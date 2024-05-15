@@ -478,7 +478,7 @@ const assets = {
             name: 'GreenMetaverseToken',
             symbol: 'GMT',
             decimals: 8,
-            icon: 'GreenMetaverseToken (GMT)',
+            icon: 'https://etherscan.io/token/images/stepngmt_32.png',
             aeAddress: 'ct_2ThKhRXDhtmTVffHik4sqCBoXeLKaw656SKW1FWW2SVNfRjDfz',
             ethAddress: '0xe3c408BD53c31C085a1746AF401A4042954ff740',
         },
