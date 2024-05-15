@@ -311,7 +311,6 @@ const assets = {
             aeAddress: 'ct_p13Wi5amRKBu1FKzRohddYEjUUPHermdtXwXR24f8W2mv7dQ',
             ethAddress: '0x3883f5e181fccaf8410fa61e12b59bad963fb645',
         },
-
         {
             nameandsymbol: 'SAND (SAND)',
             name: 'SAND',
@@ -321,13 +320,12 @@ const assets = {
             aeAddress: 'ct_5Axqp46tQDfaj5ruyYH1ivb2m9nkP2BsBFv58YdJz4KJ7nQBN',
             ethAddress: '0x3845badAde8e6dFF049820680d1F14bD3903a5d0',
         },
-
         {
             nameandsymbol: 'BitTorrent (BTT)',
             name: 'BitTorrent',
             symbol: 'BTT',
             decimals: 18,
-            icon: 'https://etherscan.io/token/0xc669928185dbce49d2230cc9b0979be6dc797957',
+            icon: 'https://etherscan.io/token/images/bittorrent_32.png',
             aeAddress: 'ct_2ahjyvpU5Sn4ZhX63it2TbUQ9BC6g7VWV9jdguBEFunwMguPw4',
             ethAddress: '0xc669928185dbce49d2230cc9b0979be6dc797957',
         },
