@@ -1,5 +1,19 @@
 # Changelog
 
+### [1.0.2](https://www.github.com/aeternity/aepp-bridge/compare/v1.0.1...v1.0.2) (2024-05-16)
+
+
+### Bug Fixes
+
+* Update constants.ts to include assets from chainConfig ([7140c1d](https://www.github.com/aeternity/aepp-bridge/commit/7140c1d213b4c49c5920713c49889a60fa31d113))
+
+
+### Miscellaneous
+
+* Add version and revision information to footer ([e709577](https://www.github.com/aeternity/aepp-bridge/commit/e70957757590c73c90c3b6538bb7980f426153a0))
+* Update integration.yml to include BUILD_ARGS with revision information ([6608f9a](https://www.github.com/aeternity/aepp-bridge/commit/6608f9abc804102b9410181772250acf4e4d3648))
+* Update ViewContainer to conditionally display revision information in the footer ([5c06b27](https://www.github.com/aeternity/aepp-bridge/commit/5c06b275708ff8c3a13a8437d8c93d989e6358a7))
+
 ### [1.0.1](https://www.github.com/aeternity/aepp-bridge/compare/v1.0.0...v1.0.1) (2024-05-16)
 
 
