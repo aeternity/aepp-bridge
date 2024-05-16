@@ -1,5 +1,13 @@
 # Changelog
 
+### [1.0.1](https://www.github.com/aeternity/aepp-bridge/compare/v1.0.0...v1.0.1) (2024-05-16)
+
+
+### Bug Fixes
+
+* update package name to match GH repo ([66fc798](https://www.github.com/aeternity/aepp-bridge/commit/66fc798e6f4f1ed69a0fc56b9fe7d16f932e01b5))
+* use custom GH token to able to trigger releases ([d352239](https://www.github.com/aeternity/aepp-bridge/commit/d352239f27b4ec828426c6e3e51559c5e7de08a9))
+
 ## 1.0.0 (2024-05-16)
 
 
