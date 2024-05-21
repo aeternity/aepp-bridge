@@ -1,6 +1,6 @@
 {
     "name": "aepp-bridge",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "private": true,
     "devDependencies": {
         "@aeternity/aepp-sdk": "13.3.2",

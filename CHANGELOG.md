@@ -1,5 +1,13 @@
 # Changelog
 
+### [1.0.3](https://www.github.com/aeternity/aepp-bridge/compare/v1.0.2...v1.0.3) (2024-05-21)
+
+
+### Miscellaneous
+
+* Update AeternityBridgeLogo component to use correct icon file name ([c06cd4c](https://www.github.com/aeternity/aepp-bridge/commit/c06cd4cdb5d46690c70e53792b6bdd4ac8804b5d))
+* Update ViewContainer to improve readability of the revision information in the footer ([2cdbcea](https://www.github.com/aeternity/aepp-bridge/commit/2cdbcea84cca57dcc160d62388c58264e87098f1))
+
 ### [1.0.2](https://www.github.com/aeternity/aepp-bridge/compare/v1.0.1...v1.0.2) (2024-05-16)
 
 
