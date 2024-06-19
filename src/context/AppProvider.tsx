@@ -12,19 +12,33 @@ async function fetchAeternityBridgeInfo(asset: Asset, aeternityAddress?: string)
     const bridge_contract = await Aeternity.Sdk.initializeContract({
         aci: Constants.aeternity.bridge_aci,
         address: Constants.aeternity.bridge_address,
+        omitUnknown: true,
     });
 
-    const { decodedResult: asset_address } = await bridge_contract.asset(asset.ethAddress);
-
-    const asset_contract = await Aeternity.Sdk.initializeContract({
-        aci: Constants.aeternity.asset_aci,
-        address: asset_address,
-    });
-
+    let { decodedResult: asset_address } = await bridge_contract.native_ae();
     let asset_balance = 0;
-    if (aeternityAddress) {
-        const { decodedResult } = await asset_contract.balance(aeternityAddress);
-        asset_balance = decodedResult;
+
+    if (asset.aeAddress === Constants.aeternity.default_ae) {
+        if (aeternityAddress) {
+            const balance = await Aeternity.Sdk.getBalance(aeternityAddress as `ak_${string}`);
+            asset_balance = Number(balance);
+        }
+    } else {
+        let { decodedResult: asset_addr } =
+            asset.aeAddress === Constants.aeternity.aeeth
+                ? await bridge_contract.native_eth()
+                : await bridge_contract.asset(asset.ethAddress);
+
+        asset_address = asset_addr;
+        const asset_contract = await Aeternity.Sdk.initializeContract({
+            aci: Constants.aeternity.asset_aci,
+            address: asset_addr,
+            omitUnknown: true,
+        });
+        if (aeternityAddress) {
+            const { decodedResult } = await asset_contract.balance(aeternityAddress);
+            asset_balance = decodedResult;
+        }
     }
 
     return {
@@ -36,37 +50,44 @@ async function fetchAeternityBridgeInfo(asset: Asset, aeternityAddress?: string)
 }
 
 async function fetchEvmBridgeInfo(assetAddress: string, ethereumAddress?: string): Promise<EVMBridgeInfo> {
-    const asset = new Ethereum.Contract(
-        assetAddress,
-        [
-            {
-                inputs: [
-                    {
-                        internalType: 'address',
-                        name: 'account',
-                        type: 'address',
-                    },
-                ],
-                name: 'balanceOf',
-                outputs: [
-                    {
-                        internalType: 'uint256',
-                        name: '',
-                        type: 'uint256',
-                    },
-                ],
-                stateMutability: 'view',
-                type: 'function',
-            },
-        ],
-        Ethereum.Provider,
-    );
+    let balance = '';
+    if (assetAddress === Constants.ethereum.default_eth) {
+        if (ethereumAddress) {
+            balance = (await Ethereum.Provider.getBalance(ethereumAddress)).toString();
+        }
+    } else {
+        const asset = new Ethereum.Contract(
+            assetAddress,
+            [
+                {
+                    inputs: [
+                        {
+                            internalType: 'address',
+                            name: 'account',
+                            type: 'address',
+                        },
+                    ],
+                    name: 'balanceOf',
+                    outputs: [
+                        {
+                            internalType: 'uint256',
+                            name: '',
+                            type: 'uint256',
+                        },
+                    ],
+                    stateMutability: 'view',
+                    type: 'function',
+                },
+            ],
+            Ethereum.Provider,
+        );
+        balance = (await asset.balanceOf(ethereumAddress).catch(() => 0)).toString();
+    }
 
-    const balance = (await asset.balanceOf(ethereumAddress).catch(() => 0)).toString();
     return {
         asset: {
             address: assetAddress,
-            balance,
+            balance: balance,
         },
     };
 }
