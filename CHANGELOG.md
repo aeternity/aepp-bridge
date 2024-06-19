@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.0.4](https://www.github.com/aeternity/aepp-bridge/compare/v1.0.3...v1.0.4) (2024-06-19)
+
+
+### Miscellaneous
+
+* Add deployment links to README.md ([7f7d68c](https://www.github.com/aeternity/aepp-bridge/commit/7f7d68cf7e668bcfdddbb01f2ab911f4d9cb08e0))
+
 ### [1.0.3](https://www.github.com/aeternity/aepp-bridge/compare/v1.0.2...v1.0.3) (2024-05-21)
 
 
