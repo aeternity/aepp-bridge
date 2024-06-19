@@ -34,6 +34,10 @@ import WalletConnection from 'src/components/base/WalletConnection';
 import { AeternityBridgeInfo, EVMBridgeInfo, Direction } from 'src/context/AppContext';
 import Spinner from 'src/components/base/Spinner';
 
+const BRIDGE_TOKEN_ACTION_TYPE = 0;
+const BRIDGE_ETH_ACTION_TYPE = 1;
+const BRIDGE_AETERNITY_ACTION_TYPE = 2;
+
 const printBalance = (
     direction: Direction,
     asset: Asset,
@@ -45,6 +49,9 @@ const printBalance = (
     let symbol = asset.symbol;
     if (direction == Direction.AeternityToEthereum) {
         symbol = `æ${symbol}`;
+        if (symbol === 'æWAE') {
+            symbol = `AE`;
+        }
         balance = aeternityInfo?.asset?.balance;
     }
     if (showBalance) {
@@ -125,24 +132,53 @@ const Bridge: React.FC = () => {
         }
 
         setButtonBusy(true);
-        try {
-            const allowance = await assetContract.allowance(ethereumAddress, Constants.ethereum.bridge_address);
-            if (allowance.lt(normalizedAmount)) {
-                const approveResult = await assetContract.approve(Constants.ethereum.bridge_address, normalizedAmount);
-                setOperationHash(approveResult.hash);
-                setConfirmingMsg('Approving allowance');
-                setConfirming(true);
 
-                await approveResult.wait(1);
+        let action_type = BRIDGE_TOKEN_ACTION_TYPE;
+        let eth_amount = BigInt(0);
+        if (asset.ethAddress === Constants.ethereum.default_eth) {
+            action_type = BRIDGE_ETH_ACTION_TYPE;
+            eth_amount = BigInt(normalizedAmount);
+        } else if (asset.ethAddress === Constants.ethereum.wae) {
+            action_type = BRIDGE_AETERNITY_ACTION_TYPE;
+        } else {
+            try {
+                const allowance = await assetContract.allowance(ethereumAddress, Constants.ethereum.bridge_address);
+                if (allowance.lt(normalizedAmount)) {
+                    const approveResult = await assetContract.approve(
+                        Constants.ethereum.bridge_address,
+                        normalizedAmount,
+                    );
+                    setOperationHash(approveResult.hash);
+                    setConfirmingMsg('Approving allowance');
+                    setConfirming(true);
+
+                    await approveResult.wait(1);
+                    setConfirming(false);
+                }
+            } catch (e: any) {
+                Logger.error(e);
+                setError(e.message);
+            } finally {
                 setConfirming(false);
+                setConfirmingMsg('');
             }
+        }
 
-            const bridgeResult = await bridge.bridge_out(asset.ethAddress, destination, normalizedAmount);
-            setOperationHash(bridgeResult.hash);
+        try {
+            const bridgeOutResult = await bridge.bridge_out(
+                asset.ethAddress,
+                destination,
+                normalizedAmount.toString(),
+                action_type,
+                {
+                    value: eth_amount,
+                },
+            );
+            setOperationHash(bridgeOutResult.hash);
             setConfirmingMsg('Bridge action');
             setConfirming(true);
 
-            await bridgeResult.wait(1);
+            await bridgeOutResult.wait(1);
         } catch (e: any) {
             Logger.error(e);
             setError(e.message);
@@ -167,34 +203,44 @@ const Bridge: React.FC = () => {
 
         setButtonBusy(true);
         try {
-            const asset_contract = await Aeternity.Sdk.initializeContract({
-                aci: Constants.aeternity.asset_aci,
-                address: aeternity.bridgeInfo?.asset?.address as `ct_${string}`,
-            });
+            let action_type = BRIDGE_TOKEN_ACTION_TYPE;
+            let ae_amount = BigInt(0);
 
-            const { decodedResult: allowance } = await asset_contract.allowance({
-                from_account: aeternityAddress,
-                for_account: Constants.aeternity.bridge_address.replace('ct_', 'ak_'),
-            });
+            if (asset.aeAddress === Constants.aeternity.default_ae) {
+                action_type = BRIDGE_AETERNITY_ACTION_TYPE;
+                ae_amount = BigInt(normalizedAmount);
+            } else {
+                action_type =
+                    asset.aeAddress === Constants.aeternity.aeeth ? BRIDGE_ETH_ACTION_TYPE : BRIDGE_TOKEN_ACTION_TYPE;
+                const asset_contract = await Aeternity.Sdk.initializeContract({
+                    aci: Constants.aeternity.asset_aci,
+                    address: aeternity.bridgeInfo?.asset?.address as `ct_${string}`,
+                    omitUnknown: true,
+                });
 
-            if (allowance === undefined) {
-                setConfirmingMsg('Creating allowance');
-                setConfirming(true);
-                await asset_contract.create_allowance(
-                    Constants.aeternity.bridge_address.replace('ct_', 'ak_'),
-                    normalizedAmount,
-                );
-            } else if (Number(allowance) < Number(normalizedAmount)) {
-                setConfirmingMsg('Updating allowance');
-                setConfirming(true);
-                await asset_contract.change_allowance(
-                    Constants.aeternity.bridge_address.replace('ct_', 'ak_'),
-                    normalizedAmount,
-                );
+                const { decodedResult: allowance } = await asset_contract.allowance({
+                    from_account: aeternityAddress,
+                    for_account: Constants.aeternity.bridge_address.replace('ct_', 'ak_'),
+                });
+
+                if (allowance === undefined) {
+                    setConfirmingMsg('Creating allowance');
+                    setConfirming(true);
+                    await asset_contract.create_allowance(
+                        Constants.aeternity.bridge_address.replace('ct_', 'ak_'),
+                        normalizedAmount,
+                    );
+                } else if (Number(allowance) < Number(normalizedAmount)) {
+                    setConfirmingMsg('Updating allowance');
+                    setConfirming(true);
+                    await asset_contract.change_allowance(
+                        Constants.aeternity.bridge_address.replace('ct_', 'ak_'),
+                        normalizedAmount,
+                    );
+                }
+                setConfirming(false);
+                setConfirmingMsg('');
             }
-            setConfirming(false);
-            setConfirmingMsg('');
-
             const bridge_contract = await Aeternity.Sdk.initializeContract({
                 aci: Constants.aeternity.bridge_aci,
                 address: Constants.aeternity.bridge_address,
@@ -203,7 +249,10 @@ const Bridge: React.FC = () => {
 
             setConfirmingMsg('Bridge action');
             setConfirming(true);
-            const bridge_out_call = await bridge_contract.bridge_out([asset.ethAddress, destination, normalizedAmount]);
+            const bridge_out_call = await bridge_contract.bridge_out(
+                [asset.ethAddress, destination, normalizedAmount, action_type],
+                { amount: ae_amount },
+            );
             setOperationHash(bridge_out_call.hash);
         } catch (e: any) {
             Logger.error(e);
@@ -211,6 +260,7 @@ const Bridge: React.FC = () => {
         } finally {
             setConfirming(false);
             setConfirmingMsg('');
+            setTimeout(() => setOperationHash(''), 5000);
         }
 
         setButtonBusy(false);

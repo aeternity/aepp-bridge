@@ -1,9 +1,34 @@
 {
     "ethereum": {
-        "bridge_address": "0x637Fd9CA649712cbCecb4aE2E70ef53fb85b1047",
+        "bridge_address": "0x87455863Df453765336CC01Ffc5809e59B2f25F2",
         "chainId": "0xaa36a7",
         "explorer": "https://sepolia.etherscan.io",
         "bridge_abi": [
+            {
+                "type": "error",
+                "name": "AddressEmptyCode",
+                "inputs": [
+                    {
+                        "type": "address",
+                        "name": "target"
+                    }
+                ]
+            },
+            {
+                "type": "error",
+                "name": "AddressInsufficientBalance",
+                "inputs": [
+                    {
+                        "type": "address",
+                        "name": "account"
+                    }
+                ]
+            },
+            {
+                "type": "error",
+                "name": "FailedInnerCall",
+                "inputs": []
+            },
             {
                 "type": "error",
                 "name": "InvalidInitialization",
@@ -13,6 +38,16 @@
                 "type": "error",
                 "name": "NotInitializing",
                 "inputs": []
+            },
+            {
+                "type": "error",
+                "name": "SafeERC20FailedOperation",
+                "inputs": [
+                    {
+                        "type": "address",
+                        "name": "token"
+                    }
+                ]
             },
             {
                 "type": "event",
@@ -32,6 +67,11 @@
                     {
                         "type": "uint256",
                         "name": "amount",
+                        "indexed": false
+                    },
+                    {
+                        "type": "uint256",
+                        "name": "action_type",
                         "indexed": false
                     },
                     {
@@ -68,6 +108,11 @@
                     },
                     {
                         "type": "uint256",
+                        "name": "action_type",
+                        "indexed": false
+                    },
+                    {
+                        "type": "uint256",
                         "name": "out_nonce",
                         "indexed": false
                     }
@@ -87,19 +132,6 @@
             },
             {
                 "type": "function",
-                "name": "add_asset",
-                "constant": false,
-                "payable": false,
-                "inputs": [
-                    {
-                        "type": "address",
-                        "name": "asset"
-                    }
-                ],
-                "outputs": []
-            },
-            {
-                "type": "function",
                 "name": "add_processor",
                 "constant": false,
                 "payable": false,
@@ -110,25 +142,6 @@
                     }
                 ],
                 "outputs": []
-            },
-            {
-                "type": "function",
-                "name": "assets",
-                "constant": true,
-                "stateMutability": "view",
-                "payable": false,
-                "inputs": [
-                    {
-                        "type": "uint256",
-                        "name": ""
-                    }
-                ],
-                "outputs": [
-                    {
-                        "type": "address",
-                        "name": ""
-                    }
-                ]
             },
             {
                 "type": "function",
@@ -160,6 +173,10 @@
                         "name": "amount"
                     },
                     {
+                        "type": "uint8",
+                        "name": "action_type"
+                    },
+                    {
                         "type": "uint256",
                         "name": "nonce"
                     }
@@ -186,6 +203,10 @@
                     {
                         "type": "uint256",
                         "name": "amount"
+                    },
+                    {
+                        "type": "uint8",
+                        "name": "action_type"
                     }
                 ],
                 "outputs": []
@@ -194,7 +215,8 @@
                 "type": "function",
                 "name": "bridge_out",
                 "constant": false,
-                "payable": false,
+                "stateMutability": "payable",
+                "payable": true,
                 "inputs": [
                     {
                         "type": "address",
@@ -207,6 +229,10 @@
                     {
                         "type": "uint256",
                         "name": "amount"
+                    },
+                    {
+                        "type": "uint8",
+                        "name": "action_type"
                     }
                 ],
                 "outputs": []
@@ -308,13 +334,27 @@
                 "name": "initialize",
                 "constant": false,
                 "payable": false,
+                "inputs": [],
+                "outputs": []
+            },
+            {
+                "type": "function",
+                "name": "movement_action_type",
+                "constant": true,
+                "stateMutability": "view",
+                "payable": false,
                 "inputs": [
                     {
-                        "type": "address[]",
-                        "name": "_assets"
+                        "type": "uint256",
+                        "name": "id"
                     }
                 ],
-                "outputs": []
+                "outputs": [
+                    {
+                        "type": "uint8",
+                        "name": ""
+                    }
+                ]
             },
             {
                 "type": "function",
@@ -413,6 +453,20 @@
             },
             {
                 "type": "function",
+                "name": "native_eth_placeholder",
+                "constant": true,
+                "stateMutability": "view",
+                "payable": false,
+                "inputs": [],
+                "outputs": [
+                    {
+                        "type": "address",
+                        "name": ""
+                    }
+                ]
+            },
+            {
+                "type": "function",
                 "name": "out_counter",
                 "constant": true,
                 "stateMutability": "view",
@@ -488,19 +542,6 @@
             },
             {
                 "type": "function",
-                "name": "remove_asset",
-                "constant": false,
-                "payable": false,
-                "inputs": [
-                    {
-                        "type": "address",
-                        "name": "asset"
-                    }
-                ],
-                "outputs": []
-            },
-            {
-                "type": "function",
                 "name": "remove_processor",
                 "constant": false,
                 "payable": false,
@@ -508,6 +549,19 @@
                     {
                         "type": "address",
                         "name": "processor"
+                    }
+                ],
+                "outputs": []
+            },
+            {
+                "type": "function",
+                "name": "set_native_eth_placeholder",
+                "constant": false,
+                "payable": false,
+                "inputs": [
+                    {
+                        "type": "address",
+                        "name": "placeholder"
                     }
                 ],
                 "outputs": []
@@ -524,6 +578,33 @@
                     }
                 ],
                 "outputs": []
+            },
+            {
+                "type": "function",
+                "name": "set_wrapped_ae",
+                "constant": false,
+                "payable": false,
+                "inputs": [
+                    {
+                        "type": "address",
+                        "name": "wae"
+                    }
+                ],
+                "outputs": []
+            },
+            {
+                "type": "function",
+                "name": "wrapped_ae",
+                "constant": true,
+                "stateMutability": "view",
+                "payable": false,
+                "inputs": [],
+                "outputs": [
+                    {
+                        "type": "address",
+                        "name": ""
+                    }
+                ]
             }
         ],
         "asset_abi": [
@@ -1072,10 +1153,423 @@
                     }
                 ]
             }
-        ]
+        ],
+        "wrapped_ae_abi": [
+            {
+                "type": "constructor",
+                "stateMutability": "undefined",
+                "payable": false,
+                "inputs": [
+                    {
+                        "type": "string",
+                        "name": "name"
+                    },
+                    {
+                        "type": "string",
+                        "name": "symbol"
+                    }
+                ]
+            },
+            {
+                "type": "error",
+                "name": "ERC20InsufficientAllowance",
+                "inputs": [
+                    {
+                        "type": "address",
+                        "name": "spender"
+                    },
+                    {
+                        "type": "uint256",
+                        "name": "allowance"
+                    },
+                    {
+                        "type": "uint256",
+                        "name": "needed"
+                    }
+                ]
+            },
+            {
+                "type": "error",
+                "name": "ERC20InsufficientBalance",
+                "inputs": [
+                    {
+                        "type": "address",
+                        "name": "sender"
+                    },
+                    {
+                        "type": "uint256",
+                        "name": "balance"
+                    },
+                    {
+                        "type": "uint256",
+                        "name": "needed"
+                    }
+                ]
+            },
+            {
+                "type": "error",
+                "name": "ERC20InvalidApprover",
+                "inputs": [
+                    {
+                        "type": "address",
+                        "name": "approver"
+                    }
+                ]
+            },
+            {
+                "type": "error",
+                "name": "ERC20InvalidReceiver",
+                "inputs": [
+                    {
+                        "type": "address",
+                        "name": "receiver"
+                    }
+                ]
+            },
+            {
+                "type": "error",
+                "name": "ERC20InvalidSender",
+                "inputs": [
+                    {
+                        "type": "address",
+                        "name": "sender"
+                    }
+                ]
+            },
+            {
+                "type": "error",
+                "name": "ERC20InvalidSpender",
+                "inputs": [
+                    {
+                        "type": "address",
+                        "name": "spender"
+                    }
+                ]
+            },
+            {
+                "type": "error",
+                "name": "OwnableInvalidOwner",
+                "inputs": [
+                    {
+                        "type": "address",
+                        "name": "owner"
+                    }
+                ]
+            },
+            {
+                "type": "error",
+                "name": "OwnableUnauthorizedAccount",
+                "inputs": [
+                    {
+                        "type": "address",
+                        "name": "account"
+                    }
+                ]
+            },
+            {
+                "type": "event",
+                "anonymous": false,
+                "name": "Approval",
+                "inputs": [
+                    {
+                        "type": "address",
+                        "name": "owner",
+                        "indexed": true
+                    },
+                    {
+                        "type": "address",
+                        "name": "spender",
+                        "indexed": true
+                    },
+                    {
+                        "type": "uint256",
+                        "name": "value",
+                        "indexed": false
+                    }
+                ]
+            },
+            {
+                "type": "event",
+                "anonymous": false,
+                "name": "OwnershipTransferred",
+                "inputs": [
+                    {
+                        "type": "address",
+                        "name": "previousOwner",
+                        "indexed": true
+                    },
+                    {
+                        "type": "address",
+                        "name": "newOwner",
+                        "indexed": true
+                    }
+                ]
+            },
+            {
+                "type": "event",
+                "anonymous": false,
+                "name": "Transfer",
+                "inputs": [
+                    {
+                        "type": "address",
+                        "name": "from",
+                        "indexed": true
+                    },
+                    {
+                        "type": "address",
+                        "name": "to",
+                        "indexed": true
+                    },
+                    {
+                        "type": "uint256",
+                        "name": "value",
+                        "indexed": false
+                    }
+                ]
+            },
+            {
+                "type": "function",
+                "name": "allowance",
+                "constant": true,
+                "stateMutability": "view",
+                "payable": false,
+                "inputs": [
+                    {
+                        "type": "address",
+                        "name": "owner"
+                    },
+                    {
+                        "type": "address",
+                        "name": "spender"
+                    }
+                ],
+                "outputs": [
+                    {
+                        "type": "uint256",
+                        "name": ""
+                    }
+                ]
+            },
+            {
+                "type": "function",
+                "name": "approve",
+                "constant": false,
+                "payable": false,
+                "inputs": [
+                    {
+                        "type": "address",
+                        "name": "spender"
+                    },
+                    {
+                        "type": "uint256",
+                        "name": "value"
+                    }
+                ],
+                "outputs": [
+                    {
+                        "type": "bool",
+                        "name": ""
+                    }
+                ]
+            },
+            {
+                "type": "function",
+                "name": "balanceOf",
+                "constant": true,
+                "stateMutability": "view",
+                "payable": false,
+                "inputs": [
+                    {
+                        "type": "address",
+                        "name": "account"
+                    }
+                ],
+                "outputs": [
+                    {
+                        "type": "uint256",
+                        "name": ""
+                    }
+                ]
+            },
+            {
+                "type": "function",
+                "name": "burn",
+                "constant": false,
+                "payable": false,
+                "inputs": [
+                    {
+                        "type": "address",
+                        "name": "to"
+                    },
+                    {
+                        "type": "uint256",
+                        "name": "amount"
+                    }
+                ],
+                "outputs": []
+            },
+            {
+                "type": "function",
+                "name": "decimals",
+                "constant": true,
+                "stateMutability": "view",
+                "payable": false,
+                "inputs": [],
+                "outputs": [
+                    {
+                        "type": "uint8",
+                        "name": ""
+                    }
+                ]
+            },
+            {
+                "type": "function",
+                "name": "mint",
+                "constant": false,
+                "payable": false,
+                "inputs": [
+                    {
+                        "type": "address",
+                        "name": "to"
+                    },
+                    {
+                        "type": "uint256",
+                        "name": "amount"
+                    }
+                ],
+                "outputs": []
+            },
+            {
+                "type": "function",
+                "name": "name",
+                "constant": true,
+                "stateMutability": "view",
+                "payable": false,
+                "inputs": [],
+                "outputs": [
+                    {
+                        "type": "string",
+                        "name": ""
+                    }
+                ]
+            },
+            {
+                "type": "function",
+                "name": "owner",
+                "constant": true,
+                "stateMutability": "view",
+                "payable": false,
+                "inputs": [],
+                "outputs": [
+                    {
+                        "type": "address",
+                        "name": ""
+                    }
+                ]
+            },
+            {
+                "type": "function",
+                "name": "renounceOwnership",
+                "constant": false,
+                "payable": false,
+                "inputs": [],
+                "outputs": []
+            },
+            {
+                "type": "function",
+                "name": "symbol",
+                "constant": true,
+                "stateMutability": "view",
+                "payable": false,
+                "inputs": [],
+                "outputs": [
+                    {
+                        "type": "string",
+                        "name": ""
+                    }
+                ]
+            },
+            {
+                "type": "function",
+                "name": "totalSupply",
+                "constant": true,
+                "stateMutability": "view",
+                "payable": false,
+                "inputs": [],
+                "outputs": [
+                    {
+                        "type": "uint256",
+                        "name": ""
+                    }
+                ]
+            },
+            {
+                "type": "function",
+                "name": "transfer",
+                "constant": false,
+                "payable": false,
+                "inputs": [
+                    {
+                        "type": "address",
+                        "name": "to"
+                    },
+                    {
+                        "type": "uint256",
+                        "name": "value"
+                    }
+                ],
+                "outputs": [
+                    {
+                        "type": "bool",
+                        "name": ""
+                    }
+                ]
+            },
+            {
+                "type": "function",
+                "name": "transferFrom",
+                "constant": false,
+                "payable": false,
+                "inputs": [
+                    {
+                        "type": "address",
+                        "name": "from"
+                    },
+                    {
+                        "type": "address",
+                        "name": "to"
+                    },
+                    {
+                        "type": "uint256",
+                        "name": "value"
+                    }
+                ],
+                "outputs": [
+                    {
+                        "type": "bool",
+                        "name": ""
+                    }
+                ]
+            },
+            {
+                "type": "function",
+                "name": "transferOwnership",
+                "constant": false,
+                "payable": false,
+                "inputs": [
+                    {
+                        "type": "address",
+                        "name": "newOwner"
+                    }
+                ],
+                "outputs": []
+            }
+        ],
+        "wae": "0xD1B22d47684AdDa00214e86725E9529B6b773819",
+        "default_eth": "0x2EE0c483ccfe53a87b8e91509691031fe9dC1b8d"
     },
     "aeternity": {
-        "bridge_address": "ct_rCdFGvdiE4jEjNeqc3pLPuHHtwhRe5K28pNa2KLr4C6zLSZGg",
+        "bridge_address": "ct_2Wugm4MfUKgZToHvmroxNHp58XDHyBkn1Hfukar9EUnsQtUEov",
         "explorer": "https://testnet.aescan.io",
         "rpc": "https://testnet.aeternity.io",
         "bridge_aci": [
@@ -1117,9 +1611,7 @@
                             "name": "aex9_extensions",
                             "payable": false,
                             "returns": {
-                                "list": [
-                                    "string"
-                                ]
+                                "list": ["string"]
                             },
                             "stateful": false
                         },
@@ -1142,10 +1634,7 @@
                             "name": "balances",
                             "payable": false,
                             "returns": {
-                                "map": [
-                                    "address",
-                                    "int"
-                                ]
+                                "map": ["address", "int"]
                             },
                             "stateful": false
                         },
@@ -1159,9 +1648,7 @@
                             "name": "balance",
                             "payable": false,
                             "returns": {
-                                "option": [
-                                    "int"
-                                ]
+                                "option": ["int"]
                             },
                             "stateful": false
                         },
@@ -1191,9 +1678,7 @@
                             "name": "allowance_for_caller",
                             "payable": false,
                             "returns": {
-                                "option": [
-                                    "int"
-                                ]
+                                "option": ["int"]
                             },
                             "stateful": false
                         },
@@ -1332,10 +1817,7 @@
                             "name": "swapped",
                             "payable": false,
                             "returns": {
-                                "map": [
-                                    "address",
-                                    "int"
-                                ]
+                                "map": ["address", "int"]
                             },
                             "stateful": false
                         }
@@ -1354,18 +1836,21 @@
                                 {
                                     "name": "assets",
                                     "type": {
-                                        "map": [
-                                            "string",
-                                            "FungibleTokenFullInterface"
-                                        ]
+                                        "map": ["string", "FungibleTokenFullInterface"]
                                     }
+                                },
+                                {
+                                    "name": "native_ae",
+                                    "type": "Bridge.native_asset"
+                                },
+                                {
+                                    "name": "native_eth",
+                                    "type": "Bridge.native_asset"
                                 },
                                 {
                                     "name": "owner",
                                     "type": {
-                                        "option": [
-                                            "address"
-                                        ]
+                                        "option": ["address"]
                                     }
                                 }
                             ],
@@ -1444,10 +1929,7 @@
                                 {
                                     "name": "x#1",
                                     "type": {
-                                        "tuple": [
-                                            "string",
-                                            "address"
-                                        ]
+                                        "tuple": ["string", "address"]
                                     }
                                 }
                             ],
@@ -1466,6 +1948,38 @@
                                 }
                             ],
                             "name": "confirm_asset_owner",
+                            "payable": false,
+                            "returns": {
+                                "tuple": []
+                            },
+                            "stateful": true
+                        },
+                        {
+                            "arguments": [
+                                {
+                                    "name": "x#1",
+                                    "type": {
+                                        "tuple": ["string", "FungibleTokenFullInterface"]
+                                    }
+                                }
+                            ],
+                            "name": "update_native_ae",
+                            "payable": false,
+                            "returns": {
+                                "tuple": []
+                            },
+                            "stateful": true
+                        },
+                        {
+                            "arguments": [
+                                {
+                                    "name": "x#1",
+                                    "type": {
+                                        "tuple": ["string", "FungibleTokenFullInterface"]
+                                    }
+                                }
+                            ],
+                            "name": "update_native_eth",
                             "payable": false,
                             "returns": {
                                 "tuple": []
@@ -1509,16 +2023,12 @@
                                 {
                                     "name": "x#1",
                                     "type": {
-                                        "tuple": [
-                                            "string",
-                                            "string",
-                                            "int"
-                                        ]
+                                        "tuple": ["string", "string", "int", "int"]
                                     }
                                 }
                             ],
                             "name": "bridge_out",
-                            "payable": false,
+                            "payable": true,
                             "returns": {
                                 "tuple": []
                             },
@@ -1529,12 +2039,7 @@
                                 {
                                     "name": "x#1",
                                     "type": {
-                                        "tuple": [
-                                            "int",
-                                            "string",
-                                            "address",
-                                            "int"
-                                        ]
+                                        "tuple": ["int", "string", "address", "int", "int"]
                                     }
                                 }
                             ],
@@ -1607,6 +2112,18 @@
                                     "type": "int"
                                 }
                             ],
+                            "name": "movement_action_type",
+                            "payable": false,
+                            "returns": "int",
+                            "stateful": false
+                        },
+                        {
+                            "arguments": [
+                                {
+                                    "name": "id",
+                                    "type": "int"
+                                }
+                            ],
                             "name": "movement_nonce",
                             "payable": false,
                             "returns": "int",
@@ -1617,11 +2134,22 @@
                             "name": "assets",
                             "payable": false,
                             "returns": {
-                                "map": [
-                                    "string",
-                                    "FungibleTokenFullInterface"
-                                ]
+                                "map": ["string", "FungibleTokenFullInterface"]
                             },
+                            "stateful": false
+                        },
+                        {
+                            "arguments": [],
+                            "name": "native_eth",
+                            "payable": false,
+                            "returns": "FungibleTokenFullInterface",
+                            "stateful": false
+                        },
+                        {
+                            "arguments": [],
+                            "name": "native_ae",
+                            "payable": false,
+                            "returns": "FungibleTokenFullInterface",
                             "stateful": false
                         },
                         {
@@ -1641,10 +2169,7 @@
                             "name": "movements_out",
                             "payable": false,
                             "returns": {
-                                "map": [
-                                    "int",
-                                    "Bridge.bridge_action"
-                                ]
+                                "map": ["int", "Bridge.bridge_action"]
                             },
                             "stateful": false
                         },
@@ -1688,19 +2213,21 @@
                             {
                                 "name": "assets",
                                 "type": {
-                                    "map": [
-                                        "string",
-                                        "FungibleTokenFullInterface"
-                                    ]
+                                    "map": ["string", "FungibleTokenFullInterface"]
                                 }
+                            },
+                            {
+                                "name": "native_eth",
+                                "type": "Bridge.native_asset"
+                            },
+                            {
+                                "name": "native_ae",
+                                "type": "Bridge.native_asset"
                             },
                             {
                                 "name": "out_actions",
                                 "type": {
-                                    "map": [
-                                        "int",
-                                        "Bridge.bridge_action"
-                                    ]
+                                    "map": ["int", "Bridge.bridge_action"]
                                 }
                             },
                             {
@@ -1710,10 +2237,7 @@
                             {
                                 "name": "in_actions",
                                 "type": {
-                                    "map": [
-                                        "int",
-                                        "Bridge.in_bridge_action"
-                                    ]
+                                    "map": ["int", "Bridge.in_bridge_action"]
                                 }
                             },
                             {
@@ -1723,9 +2247,7 @@
                             {
                                 "name": "pending_owner",
                                 "type": {
-                                    "option": [
-                                        "address"
-                                    ]
+                                    "option": ["address"]
                                 }
                             },
                             {
@@ -1735,9 +2257,7 @@
                             {
                                 "name": "processors",
                                 "type": {
-                                    "list": [
-                                        "address"
-                                    ]
+                                    "list": ["address"]
                                 }
                             }
                         ]
@@ -1755,6 +2275,22 @@
                                     },
                                     {
                                         "Failed": []
+                                    }
+                                ]
+                            },
+                            "vars": []
+                        },
+                        {
+                            "name": "native_asset",
+                            "typedef": {
+                                "record": [
+                                    {
+                                        "name": "eth_addr",
+                                        "type": "string"
+                                    },
+                                    {
+                                        "name": "underlying_token",
+                                        "type": "FungibleTokenFullInterface"
                                     }
                                 ]
                             },
@@ -1781,6 +2317,10 @@
                                         "type": "int"
                                     },
                                     {
+                                        "name": "action_type",
+                                        "type": "int"
+                                    },
+                                    {
                                         "name": "nonce",
                                         "type": "int"
                                     }
@@ -1795,18 +2335,13 @@
                                     {
                                         "name": "processors",
                                         "type": {
-                                            "list": [
-                                                "address"
-                                            ]
+                                            "list": ["address"]
                                         }
                                     },
                                     {
                                         "name": "submissions",
                                         "type": {
-                                            "map": [
-                                                "hash",
-                                                "int"
-                                            ]
+                                            "map": ["hash", "int"]
                                         }
                                     },
                                     {
@@ -1851,36 +2386,19 @@
                     "event": {
                         "variant": [
                             {
-                                "Transfer": [
-                                    "address",
-                                    "address",
-                                    "int"
-                                ]
+                                "Transfer": ["address", "address", "int"]
                             },
                             {
-                                "Allowance": [
-                                    "address",
-                                    "address",
-                                    "int"
-                                ]
+                                "Allowance": ["address", "address", "int"]
                             },
                             {
-                                "Burn": [
-                                    "address",
-                                    "int"
-                                ]
+                                "Burn": ["address", "int"]
                             },
                             {
-                                "Mint": [
-                                    "address",
-                                    "int"
-                                ]
+                                "Mint": ["address", "int"]
                             },
                             {
-                                "Swap": [
-                                    "address",
-                                    "int"
-                                ]
+                                "Swap": ["address", "int"]
                             }
                         ]
                     },
@@ -1890,9 +2408,7 @@
                             "name": "aex9_extensions",
                             "payable": false,
                             "returns": {
-                                "list": [
-                                    "string"
-                                ]
+                                "list": ["string"]
                             },
                             "stateful": false
                         },
@@ -1913,9 +2429,7 @@
                                 {
                                     "name": "initial_owner_balance",
                                     "type": {
-                                        "option": [
-                                            "int"
-                                        ]
+                                        "option": ["int"]
                                     }
                                 }
                             ],
@@ -1985,9 +2499,7 @@
                             "name": "balance",
                             "payable": false,
                             "returns": {
-                                "option": [
-                                    "int"
-                                ]
+                                "option": ["int"]
                             },
                             "stateful": false
                         },
@@ -1996,10 +2508,7 @@
                             "name": "swapped",
                             "payable": false,
                             "returns": {
-                                "map": [
-                                    "address",
-                                    "int"
-                                ]
+                                "map": ["address", "int"]
                             },
                             "stateful": false
                         },
@@ -2020,9 +2529,7 @@
                             "name": "allowance",
                             "payable": false,
                             "returns": {
-                                "option": [
-                                    "int"
-                                ]
+                                "option": ["int"]
                             },
                             "stateful": false
                         },
@@ -2036,9 +2543,7 @@
                             "name": "allowance_for_caller",
                             "payable": false,
                             "returns": {
-                                "option": [
-                                    "int"
-                                ]
+                                "option": ["int"]
                             },
                             "stateful": false
                         },
@@ -2198,9 +2703,7 @@
                             {
                                 "name": "pending_owner",
                                 "type": {
-                                    "option": [
-                                        "address"
-                                    ]
+                                    "option": ["address"]
                                 }
                             },
                             {
@@ -2222,10 +2725,7 @@
                             {
                                 "name": "swapped",
                                 "type": {
-                                    "map": [
-                                        "address",
-                                        "int"
-                                    ]
+                                    "map": ["address", "int"]
                                 }
                             }
                         ]
@@ -2270,27 +2770,23 @@
                         {
                             "name": "balances",
                             "typedef": {
-                                "map": [
-                                    "address",
-                                    "int"
-                                ]
+                                "map": ["address", "int"]
                             },
                             "vars": []
                         },
                         {
                             "name": "allowances",
                             "typedef": {
-                                "map": [
-                                    "FungibleTokenFull.allowance_accounts",
-                                    "int"
-                                ]
+                                "map": ["FungibleTokenFull.allowance_accounts", "int"]
                             },
                             "vars": []
                         }
                     ]
                 }
             }
-        ]
+        ],
+        "aeeth": "ct_2A8fvvAUdMGaL92Uc7PriCsa9faBtQoNJ33dN6Dq8agir1Jkk2",
+        "default_ae": "ct_2tdhiY2Qj4ZapLVXpgWuXDSNBPKt5XeTEa3zGLsamBmR2ma99U"
     },
     "assets": [
         {
@@ -2302,8 +2798,8 @@
             "symbol": "USDT",
             "decimals": 6,
             "icon": "https://static.alchemyapi.io/images/assets/825.png",
-            "ethAddress": "0x82641296e56A7B4D2d1548F7528C8a29Af520250",
-            "aeAddress": "ct_5Zaz8bBmxbtAmqohs5VmcHChqUnc3pQoqv65o1GS6VJYLgY6P"
+            "ethAddress": "0x59df5723474497C955db8785B365E246b87927a7",
+            "aeAddress": "ct_2LtAwSTHSmUhbQJAt7R5Ne2xwKRfuQMGfMiCsKsSfrntpbZYhE"
         },
         {
             "token_rank": 2,
@@ -2314,8 +2810,32 @@
             "symbol": "BNB",
             "decimals": 18,
             "icon": "https://static.alchemyapi.io/images/assets/1839.png",
-            "ethAddress": "0x58968E5D7Ea449274342f21BAEe3e6E6BD3a0351",
-            "aeAddress": "ct_2Wx9ucoN25KYqi9nSm527JHCN8kg2Lwm7VtG57FWXMtUwBLFR4"
+            "ethAddress": "0x16E5364A314fAAD7c4de3bbAC1F81c0bA085f5b7",
+            "aeAddress": "ct_tJwcoa1wez2etz8UfFLZR26ubm9nsNRF9tjsHzzULuRG15fvN"
+        },
+        {
+            "token_rank": 3,
+            "link": "https://etherscan.io/token/0xd7c49cee7e9188cca6ad8ff264c1da2e69d4cf3b",
+            "contract": "0xd7c49cee7e9188cca6ad8ff264c1da2e69d4cf3b",
+            "nameandsymbol": "Wrapped Ethereum (ETH)",
+            "name": "Wrapped Ethereum",
+            "symbol": "ETH",
+            "decimals": 18,
+            "icon": "https://cryptologos.cc/logos/ethereum-eth-logo.png",
+            "ethAddress": "0x2EE0c483ccfe53a87b8e91509691031fe9dC1b8d",
+            "aeAddress": "ct_2A8fvvAUdMGaL92Uc7PriCsa9faBtQoNJ33dN6Dq8agir1Jkk2"
+        },
+        {
+            "token_rank": 4,
+            "link": "https://etherscan.io/token/0x9d65ff81a3c488d585bbfb0bfe3c7707c7917f54",
+            "contract": "0x9d65ff81a3c488d585bbfb0bfe3c7707c7917f54",
+            "nameandsymbol": "Wrapped AE (WAE)",
+            "name": "Wrapped AE",
+            "symbol": "WAE",
+            "decimals": 18,
+            "icon": "https://cryptologos.cc/logos/aeternity-ae-logo.png",
+            "ethAddress": "0xD1B22d47684AdDa00214e86725E9529B6b773819",
+            "aeAddress": "ct_2tdhiY2Qj4ZapLVXpgWuXDSNBPKt5XeTEa3zGLsamBmR2ma99U"
         }
     ]
 }
