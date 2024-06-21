@@ -15,6 +15,8 @@ async function fetchAeternityBridgeInfo(asset: Asset, aeternityAddress?: string)
         omitUnknown: true,
     });
 
+    const { decodedResult: is_enabled } = await bridge_contract.is_enabled();
+    console.log('isAeternityEnabled', is_enabled);
     let { decodedResult: asset_address } = await bridge_contract.native_ae();
     let asset_balance = 0;
 
@@ -51,6 +53,16 @@ async function fetchAeternityBridgeInfo(asset: Asset, aeternityAddress?: string)
 
 async function fetchEvmBridgeInfo(assetAddress: string, ethereumAddress?: string): Promise<EVMBridgeInfo> {
     let balance = '';
+
+    const bridgeContract = new Ethereum.Contract(
+        Constants.ethereum.bridge_address,
+        Constants.ethereum.bridge_abi,
+        Ethereum.Provider,
+    );
+
+    const isEnabled = await bridgeContract.isEnabled();
+    console.log('isEVMEnabled', isEnabled);
+
     if (assetAddress === Constants.ethereum.default_eth) {
         if (ethereumAddress) {
             balance = (await Ethereum.Provider.getBalance(ethereumAddress)).toString();
