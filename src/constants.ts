@@ -13,7 +13,7 @@ export interface Asset {
     icon: string;
 }
 
-const isMainnet = false;
+const isMainnet = true;
 
 const Constants = {
     isMainnet,
@@ -24,8 +24,8 @@ const Constants = {
         ethChainId: bridgeConfig[isMainnet ? 'mainnet' : 'testnet'].chainId,
         bridge_abi: deployment.ethereum.bridge_abi,
         asset_abi: deployment.ethereum.asset_abi,
-        wae: deployment.ethereum.wae,
-        default_eth: deployment.ethereum.default_eth,
+        wae: bridgeConfig[isMainnet ? 'mainnet' : 'testnet'].wae,
+        default_eth: bridgeConfig[isMainnet ? 'mainnet' : 'testnet'].default_eth,
     },
     aeternity: {
         bridge_address: bridgeConfig[isMainnet ? 'mainnet' : 'testnet'].ae_bridge_address as `ct_${string}`,
@@ -33,8 +33,8 @@ const Constants = {
         rpc: bridgeConfig[isMainnet ? 'mainnet' : 'testnet'].aeRpc,
         bridge_aci: deployment.aeternity.bridge_aci,
         asset_aci: deployment.aeternity.asset_aci,
-        aeeth: deployment.aeternity.aeeth,
-        default_ae: deployment.aeternity.default_ae,
+        aeeth: bridgeConfig[isMainnet ? 'mainnet' : 'testnet'].aeeth,
+        default_ae: bridgeConfig[isMainnet ? 'mainnet' : 'testnet'].default_ae,
     },
 };
 

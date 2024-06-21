@@ -9,10 +9,12 @@ export interface AssetInfo {
 
 export interface AeternityBridgeInfo {
     asset?: AssetInfo;
+    isEnabled?: boolean;
 }
 
 export interface EVMBridgeInfo {
     asset?: AssetInfo;
+    isEnabled?: boolean;
 }
 
 export interface FundEvent {

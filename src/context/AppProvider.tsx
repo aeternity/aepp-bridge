@@ -48,6 +48,7 @@ async function fetchAeternityBridgeInfo(asset: Asset, aeternityAddress?: string)
             address: asset_address,
             balance: asset_balance?.toString() || '0',
         },
+        isEnabled: is_enabled,
     };
 }
 
@@ -61,7 +62,6 @@ async function fetchEvmBridgeInfo(assetAddress: string, ethereumAddress?: string
     );
 
     const isEnabled = await bridgeContract.isEnabled();
-    console.log('isEVMEnabled', isEnabled);
 
     if (assetAddress === Constants.ethereum.default_eth) {
         if (ethereumAddress) {
@@ -101,6 +101,7 @@ async function fetchEvmBridgeInfo(assetAddress: string, ethereumAddress?: string
             address: assetAddress,
             balance: balance,
         },
+        isEnabled,
     };
 }
 

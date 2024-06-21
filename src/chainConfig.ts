@@ -3,11 +3,15 @@ import deploymentJSON from './deployment.json';
 const bridgeConfig = {
     mainnet: {
         chainId: '0x1',
-        ae_bridge_address: 'ct_2ioisnF4reEMxWz4hkX5DhR4D6h83oW9ShHfAvs89E6PKqphA9',
-        eth_bridge_address: '0xc9d9dB4a1774A12aCFA0a8d111A5375d59831629',
+        ae_bridge_address: 'ct_2Xdym95f2i998W9Zoh1NgAB7pVuQ34ztEsema7u4XwSoq5VKUJ',
+        eth_bridge_address: '0xd099E3Ab65d6294d1d2D1Ad92897Cc29286F8cA5',
         etherscan: 'https://etherscan.io',
         aescan: 'https://aescan.io',
         aeRpc: 'https://mainnet.aeternity.io',
+        aeeth: 'ct_ryTY1mxqjCjq1yBn9i6HDaCSdA6thXUFZTA84EMzbWd1SLKdh',
+        default_ae: 'ct_o5iyqeZyiKep7srn43fLFjwJ7QyDH8dD2M3RFB5PCWgiQEPqq',
+        wae: '0xCa781A1779c8f363f7F82BF6f4B406e5d54bAE1F',
+        default_eth: '0xAbaE76F98A84D1DC3E0af8ed68465631165d33B2',
     },
     testnet: {
         chainId: '0xaa36a7',
@@ -16,12 +20,34 @@ const bridgeConfig = {
         etherscan: 'https://sepolia.etherscan.io',
         aescan: 'https://testnet.aescan.io',
         aeRpc: 'https://testnet.aeternity.io',
+        aeeth: 'ct_WVqAvLQpvZCgBg4faZLXA1YBj43Fxj91D33Z8K7pFsY8YCofv',
+        default_ae: 'ct_22WVQXzVCkgQYDbPUTX1YRNnyUx7XUHQ9ZRkK9P7BwwdyqZaXH',
+        wae: '0xBC6e88A962662195e9bb8C17f8f396aCD7B7FE95',
+        default_eth: '0xd57aafdC9615835E1F75BcdBDE1c7B1Aa6e4cB10',
     },
 };
 
 const assets = {
     testnet: deploymentJSON.assets,
     mainnet: [
+        {
+            nameandsymbol: 'Wrapped Ethereum (ETH)',
+            name: 'Wrapped Ethereum',
+            symbol: 'ETH',
+            decimals: 18,
+            icon: 'https://cryptologos.cc/logos/ethereum-eth-logo.png',
+            ethAddress: '0xAbaE76F98A84D1DC3E0af8ed68465631165d33B2',
+            aeAddress: 'ct_WVqAvLQpvZCgBg4faZLXA1YBj43Fxj91D33Z8K7pFsY8YCofv',
+        },
+        {
+            nameandsymbol: 'Wrapped AE (WAE)',
+            name: 'Wrapped AE',
+            symbol: 'WAE',
+            decimals: 18,
+            icon: 'https://cryptologos.cc/logos/aeternity-ae-logo.png',
+            ethAddress: '0xBC6e88A962662195e9bb8C17f8f396aCD7B7FE95',
+            aeAddress: 'ct_22WVQXzVCkgQYDbPUTX1YRNnyUx7XUHQ9ZRkK9P7BwwdyqZaXH',
+        },
         {
             nameandsymbol: 'Tether USD (USDT)',
             name: 'Tether USD',
