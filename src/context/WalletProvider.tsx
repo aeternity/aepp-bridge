@@ -1,20 +1,19 @@
-import React from 'react';
+import { useState, useEffect, ReactNode, useCallback } from 'react';
 import * as Aeternity from 'src/services/aeternity';
 import * as Ethereum from 'src/services/ethereum';
 import Logger from '../services/logger';
 import WalletContext from './WalletContext';
 
-const WalletProvider: React.FC<{ children: React.ReactNode }> = (props) => {
-    const [connecting, setConnecting] = React.useState(false);
-    const [aeternityAddress, setAeternityAddress] = React.useState<string>();
-    const [ethereumAddress, setEthereumAddress] = React.useState<string>();
-    const [walletConnectError, setWalletConnectError] = React.useState<string>('');
+const WalletProvider: React.FC<{ children: ReactNode }> = (props) => {
+    const [connecting, setConnecting] = useState(false);
+    const [ethereumAddress, setEthereumAddress] = useState<string | undefined>(undefined);
+    const [aeternityAddress, setAeternityAddress] = useState<string | undefined>(undefined);
+    const [walletConnectError, setWalletConnectError] = useState<string>('');
 
-    React.useEffect(() => {
+    useEffect(() => {
         const ethereumClient = (window as any).ethereum;
 
         if (ethereumClient) {
-            console.log('Ethereum Provider:', Ethereum.Provider.provider);
             Ethereum.Provider.listAccounts().then((accounts) => {
                 if (accounts.length > 0) {
                     setEthereumAddress(accounts[0]);
@@ -34,7 +33,15 @@ const WalletProvider: React.FC<{ children: React.ReactNode }> = (props) => {
         }
     }, []);
 
-    const connectAeternityWallet = React.useCallback(async () => {
+    const tryConnectToAeternityWallet = useCallback(async () => {
+        try {
+            const address = Aeternity.Sdk.address;
+        } catch (e) {
+            connectAeternityWallet();
+        }
+    }, []);
+
+    const connectAeternityWallet = useCallback(async () => {
         try {
             setConnecting(true);
             const address = await Aeternity.connect();
@@ -45,9 +52,9 @@ const WalletProvider: React.FC<{ children: React.ReactNode }> = (props) => {
         } finally {
             setConnecting(false);
         }
-    }, []);
+    }, [aeternityAddress]);
 
-    const connectEthereumWallet = React.useCallback(async () => {
+    const connectEthereumWallet = useCallback(async () => {
         if (!Ethereum.Provider) {
             setWalletConnectError('Ethereum wallet not available');
             return;
@@ -64,7 +71,7 @@ const WalletProvider: React.FC<{ children: React.ReactNode }> = (props) => {
         }
     }, []);
 
-    const disconnectWallet = React.useCallback(() => {
+    const disconnectWallet = useCallback(() => {
         if (ethereumAddress) {
             setEthereumAddress(undefined);
         } else if (aeternityAddress) {
@@ -76,12 +83,13 @@ const WalletProvider: React.FC<{ children: React.ReactNode }> = (props) => {
         <WalletContext.Provider
             value={{
                 connecting,
-                aeternityAddress: aeternityAddress,
-                ethereumAddress: ethereumAddress,
+                aeternityAddress,
+                ethereumAddress,
                 connectAeternityWallet,
                 connectEthereumWallet,
                 walletConnectError,
                 disconnectWallet,
+                tryConnectToAeternityWallet,
             }}
         >
             {props.children}
