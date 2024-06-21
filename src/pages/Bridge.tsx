@@ -379,8 +379,8 @@ const Bridge: React.FC = () => {
                         <TextField
                             fullWidth
                             id="outlined-textfield-amount"
-                            label={`Total Amount (${asset.decimals} decimals)`}
-                            placeholder={`0.00001 ${asset.symbol}`}
+                            label={`Total Amount`}
+                            placeholder={`0 ${asset.symbol}`}
                             variant="outlined"
                             type="number"
                             autoComplete="off"
