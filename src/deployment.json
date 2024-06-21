@@ -1,6 +1,6 @@
 {
     "ethereum": {
-        "bridge_address": "0x87455863Df453765336CC01Ffc5809e59B2f25F2",
+        "bridge_address": "0xa2E1f5E1f2721Ae935ac7b0799BC108963276dBA",
         "chainId": "0xaa36a7",
         "explorer": "https://sepolia.etherscan.io",
         "bridge_abi": [
@@ -260,6 +260,22 @@
             },
             {
                 "type": "function",
+                "name": "disable",
+                "constant": false,
+                "payable": false,
+                "inputs": [],
+                "outputs": []
+            },
+            {
+                "type": "function",
+                "name": "enable",
+                "constant": false,
+                "payable": false,
+                "inputs": [],
+                "outputs": []
+            },
+            {
+                "type": "function",
                 "name": "getAddress",
                 "constant": true,
                 "stateMutability": "view",
@@ -336,6 +352,34 @@
                 "payable": false,
                 "inputs": [],
                 "outputs": []
+            },
+            {
+                "type": "function",
+                "name": "isEnabled",
+                "constant": true,
+                "stateMutability": "view",
+                "payable": false,
+                "inputs": [],
+                "outputs": [
+                    {
+                        "type": "bool",
+                        "name": ""
+                    }
+                ]
+            },
+            {
+                "type": "function",
+                "name": "is_enabled",
+                "constant": true,
+                "stateMutability": "view",
+                "payable": false,
+                "inputs": [],
+                "outputs": [
+                    {
+                        "type": "bool",
+                        "name": ""
+                    }
+                ]
             },
             {
                 "type": "function",
@@ -620,6 +664,10 @@
                     {
                         "type": "string",
                         "name": "symbol"
+                    },
+                    {
+                        "type": "uint8",
+                        "name": "token_decimals"
                     }
                 ]
             },
@@ -1565,11 +1613,11 @@
                 "outputs": []
             }
         ],
-        "wae": "0xD1B22d47684AdDa00214e86725E9529B6b773819",
-        "default_eth": "0x2EE0c483ccfe53a87b8e91509691031fe9dC1b8d"
+        "wae": "0xBC6e88A962662195e9bb8C17f8f396aCD7B7FE95",
+        "default_eth": "0xd57aafdC9615835E1F75BcdBDE1c7B1Aa6e4cB10"
     },
     "aeternity": {
-        "bridge_address": "ct_2Wugm4MfUKgZToHvmroxNHp58XDHyBkn1Hfukar9EUnsQtUEov",
+        "bridge_address": "ct_2C5nHYyzUMiqU9HE32XNLN47pFEDL2bNpVTAsG5XmZNigvM4Fv",
         "explorer": "https://testnet.aescan.io",
         "rpc": "https://testnet.aeternity.io",
         "bridge_aci": [
@@ -2019,6 +2067,24 @@
                             "stateful": true
                         },
                         {
+                            "arguments": [],
+                            "name": "disable",
+                            "payable": false,
+                            "returns": {
+                                "tuple": []
+                            },
+                            "stateful": true
+                        },
+                        {
+                            "arguments": [],
+                            "name": "enable",
+                            "payable": false,
+                            "returns": {
+                                "tuple": []
+                            },
+                            "stateful": true
+                        },
+                        {
                             "arguments": [
                                 {
                                     "name": "x#1",
@@ -2199,6 +2265,13 @@
                         },
                         {
                             "arguments": [],
+                            "name": "is_enabled",
+                            "payable": false,
+                            "returns": "bool",
+                            "stateful": false
+                        },
+                        {
+                            "arguments": [],
                             "name": "out_counter",
                             "payable": false,
                             "returns": "int",
@@ -2249,6 +2322,10 @@
                                 "type": {
                                     "option": ["address"]
                                 }
+                            },
+                            {
+                                "name": "is_enabled",
+                                "type": "bool"
                             },
                             {
                                 "name": "processors_threshold",
@@ -2785,8 +2862,8 @@
                 }
             }
         ],
-        "aeeth": "ct_2A8fvvAUdMGaL92Uc7PriCsa9faBtQoNJ33dN6Dq8agir1Jkk2",
-        "default_ae": "ct_2tdhiY2Qj4ZapLVXpgWuXDSNBPKt5XeTEa3zGLsamBmR2ma99U"
+        "aeeth": "ct_WVqAvLQpvZCgBg4faZLXA1YBj43Fxj91D33Z8K7pFsY8YCofv",
+        "default_ae": "ct_22WVQXzVCkgQYDbPUTX1YRNnyUx7XUHQ9ZRkK9P7BwwdyqZaXH"
     },
     "assets": [
         {
@@ -2798,8 +2875,8 @@
             "symbol": "USDT",
             "decimals": 6,
             "icon": "https://static.alchemyapi.io/images/assets/825.png",
-            "ethAddress": "0x59df5723474497C955db8785B365E246b87927a7",
-            "aeAddress": "ct_2LtAwSTHSmUhbQJAt7R5Ne2xwKRfuQMGfMiCsKsSfrntpbZYhE"
+            "ethAddress": "0xD7C518081025dC135a5889550Db30eA4a9cD1c7B",
+            "aeAddress": "ct_6zxQdq1xH3h96V97WRdoFN88AU7eNAynzdYd3uWRfsbPo8rDW"
         },
         {
             "token_rank": 2,
@@ -2810,8 +2887,8 @@
             "symbol": "BNB",
             "decimals": 18,
             "icon": "https://static.alchemyapi.io/images/assets/1839.png",
-            "ethAddress": "0x16E5364A314fAAD7c4de3bbAC1F81c0bA085f5b7",
-            "aeAddress": "ct_tJwcoa1wez2etz8UfFLZR26ubm9nsNRF9tjsHzzULuRG15fvN"
+            "ethAddress": "0xb69A475053D136C17B699237913d72034E8049c2",
+            "aeAddress": "ct_QQjQaNhSuLGJJ3U29NjMjnkeePNqzTHFPpyXohu6F9utdEn1d"
         },
         {
             "token_rank": 3,
@@ -2822,8 +2899,8 @@
             "symbol": "ETH",
             "decimals": 18,
             "icon": "https://cryptologos.cc/logos/ethereum-eth-logo.png",
-            "ethAddress": "0x2EE0c483ccfe53a87b8e91509691031fe9dC1b8d",
-            "aeAddress": "ct_2A8fvvAUdMGaL92Uc7PriCsa9faBtQoNJ33dN6Dq8agir1Jkk2"
+            "ethAddress": "0xd57aafdC9615835E1F75BcdBDE1c7B1Aa6e4cB10",
+            "aeAddress": "ct_WVqAvLQpvZCgBg4faZLXA1YBj43Fxj91D33Z8K7pFsY8YCofv"
         },
         {
             "token_rank": 4,
@@ -2834,8 +2911,8 @@
             "symbol": "WAE",
             "decimals": 18,
             "icon": "https://cryptologos.cc/logos/aeternity-ae-logo.png",
-            "ethAddress": "0xD1B22d47684AdDa00214e86725E9529B6b773819",
-            "aeAddress": "ct_2tdhiY2Qj4ZapLVXpgWuXDSNBPKt5XeTEa3zGLsamBmR2ma99U"
+            "ethAddress": "0xBC6e88A962662195e9bb8C17f8f396aCD7B7FE95",
+            "aeAddress": "ct_22WVQXzVCkgQYDbPUTX1YRNnyUx7XUHQ9ZRkK9P7BwwdyqZaXH"
         }
     ]
 }
