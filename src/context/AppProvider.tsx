@@ -110,7 +110,7 @@ const fetchAeternityBalance = async (address: string | undefined) => {
 
 const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const isMounter = React.useRef(false);
-    const { aeternityAddress, ethereumAddress } = useWalletContext();
+    const { aeternityAddress, ethereumAddress, connectAeternityWallet } = useWalletContext();
     const [asset, updateAsset] = React.useState<Asset>(Constants.assets[0]);
     const [evmBridgeInfo, setEvmBridgeInfo] = React.useState<EVMBridgeInfo>();
     const [aeternityBridgeInfo, setAeternityBridgeInfo] = React.useState<AeternityBridgeInfo>();
@@ -171,7 +171,12 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                     balance: ethereumBalance,
                 },
                 direction,
-                updateDirection,
+                updateDirection: (direction: Direction) => {
+                    updateDirection(direction);
+                    if (direction === Direction.AeternityToEthereum) {
+                        connectAeternityWallet();
+                    }
+                },
             }}
         >
             {children}
