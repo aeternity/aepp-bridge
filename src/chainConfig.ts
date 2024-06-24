@@ -9,7 +9,7 @@ const bridgeConfig = {
         aescan: 'https://aescan.io',
         aeRpc: 'https://mainnet.aeternity.io',
         aeeth: 'ct_ryTY1mxqjCjq1yBn9i6HDaCSdA6thXUFZTA84EMzbWd1SLKdh',
-        default_ae: 'ct_o5iyqeZyiKep7srn43fLFjwJ7QyDH8dD2M3RFB5PCWgiQEPqq',
+        default_ae: 'ct_J3zBY8xxjsRr3QojETNw48Eb38fjvEuJKkQ6KzECvubvEcvCa',
         wae: '0xCa781A1779c8f363f7F82BF6f4B406e5d54bAE1F',
         default_eth: '0xAbaE76F98A84D1DC3E0af8ed68465631165d33B2',
     },
@@ -46,7 +46,7 @@ const assets = {
             decimals: 18,
             icon: 'https://cryptologos.cc/logos/aeternity-ae-logo.png',
             ethAddress: '0xCa781A1779c8f363f7F82BF6f4B406e5d54bAE1F',
-            aeAddress: 'ct_o5iyqeZyiKep7srn43fLFjwJ7QyDH8dD2M3RFB5PCWgiQEPqq',
+            aeAddress: 'ct_J3zBY8xxjsRr3QojETNw48Eb38fjvEuJKkQ6KzECvubvEcvCa',
         },
         {
             nameandsymbol: 'Tether USD (USDT)',
