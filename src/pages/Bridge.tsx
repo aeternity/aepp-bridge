@@ -72,6 +72,9 @@ const Bridge: React.FC = () => {
     const [destination, setDestination] = React.useState<string>();
     const [amount, setAmount] = React.useState<string>();
 
+    const isBridgeContractEnabled =
+        Direction.EthereumToAeternity === direction ? ethereum.bridgeInfo?.isEnabled : aeternity.bridgeInfo?.isEnabled;
+
     const handleDirectionChange = React.useCallback((evt: SelectChangeEvent<Direction>) => {
         updateDirection(evt.target.value as Direction);
         setDestination('');
@@ -265,6 +268,7 @@ const Bridge: React.FC = () => {
 
         setButtonBusy(false);
     }, [asset, aeternity, destination, normalizedAmount, isValidDestination]);
+
     return (
         <Container sx={{ paddingY: 8 }}>
             <Grid container direction="row" justifyContent="center" alignItems="flex-start" sx={{ marginBottom: 10 }}>
@@ -405,6 +409,13 @@ const Bridge: React.FC = () => {
                         />
                     </CardContent>
 
+                    <Grid container direction="column" justifyContent="center" alignItems="center">
+                        {!isBridgeContractEnabled && (
+                            <Grid>
+                                <Typography>Smart contract has been disabled for this network.</Typography>
+                            </Grid>
+                        )}
+                    </Grid>
                     <Grid container direction="row" justifyContent="center" alignItems="center">
                         <Grid item>
                             <Spinner
@@ -425,7 +436,7 @@ const Bridge: React.FC = () => {
                             }
                         >
                             <Button
-                                disabled={buttonBusy}
+                                disabled={buttonBusy || !isBridgeContractEnabled}
                                 sx={{ ':hover': { background: '#222' } }}
                                 fullWidth
                                 variant="contained"
