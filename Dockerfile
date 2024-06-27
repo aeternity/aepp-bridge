@@ -1,21 +1,16 @@
-#Stage 1
-FROM node:18-alpine as builder
+# Stage 1
+FROM node:18-alpine as react-build
 WORKDIR /app
-COPY package*.json .
-COPY yarn*.lock .
-RUN yarn install
-COPY . .
+COPY . ./
+RUN yarn
+RUN yarn build
 
 ARG REVISION
 ENV REACT_APP_REVISION $REVISION
 
-RUN yarn build
-
-#Stage 2
+# Stage 2 - the production environment
 FROM nginx:1.19.0
-
-WORKDIR /usr/share/nginx/html
-
-RUN rm -rf ./*
-COPY --from=builder /app/build .
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=react-build /app/build /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
