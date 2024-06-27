@@ -4,6 +4,8 @@ import { Routes, Route } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
 import Bridge from './pages/Bridge';
+import FAQ from './pages/FAQ';
+import TermsAndConditions from './pages/TermsAndConditions';
 import ViewContainer from './components/base/ViewContainer';
 
 const AppRouter: React.FC = () => {
@@ -24,6 +26,8 @@ const AppRouter: React.FC = () => {
                             </>
                         }
                     />
+                    <Route path="/faq" element={<FAQ />} />
+                    <Route path="/terms" element={<TermsAndConditions />} />
                 </Routes>
             </ViewContainer>
         </BrowserRouter>

@@ -69,6 +69,12 @@ const ViewContainer: React.FC<{ children: React.ReactNode }> = (props) => {
                         )}
                     </Box>
                     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', flex: 1 }}>
+                        <Link sx={linkStyles} href="/faq">
+                            FAQ
+                        </Link>
+                        <Link sx={linkStyles} href="/terms">
+                            Terms and Conditions
+                        </Link>
                         <Link sx={linkStyles} href="https://aescan.io" target="_blank">
                             Blockchain Explorer
                         </Link>

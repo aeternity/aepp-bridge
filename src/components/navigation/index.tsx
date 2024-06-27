@@ -18,7 +18,9 @@ const NavigationBar = () => {
                         justifyContent: 'space-between',
                     }}
                 >
-                    <AeternityBridgeLogo height="50" />
+                    <Link sx={linkStyles} href="/">
+                        <AeternityBridgeLogo height="50" />
+                    </Link>
                     <Box sx={{ alignItems: 'center', display: { sm: 'flex', xs: 'none' } }}>
                         <Link sx={linkStyles} href="https://aeternity.com" target="_blank">
                             æternity Website
