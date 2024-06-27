@@ -31,7 +31,7 @@ import * as Aeternity from 'src/services/aeternity';
 import Logger from 'src/services/logger';
 import * as Ethereum from 'src/services/ethereum';
 import WalletConnection from 'src/components/base/WalletConnection';
-import { AeternityBridgeInfo, EVMBridgeInfo, Direction } from 'src/context/AppContext';
+import { AeternityAssetInfo, EthereumAssetInfo, Direction } from 'src/context/AppContext';
 import Spinner from 'src/components/base/Spinner';
 
 const BRIDGE_TOKEN_ACTION_TYPE = 0;
@@ -42,8 +42,8 @@ const printBalance = (
     direction: Direction,
     asset: Asset,
     showBalance: boolean,
-    ethereumInfo?: EVMBridgeInfo,
-    aeternityInfo?: AeternityBridgeInfo,
+    ethereumInfo?: EthereumAssetInfo,
+    aeternityInfo?: AeternityAssetInfo,
 ) => {
     let balance = ethereumInfo?.asset?.balance;
     let symbol = asset.symbol;
@@ -73,7 +73,9 @@ const Bridge: React.FC = () => {
     const [amount, setAmount] = React.useState<string>();
 
     const isBridgeContractEnabled =
-        Direction.EthereumToAeternity === direction ? ethereum.bridgeInfo?.isEnabled : aeternity.bridgeInfo?.isEnabled;
+        Direction.EthereumToAeternity === direction ? ethereum.isEnabled : aeternity.isEnabled;
+    const hasOperatorEnoughBalance =
+        Direction.EthereumToAeternity === direction ? aeternity.areFundsSufficient : ethereum.areFundsSufficient;
 
     const handleDirectionChange = React.useCallback((evt: SelectChangeEvent<Direction>) => {
         updateDirection(evt.target.value as Direction);
@@ -130,7 +132,7 @@ const Bridge: React.FC = () => {
         if (!normalizedAmount || normalizedAmount <= 0) {
             return setError('Invalid amount!');
         }
-        if (normalizedAmount > Number(ethereum.bridgeInfo?.asset?.balance || 0)) {
+        if (normalizedAmount > Number(ethereum.assetInfo?.asset?.balance || 0)) {
             return setError('Not enough balance!');
         }
 
@@ -200,7 +202,7 @@ const Bridge: React.FC = () => {
         if (!normalizedAmount || normalizedAmount <= 0) {
             return setError('Invalid amount!');
         }
-        if (normalizedAmount > Number(aeternity.bridgeInfo?.asset?.balance || 0)) {
+        if (normalizedAmount > Number(aeternity.assetInfo?.asset?.balance || 0)) {
             return setError('Not enough balance!');
         }
 
@@ -217,7 +219,7 @@ const Bridge: React.FC = () => {
                     asset.aeAddress === Constants.aeternity.aeeth ? BRIDGE_ETH_ACTION_TYPE : BRIDGE_TOKEN_ACTION_TYPE;
                 const asset_contract = await Aeternity.Sdk.initializeContract({
                     aci: Constants.aeternity.asset_aci,
-                    address: aeternity.bridgeInfo?.asset?.address as `ct_${string}`,
+                    address: aeternity.assetInfo?.asset?.address as `ct_${string}`,
                     omitUnknown: true,
                 });
 
@@ -354,8 +356,8 @@ const Bridge: React.FC = () => {
                                                             direction,
                                                             _asset,
                                                             _asset.symbol == asset.symbol,
-                                                            ethereum.bridgeInfo,
-                                                            aeternity.bridgeInfo,
+                                                            ethereum.assetInfo,
+                                                            aeternity.assetInfo,
                                                         )}
                                                     </Box>
                                                 </Box>
@@ -415,6 +417,14 @@ const Bridge: React.FC = () => {
                                 <Typography>Smart contract has been disabled for this network.</Typography>
                             </Grid>
                         )}
+                        {!hasOperatorEnoughBalance && (
+                            <Grid item>
+                                <Typography>
+                                    Bridge operator address has insufficient funds to execute this transaction.
+                                </Typography>
+                                <Typography align="center">Please check again later.</Typography>
+                            </Grid>
+                        )}
                     </Grid>
                     <Grid container direction="row" justifyContent="center" alignItems="center">
                         <Grid item>
@@ -436,7 +446,7 @@ const Bridge: React.FC = () => {
                             }
                         >
                             <Button
-                                disabled={buttonBusy || !isBridgeContractEnabled}
+                                disabled={buttonBusy || !isBridgeContractEnabled || !hasOperatorEnoughBalance}
                                 sx={{ ':hover': { background: '#222' } }}
                                 fullWidth
                                 variant="contained"

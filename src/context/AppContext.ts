@@ -7,14 +7,17 @@ export interface AssetInfo {
     balance: string;
 }
 
-export interface AeternityBridgeInfo {
+export interface AeternityAssetInfo {
     asset?: AssetInfo;
-    isEnabled?: boolean;
 }
 
-export interface EVMBridgeInfo {
+export interface EthereumAssetInfo {
     asset?: AssetInfo;
+}
+
+export interface BridgeInfo {
     isEnabled?: boolean;
+    areFundsSufficient?: boolean;
 }
 
 export interface FundEvent {
@@ -34,11 +37,15 @@ export interface IAppContext {
     assets: Asset[];
     updateAsset: (symbol: Asset) => void;
     aeternity: {
-        bridgeInfo?: AeternityBridgeInfo;
+        isEnabled?: boolean;
+        areFundsSufficient?: boolean;
+        assetInfo?: AeternityAssetInfo;
         balance?: string;
     };
     ethereum: {
-        bridgeInfo?: EVMBridgeInfo;
+        isEnabled?: boolean;
+        areFundsSufficient?: boolean;
+        assetInfo?: EthereumAssetInfo;
         balance?: string;
     };
     direction: Direction;

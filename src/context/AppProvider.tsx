@@ -1,22 +1,47 @@
 import React from 'react';
-import AppContext, { AeternityBridgeInfo, EVMBridgeInfo, Direction } from './AppContext';
+import AppContext, { AeternityAssetInfo, EthereumAssetInfo, Direction, BridgeInfo } from './AppContext';
 import * as Aeternity from 'src/services/aeternity';
-import Constants, { Asset } from 'src/constants';
+import Constants, {
+    Asset,
+    AETERNITY_FUNDS_ADDRESS,
+    ETHEREUM_FUNDS_ADDRESS,
+    ETHEREUM_FUNDS_THRESHOLD,
+    AETERNITY_FUNDS_THRESHOLD,
+} from 'src/constants';
 import { assets } from 'src/chainConfig';
 import Logger from 'src/services/logger';
 import * as Ethereum from 'src/services/ethereum';
 import useWalletContext from 'src/hooks/useWalletContext';
 import BigNumber from 'bignumber.js';
 
-async function fetchAeternityBridgeInfo(asset: Asset, aeternityAddress?: string): Promise<AeternityBridgeInfo> {
+async function fetchAeternityBridgeInfo(): Promise<BridgeInfo> {
+    const bridgeContract = await Aeternity.Sdk.initializeContract({
+        aci: Constants.aeternity.bridge_aci,
+        address: Constants.aeternity.bridge_address,
+        omitUnknown: true,
+    });
+
+    const [{ decodedResult: isEnabled }, _fundAccountBalance] = await Promise.all([
+        bridgeContract.is_enabled(),
+        Ethereum.Provider.getBalance(ETHEREUM_FUNDS_ADDRESS),
+    ]);
+
+    const fundAccountBalance = new BigNumber(_fundAccountBalance.toString()).shiftedBy(-18);
+    const areFundsSufficient = fundAccountBalance.isGreaterThanOrEqualTo(ETHEREUM_FUNDS_THRESHOLD);
+
+    return {
+        isEnabled,
+        areFundsSufficient,
+    };
+}
+
+async function fetchAeternityAssetInfo(asset: Asset, aeternityAddress?: string): Promise<AeternityAssetInfo> {
     const bridge_contract = await Aeternity.Sdk.initializeContract({
         aci: Constants.aeternity.bridge_aci,
         address: Constants.aeternity.bridge_address,
         omitUnknown: true,
     });
 
-    const { decodedResult: is_enabled } = await bridge_contract.is_enabled();
-    console.log('isAeternityEnabled', is_enabled);
     let { decodedResult: asset_address } = await bridge_contract.native_ae();
     let asset_balance = 0;
 
@@ -26,21 +51,23 @@ async function fetchAeternityBridgeInfo(asset: Asset, aeternityAddress?: string)
             asset_balance = Number(balance);
         }
     } else {
-        let { decodedResult: asset_addr } =
-            asset.aeAddress === Constants.aeternity.aeeth
-                ? await bridge_contract.native_eth()
-                : await bridge_contract.asset(asset.ethAddress);
+        try {
+            let { decodedResult: asset_addr } =
+                asset.aeAddress === Constants.aeternity.aeeth
+                    ? await bridge_contract.native_eth()
+                    : await bridge_contract.asset(asset.ethAddress);
 
-        asset_address = asset_addr;
-        const asset_contract = await Aeternity.Sdk.initializeContract({
-            aci: Constants.aeternity.asset_aci,
-            address: asset_addr,
-            omitUnknown: true,
-        });
-        if (aeternityAddress) {
-            const { decodedResult } = await asset_contract.balance(aeternityAddress);
-            asset_balance = decodedResult;
-        }
+            asset_address = asset_addr;
+            const asset_contract = await Aeternity.Sdk.initializeContract({
+                aci: Constants.aeternity.asset_aci,
+                address: asset_addr,
+                omitUnknown: true,
+            });
+            if (aeternityAddress) {
+                const { decodedResult } = await asset_contract.balance(aeternityAddress);
+                asset_balance = decodedResult;
+            }
+        } catch (error) {}
     }
 
     return {
@@ -48,20 +75,32 @@ async function fetchAeternityBridgeInfo(asset: Asset, aeternityAddress?: string)
             address: asset_address,
             balance: asset_balance?.toString() || '0',
         },
-        isEnabled: is_enabled,
     };
 }
 
-async function fetchEvmBridgeInfo(assetAddress: string, ethereumAddress?: string): Promise<EVMBridgeInfo> {
-    let balance = '';
-
+async function fetchEthereumBridgeInfo(): Promise<BridgeInfo> {
     const bridgeContract = new Ethereum.Contract(
         Constants.ethereum.bridge_address,
         Constants.ethereum.bridge_abi,
         Ethereum.Provider,
     );
 
-    const isEnabled = await bridgeContract.isEnabled();
+    const [isEnabled, _fundAccountBalance] = await Promise.all([
+        bridgeContract.isEnabled(),
+        Aeternity.Sdk.getBalance(AETERNITY_FUNDS_ADDRESS as `ak_${string}`),
+    ]);
+
+    const fundAccountBalance = new BigNumber(_fundAccountBalance.toString()).shiftedBy(-18);
+    const areFundsSufficient = fundAccountBalance.isGreaterThanOrEqualTo(AETERNITY_FUNDS_THRESHOLD);
+
+    return {
+        isEnabled,
+        areFundsSufficient,
+    };
+}
+
+async function fetchEthereumAssetInfo(assetAddress: string, ethereumAddress?: string): Promise<EthereumAssetInfo> {
+    let balance = '';
 
     if (assetAddress === Constants.ethereum.default_eth) {
         if (ethereumAddress) {
@@ -101,7 +140,6 @@ async function fetchEvmBridgeInfo(assetAddress: string, ethereumAddress?: string
             address: assetAddress,
             balance: balance,
         },
-        isEnabled,
     };
 }
 
@@ -125,35 +163,52 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const isMounter = React.useRef(false);
     const { aeternityAddress, ethereumAddress, tryConnectToAeternityWallet } = useWalletContext();
     const [asset, updateAsset] = React.useState<Asset>(Constants.assets[0]);
-    const [evmBridgeInfo, setEvmBridgeInfo] = React.useState<EVMBridgeInfo>();
-    const [aeternityBridgeInfo, setAeternityBridgeInfo] = React.useState<AeternityBridgeInfo>();
+    const [ethereumAssetInfo, setEthereumAssetInfo] = React.useState<EthereumAssetInfo>();
+    const [aeternityAssetInfo, setAeternityAssetInfo] = React.useState<AeternityAssetInfo>();
     const [direction, updateDirection] = React.useState<Direction>(Direction.EthereumToAeternity);
     const [ethereumBalance, setEthereumBalance] = React.useState<string>();
     const [aeternityBalance, setAeternityBalance] = React.useState<string>();
+
+    const [isEthereumBridgeEnabled, setEthereumBridgeEnabled] = React.useState<boolean>(true);
+    const [isAeternityBridgeEnabled, setAeternityBridgeEnabled] = React.useState<boolean>(true);
+    const [areEthereumFundsSufficient, setEthereumFundsSufficient] = React.useState<boolean>(true);
+    const [areAeternityFundsSufficient, setAeternityFundsSufficient] = React.useState<boolean>(true);
 
     React.useEffect(() => {
         isMounter.current = true;
 
         const fetch = () => {
             // Ethereum
-            fetchEvmBridgeInfo(asset.ethAddress, ethereumAddress)
+            fetchEthereumAssetInfo(asset.ethAddress, ethereumAddress)
                 .then((info) => {
                     if (isMounter.current) {
-                        setEvmBridgeInfo(info);
+                        setEthereumAssetInfo(info);
                     }
                 })
                 .catch(Logger.error);
             // Aeternity
-            fetchAeternityBridgeInfo(asset, aeternityAddress)
+            fetchAeternityAssetInfo(asset, aeternityAddress)
                 .then((info) => {
                     if (isMounter.current) {
-                        setAeternityBridgeInfo(info);
+                        setAeternityAssetInfo(info);
                     }
                 })
                 .catch(Logger.error);
 
             fetchEthereumBalance(ethereumAddress).then(setEthereumBalance).catch(Logger.error);
             fetchAeternityBalance(aeternityAddress).then(setAeternityBalance).catch(Logger.error);
+            fetchEthereumBridgeInfo()
+                .then((info) => {
+                    setEthereumBridgeEnabled(info.isEnabled!);
+                    setEthereumFundsSufficient(info.areFundsSufficient!);
+                })
+                .catch(Logger.error);
+            fetchAeternityBridgeInfo()
+                .then((info) => {
+                    setAeternityBridgeEnabled(info.isEnabled!);
+                    setAeternityFundsSufficient(info.areFundsSufficient!);
+                })
+                .catch(Logger.error);
         };
         fetch(); // First fetch
 
@@ -172,16 +227,20 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                 assets: assets[Constants.isMainnet ? 'mainnet' : 'testnet'],
                 updateAsset: (asset: Asset) => {
                     updateAsset(asset);
-                    setAeternityBridgeInfo({});
-                    setEvmBridgeInfo({});
+                    setAeternityAssetInfo({});
+                    setEthereumAssetInfo({});
                 },
                 aeternity: {
-                    bridgeInfo: aeternityBridgeInfo,
+                    assetInfo: aeternityAssetInfo,
                     balance: aeternityBalance,
+                    isEnabled: isAeternityBridgeEnabled,
+                    areFundsSufficient: areAeternityFundsSufficient,
                 },
                 ethereum: {
-                    bridgeInfo: evmBridgeInfo,
+                    assetInfo: ethereumAssetInfo,
                     balance: ethereumBalance,
+                    isEnabled: isEthereumBridgeEnabled,
+                    areFundsSufficient: areEthereumFundsSufficient,
                 },
                 direction,
                 updateDirection: (direction: Direction) => {
