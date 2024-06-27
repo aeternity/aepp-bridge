@@ -13,7 +13,12 @@ RUN yarn build
 
 #Stage 2
 FROM nginx:1.19.0
+
+COPY . /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 WORKDIR /usr/share/nginx/html
+
 RUN rm -rf ./*
 COPY --from=builder /app/build .
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
