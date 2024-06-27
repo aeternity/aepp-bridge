@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.2.3](https://www.github.com/aeternity/aepp-bridge/compare/v1.2.2...v1.2.3) (2024-06-27)
+
+
+### Miscellaneous
+
+* Update Dockerfile to remove unnecessary file copy and nginx configuration ([6143e8e](https://www.github.com/aeternity/aepp-bridge/commit/6143e8e25ae21a14c40757bdb6f75889714d45c6))
+
 ### [1.2.2](https://www.github.com/aeternity/aepp-bridge/compare/v1.2.1...v1.2.2) (2024-06-27)
 
 
