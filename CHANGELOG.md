@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://www.github.com/aeternity/aepp-bridge/compare/v1.1.0...v1.2.0) (2024-06-27)
+
+
+### Features
+
+* Add FAQ and Terms and Conditions pages ([57c3d1a](https://www.github.com/aeternity/aepp-bridge/commit/57c3d1a7694136fe9551f4115340d87233b44760))
+
 ## [1.1.0](https://www.github.com/aeternity/aepp-bridge/compare/v1.0.3...v1.1.0) (2024-06-24)
 
 
