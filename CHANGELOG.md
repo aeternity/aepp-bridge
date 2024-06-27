@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.2.1](https://www.github.com/aeternity/aepp-bridge/compare/v1.2.0...v1.2.1) (2024-06-27)
+
+
+### Miscellaneous
+
+* Update nginx.conf to use /index.html as fallback for all routes ([50f3a97](https://www.github.com/aeternity/aepp-bridge/commit/50f3a976f11cd573d4346b26817531ed9be189c3))
+
 ## [1.2.0](https://www.github.com/aeternity/aepp-bridge/compare/v1.1.0...v1.2.0) (2024-06-27)
 
 
