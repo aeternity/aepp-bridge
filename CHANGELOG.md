@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.2.2](https://www.github.com/aeternity/aepp-bridge/compare/v1.2.1...v1.2.2) (2024-06-27)
+
+
+### Miscellaneous
+
+* Update Dockerfile to copy files and directories for nginx deployment ([ab6e449](https://www.github.com/aeternity/aepp-bridge/commit/ab6e449c21cc5ebacfe8632c1d4695ad645f6c41))
+
 ### [1.2.1](https://www.github.com/aeternity/aepp-bridge/compare/v1.2.0...v1.2.1) (2024-06-27)
 
 
