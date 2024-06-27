@@ -1,5 +1,13 @@
 # Changelog
 
+### [1.2.4](https://www.github.com/aeternity/aepp-bridge/compare/v1.2.3...v1.2.4) (2024-06-27)
+
+
+### Bug Fixes
+
+* nginx config and Dockerfile ([5c643cc](https://www.github.com/aeternity/aepp-bridge/commit/5c643cca74974ab2dde480758d9df2123e207eaf))
+* remove nginx config ([37786c3](https://www.github.com/aeternity/aepp-bridge/commit/37786c39833e77d0bccbee2a1805641b24a96d35))
+
 ### [1.2.3](https://www.github.com/aeternity/aepp-bridge/compare/v1.2.2...v1.2.3) (2024-06-27)
 
 
