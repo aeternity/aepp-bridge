@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.3.1](https://www.github.com/aeternity/aepp-bridge/compare/v1.3.0...v1.3.1) (2024-06-30)
+
+
+### Bug Fixes
+
+* check for AE bridging to EVM ([70f6ab6](https://www.github.com/aeternity/aepp-bridge/commit/70f6ab6ec042217cc9d578b37cc61ed25171ce46))
+
 ## [1.3.0](https://www.github.com/aeternity/aepp-bridge/compare/v1.2.4...v1.3.0) (2024-06-30)
 
 
