@@ -80,8 +80,20 @@ const getTxUrl = (direction: Direction, hash: string) => {
         : `${Constants.ethereum.etherscan}/tx/${hash}`;
 };
 
+const checkEvmNetworkHasEnoughBalance = async (asset: Asset, normalizedAmount: number) => {
+    const assetContract = new Ethereum.Contract(
+        asset.ethAddress,
+        Constants.ethereum.asset_abi,
+        Ethereum.Provider.getSigner(),
+    );
+
+    return new BigNumber(await assetContract.balanceOf(Constants.ethereum.bridge_address)).isGreaterThanOrEqualTo(
+        normalizedAmount,
+    );
+};
+
 const Bridge: React.FC = () => {
-    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+    const { enqueueSnackbar } = useSnackbar();
     const { aeternity, ethereum, assets, asset, updateAsset, direction, updateDirection } = useAppContext();
     const { aeternityAddress, ethereumAddress } = useWalletContext();
 
@@ -152,7 +164,7 @@ const Bridge: React.FC = () => {
 
     const showErrorMessage = (message: string) => {
         message &&
-            enqueueSnackbar(message.substring(0, 50), {
+            enqueueSnackbar(message.substring(0, 100), {
                 variant: 'error',
                 anchorOrigin: { vertical: 'top', horizontal: 'right' },
                 autoHideDuration: 4000,
@@ -260,6 +272,13 @@ const Bridge: React.FC = () => {
         }
 
         setButtonBusy(true);
+
+        const result = await checkEvmNetworkHasEnoughBalance(asset, normalizedAmount);
+        if (!result) {
+            setButtonBusy(false);
+            return showErrorMessage('Ethereum bridge contract has insufficient balance to complete this transaction.');
+        }
+
         try {
             let action_type = BRIDGE_TOKEN_ACTION_TYPE;
             let ae_amount = BigInt(0);
