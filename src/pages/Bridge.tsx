@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+    Alert,
     Box,
     Breadcrumbs,
     Container,
@@ -8,6 +9,9 @@ import {
     DialogTitle,
     Divider,
     Grid,
+    Slide,
+    SlideProps,
+    Snackbar,
     Stack,
     Typography,
 } from '@mui/material';
@@ -59,6 +63,10 @@ const printBalance = (
     }
     return symbol;
 };
+
+function SlideTransition(props: SlideProps) {
+    return <Slide {...props} direction="left" />;
+}
 
 const Bridge: React.FC = () => {
     const { aeternity, ethereum, assets, asset, updateAsset, direction, updateDirection } = useAppContext();
@@ -460,12 +468,18 @@ const Bridge: React.FC = () => {
             </Grid>
 
             {!!error && (
-                <Dialog title="Error" open={true} onClose={() => setError('')} maxWidth="md">
-                    <DialogTitle>Error</DialogTitle>
-                    <DialogContent>
+                <Snackbar
+                    anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                    open={true}
+                    autoHideDuration={4000}
+                    onClose={() => setError('')}
+                    TransitionComponent={SlideTransition}
+                    sx={{ mt: 8 }}
+                >
+                    <Alert onClose={() => setError('')} severity="error" variant="standard" sx={{ width: '100%' }}>
                         {error.includes('ACTION_REJECTED') ? 'User rejected transaction' : error}
-                    </DialogContent>
-                </Dialog>
+                    </Alert>
+                </Snackbar>
             )}
             <Dialog title="Operation Hash" open={!!operationHash} onClose={() => setOperationHash('')} maxWidth="md">
                 <DialogTitle>Transaction submitted</DialogTitle>
