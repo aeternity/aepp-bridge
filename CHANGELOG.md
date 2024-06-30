@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.3.0](https://www.github.com/aeternity/aepp-bridge/compare/v1.2.4...v1.3.0) (2024-06-30)
+
+
+### Features
+
+* refactor bridge info object and adjust views accordingly to the bridge operator fund account balance ([b24f22d](https://www.github.com/aeternity/aepp-bridge/commit/b24f22dec66fe93f25d114e762609cfd9d10b822))
+* setup snack notificator lib ([7712d55](https://www.github.com/aeternity/aepp-bridge/commit/7712d55a3bd6eb6b7ba4e6d5e3904b042da41a7b))
+
+
+### Refactorings
+
+* dialogs & display bridge action summary ([fe7c69d](https://www.github.com/aeternity/aepp-bridge/commit/fe7c69d0f19a9d486de0f59a9642667de0305da8))
+
+
+### Miscellaneous
+
+* Add check for sufficient balance in Ethereum bridge contract ([aa3b09a](https://www.github.com/aeternity/aepp-bridge/commit/aa3b09a6e2a218c7033cd595a1a32e34d17288dd))
+* Disable bridge usage depending on the contract flag ([c50fcf3](https://www.github.com/aeternity/aepp-bridge/commit/c50fcf3a949d7cf7ff84bf5e8feb995c1340f8fb))
+* replace error dialogs with snack alerts ([b5ad38d](https://www.github.com/aeternity/aepp-bridge/commit/b5ad38d4fb0126dfc582dd70092b2cbd4141d5b1))
+
 ### [1.2.4](https://www.github.com/aeternity/aepp-bridge/compare/v1.2.3...v1.2.4) (2024-06-27)
 
 
