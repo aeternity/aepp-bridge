@@ -81,6 +81,8 @@ const getTxUrl = (direction: Direction, hash: string) => {
 };
 
 const checkEvmNetworkHasEnoughBalance = async (asset: Asset, normalizedAmount: number) => {
+    if (asset.symbol === 'WAE') return true;
+
     const assetContract = new Ethereum.Contract(
         asset.ethAddress,
         Constants.ethereum.asset_abi,
