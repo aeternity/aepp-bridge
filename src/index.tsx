@@ -1,4 +1,3 @@
-import React from 'react';
 import ReactDOMClient from 'react-dom/client';
 
 import './index.css';
@@ -7,6 +6,7 @@ import ThemeProvider from './context/ThemeProvider';
 import Router from './Routes';
 import AppProvider from './context/AppProvider';
 import WalletProvider from './context/WalletProvider';
+import { SnackbarProvider } from 'notistack';
 
 const container = document.getElementById('root');
 if (!container) {
@@ -20,9 +20,11 @@ global.process = require('process');
 const App = () => (
     <ThemeProvider>
         <WalletProvider>
-            <AppProvider>
-                <Router />
-            </AppProvider>
+            <SnackbarProvider classes={{ containerRoot: 'snackRoot' }}>
+                <AppProvider>
+                    <Router />
+                </AppProvider>
+            </SnackbarProvider>
         </WalletProvider>
     </ThemeProvider>
 );
