@@ -21,13 +21,16 @@ const NavigationBar = () => {
                     <Link sx={linkStyles} href="/">
                         <AeternityBridgeLogo height="50" />
                     </Link>
-                    <Box sx={{ alignItems: 'center', display: { sm: 'flex', xs: 'none' } }}>
-                        <Link sx={linkStyles} href="https://aeternity.com" target="_blank">
-                            æternity Website
-                        </Link>
-                        <Link sx={linkStyles} href="https://wallet.superhero.com" target="_blank">
-                            æternity Wallet
-                        </Link>
+                    <Box sx={{ alignItems: 'center', display: 'flex' }}>
+                        <Box sx={{ alignItems: 'center', display: { sm: 'flex', xs: 'none' } }}>
+                            <Link sx={linkStyles} href="https://aeternity.com" target="_blank">
+                                æternity Website
+                            </Link>
+                            <Link sx={linkStyles} href="https://wallet.superhero.com" target="_blank">
+                                æternity Wallet
+                            </Link>
+                        </Box>
+
                         <Divider flexItem orientation="vertical" sx={{ margin: 1, ml: 2 }} />
                         <ConnectWallet />
                     </Box>

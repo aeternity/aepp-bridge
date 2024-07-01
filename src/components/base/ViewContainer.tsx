@@ -75,12 +75,14 @@ const ViewContainer: React.FC<{ children: React.ReactNode }> = (props) => {
                         <Link sx={linkStyles} href="/terms">
                             Terms and Conditions
                         </Link>
-                        <Link sx={linkStyles} href="https://aescan.io" target="_blank">
-                            Blockchain Explorer
-                        </Link>
-                        <Link sx={linkStyles} href="https://forum.aeternity.com" target="_blank">
-                            Community Support
-                        </Link>
+                        <Box sx={{ display: { md: 'flex', sm: 'none', xs: 'none' } }}>
+                            <Link sx={linkStyles} href="https://aescan.io" target="_blank">
+                                Blockchain Explorer
+                            </Link>
+                            <Link sx={linkStyles} href="https://forum.aeternity.com" target="_blank">
+                                Community Support
+                            </Link>
+                        </Box>
                     </Box>
                 </Box>
             </footer>
