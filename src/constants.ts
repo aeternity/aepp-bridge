@@ -23,6 +23,7 @@ const isMainnet = true;
 const Constants = {
     isMainnet,
     assets: assets[isMainnet ? 'mainnet' : 'testnet'],
+    aeAPI: bridgeConfig[isMainnet ? 'mainnet' : 'testnet'].aeAPI,
     ethereum: {
         bridge_address: bridgeConfig[isMainnet ? 'mainnet' : 'testnet'].eth_bridge_address,
         etherscan: bridgeConfig[isMainnet ? 'mainnet' : 'testnet'].etherscan,

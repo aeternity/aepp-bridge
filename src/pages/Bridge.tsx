@@ -94,6 +94,21 @@ const checkEvmNetworkHasEnoughBalance = async (asset: Asset, normalizedAmount: n
     );
 };
 
+const checkAeAccountHasEligibleBridgeUse = async (account: string) => {
+    const bridge = Constants.aeternity.bridge_address;
+    const aeAPI = Constants.aeAPI;
+
+    const response = await fetch(
+        `${aeAPI}/transactions?account=${account}&contract_id=${bridge}&entrypoint=bridge_out&limit=1`,
+    ).then((res) => res.json());
+
+    const lastTxTime = new Date(response.data[0].micro_time);
+    const timeNow = new Date();
+    const diffInHours = (timeNow.getTime() - lastTxTime.getTime()) / 1000 / 60 / 60;
+
+    return diffInHours >= 12;
+};
+
 const Bridge: React.FC = () => {
     const { enqueueSnackbar } = useSnackbar();
     const { aeternity, ethereum, assets, asset, updateAsset, direction, updateDirection } = useAppContext();
@@ -275,10 +290,16 @@ const Bridge: React.FC = () => {
 
         setButtonBusy(true);
 
-        const result = await checkEvmNetworkHasEnoughBalance(asset, normalizedAmount);
-        if (!result) {
+        const hasBalance = await checkEvmNetworkHasEnoughBalance(asset, normalizedAmount);
+        if (!hasBalance) {
             setButtonBusy(false);
             return showErrorMessage('Ethereum bridge contract has insufficient balance to complete this transaction.');
+        }
+
+        const hasEligibleBridgeUse = await checkAeAccountHasEligibleBridgeUse(aeternityAddress!);
+        if (!hasEligibleBridgeUse) {
+            setButtonBusy(false);
+            return showErrorMessage('Only 1 transaction allowed in every 12 hours. Please try again later.');
         }
 
         try {
