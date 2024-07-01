@@ -29,7 +29,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import useWalletContext, { RequiredWallet } from 'src/hooks/useWalletContext';
 import useAppContext from 'src/hooks/useAppContext';
-import Constants, { Asset } from 'src/constants';
+import Constants, { Asset, BRIDGE_USAGE_INTERVAL_IN_HOURS } from 'src/constants';
 import * as Aeternity from 'src/services/aeternity';
 import Logger from 'src/services/logger';
 import * as Ethereum from 'src/services/ethereum';
@@ -106,7 +106,7 @@ const checkAeAccountHasEligibleBridgeUse = async (account: string) => {
     const timeNow = new Date();
     const diffInHours = (timeNow.getTime() - lastTxTime.getTime()) / 1000 / 60 / 60;
 
-    return diffInHours >= 12;
+    return diffInHours >= BRIDGE_USAGE_INTERVAL_IN_HOURS;
 };
 
 const Bridge: React.FC = () => {
@@ -179,10 +179,13 @@ const Bridge: React.FC = () => {
             },
         });
 
-    const showErrorMessage = (message: string) => {
+    const showSnackMessage = (
+        message: string,
+        variant: 'error' | 'default' | 'success' | 'warning' | 'info' = 'error',
+    ) => {
         message &&
             enqueueSnackbar(message.substring(0, 100), {
-                variant: 'error',
+                variant,
                 anchorOrigin: { vertical: 'top', horizontal: 'right' },
                 autoHideDuration: 4000,
             });
@@ -200,13 +203,13 @@ const Bridge: React.FC = () => {
             Ethereum.Provider.getSigner(),
         );
         if (!isValidDestination || !destination?.startsWith('ak_')) {
-            return showErrorMessage('Invalid destination!');
+            return showSnackMessage('Invalid destination!');
         }
         if (!normalizedAmount || normalizedAmount <= 0) {
-            return showErrorMessage('Invalid amount!');
+            return showSnackMessage('Invalid amount!');
         }
         if (normalizedAmount > Number(ethereum.assetInfo?.asset?.balance || 0)) {
-            return showErrorMessage('Not enough balance!');
+            return showSnackMessage('Not enough balance!');
         }
 
         setButtonBusy(true);
@@ -237,7 +240,7 @@ const Bridge: React.FC = () => {
                 }
             } catch (e: any) {
                 Logger.error(e);
-                showErrorMessage(e.message);
+                showSnackMessage(e.message);
             } finally {
                 setConfirming(false);
                 setConfirmingMsg('');
@@ -269,7 +272,7 @@ const Bridge: React.FC = () => {
             await bridgeOutResult.wait(1);
         } catch (e: any) {
             Logger.error(e);
-            showErrorMessage(e.message);
+            showSnackMessage(e.message);
         } finally {
             setConfirming(false);
             setConfirmingMsg('');
@@ -279,13 +282,13 @@ const Bridge: React.FC = () => {
 
     const bridgeToEvm = React.useCallback(async () => {
         if (!isValidDestination || !destination?.startsWith('0x')) {
-            return showErrorMessage('Invalid destination!');
+            return showSnackMessage('Invalid destination!');
         }
         if (!normalizedAmount || normalizedAmount <= 0) {
-            return showErrorMessage('Invalid amount!');
+            return showSnackMessage('Invalid amount!');
         }
         if (normalizedAmount > Number(aeternity.assetInfo?.asset?.balance || 0)) {
-            return showErrorMessage('Not enough balance!');
+            return showSnackMessage('Not enough balance!');
         }
 
         setButtonBusy(true);
@@ -293,13 +296,19 @@ const Bridge: React.FC = () => {
         const hasBalance = await checkEvmNetworkHasEnoughBalance(asset, normalizedAmount);
         if (!hasBalance) {
             setButtonBusy(false);
-            return showErrorMessage('Ethereum bridge contract has insufficient balance to complete this transaction.');
+            return showSnackMessage(
+                'Ethereum bridge contract has insufficient balance to complete this transaction.',
+                'warning',
+            );
         }
 
         const hasEligibleBridgeUse = await checkAeAccountHasEligibleBridgeUse(aeternityAddress!);
         if (!hasEligibleBridgeUse) {
             setButtonBusy(false);
-            return showErrorMessage('Only 1 transaction allowed in every 12 hours. Please try again later.');
+            return showSnackMessage(
+                `Only 1 transaction allowed in every ${BRIDGE_USAGE_INTERVAL_IN_HOURS} hours. Please try again later.`,
+                'info',
+            );
         }
 
         try {
@@ -368,7 +377,7 @@ const Bridge: React.FC = () => {
             });
         } catch (e: any) {
             Logger.error(e);
-            showErrorMessage(e.message);
+            showSnackMessage(e.message);
         } finally {
             setConfirming(false);
             setConfirmingMsg('');
@@ -544,7 +553,7 @@ const Bridge: React.FC = () => {
                     </Grid>
                     <CardActions sx={{ margin: 1, paddingTop: 1 }}>
                         <WalletConnection
-                            onWalletConnectError={showErrorMessage}
+                            onWalletConnectError={showSnackMessage}
                             requiredWallet={
                                 direction == Direction.EthereumToAeternity
                                     ? RequiredWallet.Ethereum

@@ -17,6 +17,7 @@ export const ETHEREUM_FUNDS_ADDRESS = '0xb322a9eae7d95aa8e8ae731c8daf4c8ff419c78
 export const AETERNITY_FUNDS_ADDRESS = 'ak_Kpsu4qiVRHuw6EKFKk9g5TqYF8XFUsmE9ynDyFpdRz8W5J6HW';
 export const ETHEREUM_FUNDS_THRESHOLD = 0.01;
 export const AETERNITY_FUNDS_THRESHOLD = 0.005;
+export const BRIDGE_USAGE_INTERVAL_IN_HOURS = 12;
 
 const isMainnet = true;
 
