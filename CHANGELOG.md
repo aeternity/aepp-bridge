@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.4.1](https://www.github.com/aeternity/aepp-bridge/compare/v1.4.0...v1.4.1) (2024-07-01)
+
+
+### Bug Fixes
+
+* header and footer for small screens ([a26a810](https://www.github.com/aeternity/aepp-bridge/commit/a26a8100f155cff5a5c2574be39076581160b3f6))
+
 ## [1.4.0](https://www.github.com/aeternity/aepp-bridge/compare/v1.3.1...v1.4.0) (2024-07-01)
 
 
