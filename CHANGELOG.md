@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.4.0](https://www.github.com/aeternity/aepp-bridge/compare/v1.3.1...v1.4.0) (2024-07-01)
+
+
+### Features
+
+* restrict bridge usage to once in every 12 hours ([77ca54f](https://www.github.com/aeternity/aepp-bridge/commit/77ca54f2fa149bdcd779fbb992e259924edbd795))
+
+
+### Refactorings
+
+* snack message display function & restriction interval var ([1e44ec1](https://www.github.com/aeternity/aepp-bridge/commit/1e44ec137c810e6060f40f752b2f74c3ef1c0fd4))
+
 ### [1.3.1](https://www.github.com/aeternity/aepp-bridge/compare/v1.3.0...v1.3.1) (2024-06-30)
 
 
