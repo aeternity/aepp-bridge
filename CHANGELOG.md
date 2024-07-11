@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.4.2](https://www.github.com/aeternity/aepp-bridge/compare/v1.4.1...v1.4.2) (2024-07-11)
+
+
+### Miscellaneous
+
+* add "How To" link to the top menu ([4cb1e75](https://www.github.com/aeternity/aepp-bridge/commit/4cb1e754e361f1ba98a7cd0316c0d16510c6da45))
+
 ### [1.4.1](https://www.github.com/aeternity/aepp-bridge/compare/v1.4.0...v1.4.1) (2024-07-01)
 
 
