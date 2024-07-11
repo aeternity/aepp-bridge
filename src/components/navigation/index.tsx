@@ -1,4 +1,4 @@
-import { Box, Toolbar, AppBar, Link, Divider, Typography } from '@mui/material';
+import { Box, Toolbar, AppBar, Link, Divider } from '@mui/material';
 
 import AeternityBridgeLogo from '../base/icons/aerc-logo';
 import ConnectWallet from './ConnectWallet';
@@ -23,6 +23,9 @@ const NavigationBar = () => {
                     </Link>
                     <Box sx={{ alignItems: 'center', display: 'flex' }}>
                         <Box sx={{ alignItems: 'center', display: { sm: 'flex', xs: 'none' } }}>
+                            <Link sx={linkStyles} href="/faq">
+                                How To
+                            </Link>
                             <Link sx={linkStyles} href="https://aeternity.com" target="_blank">
                                 æternity Website
                             </Link>
