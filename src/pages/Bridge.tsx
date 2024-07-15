@@ -102,6 +102,10 @@ const checkAeAccountHasEligibleBridgeUse = async (account: string) => {
         `${aeAPI}/transactions?account=${account}&contract_id=${bridge}&entrypoint=bridge_out&limit=1`,
     ).then((res) => res.json());
 
+    if (!response.data.length) {
+        return true;
+    }
+
     const lastTxTime = new Date(response.data[0].micro_time);
     const timeNow = new Date();
     const diffInHours = (timeNow.getTime() - lastTxTime.getTime()) / 1000 / 60 / 60;
