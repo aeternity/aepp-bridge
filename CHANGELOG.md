@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.4.3](https://www.github.com/aeternity/aepp-bridge/compare/v1.4.2...v1.4.3) (2024-07-15)
+
+
+### Bug Fixes
+
+* checkAeAccountHasEligibleBridgeUse function's transactions call ([24d21a6](https://www.github.com/aeternity/aepp-bridge/commit/24d21a6efeca288a15b80001a5ebf4a2f85636a7))
+
 ### [1.4.2](https://www.github.com/aeternity/aepp-bridge/compare/v1.4.1...v1.4.2) (2024-07-11)
 
 
