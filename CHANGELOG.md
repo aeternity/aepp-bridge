@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.5.0](https://www.github.com/aeternity/aepp-bridge/compare/v1.4.3...v1.5.0) (2024-08-12)
+
+
+### Features
+
+* update AE address in bridge form ([68801cb](https://www.github.com/aeternity/aepp-bridge/commit/68801cb2d5d97cfcdb5993e826dc42d88eaadfdd))
+
+
+### Bug Fixes
+
+* update bridge transaction link to use correct blockchain explorer ([c5e1638](https://www.github.com/aeternity/aepp-bridge/commit/c5e16383578939a40389066c482a3a9be778becf))
+
+
+### Refactorings
+
+* improve destination token value display in Bridge form ([524e1b3](https://www.github.com/aeternity/aepp-bridge/commit/524e1b37574a3d686c86bf55bcb51520610103cc))
+
 ### [1.4.3](https://www.github.com/aeternity/aepp-bridge/compare/v1.4.2...v1.4.3) (2024-07-15)
 
 
