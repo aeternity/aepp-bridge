@@ -653,8 +653,8 @@ const Bridge: React.FC = () => {
                                 >
                                     View bridge transaction on{' '}
                                     {bridgeActionSummary?.direction === Direction.AeternityToEthereum
-                                        ? 'etherscan'
-                                        : 'aescan'}
+                                        ? 'aescan'
+                                        : 'etherscan'}
                                 </a>
                             </Grid>
                         </Grid>
