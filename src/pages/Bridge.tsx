@@ -83,6 +83,11 @@ const getTxUrl = (direction: Direction, hash: string) => {
 const checkEvmNetworkHasEnoughBalance = async (asset: Asset, normalizedAmount: number) => {
     if (asset.symbol === 'WAE') return true;
 
+    if (asset.symbol === 'ETH') {
+        const balance = await Ethereum.Provider.getBalance(Constants.ethereum.bridge_address);
+        return new BigNumber(balance.toString()).isGreaterThanOrEqualTo(normalizedAmount);
+    }
+
     const assetContract = new Ethereum.Contract(
         asset.ethAddress,
         Constants.ethereum.asset_abi,
@@ -390,6 +395,20 @@ const Bridge: React.FC = () => {
         setButtonBusy(false);
     }, [asset, aeternity, destination, normalizedAmount, isValidDestination]);
 
+    function getDestinationTokenValue() {
+        if (direction == Direction.EthereumToAeternity && asset.symbol === 'WAE') {
+            return 'Native AE';
+        } else if (direction == Direction.AeternityToEthereum && asset.symbol === 'ETH') {
+            return 'Native ETH';
+        }
+
+        return (
+            (direction == Direction.EthereumToAeternity ? 'æ' : '') +
+            asset.symbol +
+            ` (${direction == Direction.EthereumToAeternity ? asset.aeAddress : asset.ethAddress})`
+        );
+    }
+
     return (
         <Container sx={{ paddingY: 8 }}>
             <Grid container direction="row" justifyContent="center" alignItems="flex-start" sx={{ marginBottom: 10 }}>
@@ -490,13 +509,7 @@ const Bridge: React.FC = () => {
                             <TextField
                                 id="token-select"
                                 label="Destination Token"
-                                value={
-                                    (direction == Direction.EthereumToAeternity ? 'æ' : '') +
-                                    asset.symbol +
-                                    ` (${
-                                        direction == Direction.EthereumToAeternity ? asset.aeAddress : asset.ethAddress
-                                    })`
-                                }
+                                value={getDestinationTokenValue()}
                                 disabled
                             ></TextField>
                         </FormControl>
