@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.5.1](https://www.github.com/aeternity/aepp-bridge/compare/v1.5.0...v1.5.1) (2024-08-12)
+
+
+### Refactorings
+
+* remove powered by aeternity remark ([848e799](https://www.github.com/aeternity/aepp-bridge/commit/848e7990b05a53590477ef89f69ef78837954762))
+
 ## [1.5.0](https://www.github.com/aeternity/aepp-bridge/compare/v1.4.3...v1.5.0) (2024-08-12)
 
 
