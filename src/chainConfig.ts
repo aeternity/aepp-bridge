@@ -39,7 +39,7 @@ const assets = {
             decimals: 18,
             icon: 'https://cryptologos.cc/logos/ethereum-eth-logo.png',
             ethAddress: '0xAbaE76F98A84D1DC3E0af8ed68465631165d33B2',
-            aeAddress: 'ct_WVqAvLQpvZCgBg4faZLXA1YBj43Fxj91D33Z8K7pFsY8YCofv',
+            aeAddress: 'ct_ryTY1mxqjCjq1yBn9i6HDaCSdA6thXUFZTA84EMzbWd1SLKdh',
         },
         {
             nameandsymbol: 'Wrapped AE (WAE)',
