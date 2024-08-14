@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.5.2](https://www.github.com/aeternity/aepp-bridge/compare/v1.5.1...v1.5.2) (2024-08-14)
+
+
+### Miscellaneous
+
+* update terms and conditions ([52761f5](https://www.github.com/aeternity/aepp-bridge/commit/52761f53a69ca7785f5223a3acf1248036adecaa))
+
 ### [1.5.1](https://www.github.com/aeternity/aepp-bridge/compare/v1.5.0...v1.5.1) (2024-08-12)
 
 
