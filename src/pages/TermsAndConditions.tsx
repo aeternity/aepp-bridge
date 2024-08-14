@@ -20,11 +20,12 @@ const TermsAndConditions = () => {
                             <p>1. GENERAL PROVISIONS</p>
                             <p>
                                 THE WEBSITE IS PROVIDED BY ÆTERNITY FOUNDATION(“ÆTERNITY”, “WE”, “US”) “AS IS” WITHOUT
-                                WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-                                MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT
-                                SHALL ÆTERNITY FOUNDATION BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-                                IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH
-                                THE WEBSITE OR THE USE OR OTHER DEALINGS DIRECTLY/INDIRECTLY IN RELATION TO THE WEBSITE.
+                                WARRANTY OF ANY KIND, DOES NOT MAINTAIN OR RUN THE BRIDGE, EXPRESS OR IMPLIED, INCLUDING
+                                BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
+                                AND NON-INFRINGEMENT. IN NO EVENT SHALL ÆTERNITY FOUNDATION BE LIABLE FOR ANY CLAIM,
+                                DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+                                FROM, OUT OF OR IN CONNECTION WITH THE WEBSITE OR THE USE OR OTHER DEALINGS
+                                DIRECTLY/INDIRECTLY IN RELATION TO THE WEBSITE.
                             </p>
                             <p>
                                 Any reference to the Website hereto shall be interpreted as referring to the collection
