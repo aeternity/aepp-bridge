@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.6.0](https://www.github.com/aeternity/aepp-bridge/compare/v1.5.1...v1.6.0) (2024-08-15)
+
+
+### Features
+
+* Update sponsorship information in terms and conditions ([d1eb346](https://www.github.com/aeternity/aepp-bridge/commit/d1eb3460caf16e405a8b6e343009acc39b888523))
+
+
+### Miscellaneous
+
+* update terms and conditions ([52761f5](https://www.github.com/aeternity/aepp-bridge/commit/52761f53a69ca7785f5223a3acf1248036adecaa))
+
 ### [1.5.1](https://www.github.com/aeternity/aepp-bridge/compare/v1.5.0...v1.5.1) (2024-08-12)
 
 
