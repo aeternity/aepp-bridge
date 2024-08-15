@@ -69,6 +69,9 @@ const ViewContainer: React.FC<{ children: React.ReactNode }> = (props) => {
                         )}
                     </Box>
                     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', flex: 1 }}>
+                        <Link sx={linkStyles} href="https://github.com/aeternity/aepp-bridge" target="_blank">
+                            GitHub Repo
+                        </Link>
                         <Link sx={linkStyles} href="/faq">
                             FAQ
                         </Link>
