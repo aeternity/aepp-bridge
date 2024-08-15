@@ -48,10 +48,12 @@ const ViewContainer: React.FC<{ children: React.ReactNode }> = (props) => {
             <div className={classes.container}>{props.children}</div>
             <footer className={classes.footer}>
                 <Box sx={{ flexDirection: 'row', display: 'flex', flexGrow: 1, flex: 1, pl: 3, pr: 3 }}>
-                    {/* <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                         <Typography sx={{ fontSize: 12 }}>Powered by</Typography>
-                        <AeternityLogo width={100} />
-                    </Box> */}
+                        <Link sx={{ ...linkStyles, marginLeft: 0 }} href="https://acurast.com/" target="_blank">
+                            Acurast
+                        </Link>
+                    </Box>
                     <Box
                         sx={{
                             display: 'flex',
