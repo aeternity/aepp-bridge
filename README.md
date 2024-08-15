@@ -58,7 +58,7 @@ If you want to run the bridge on free cloud service, following steps can be take
 
 1. Fork this repository
 2. Create an account for a cloud deployment service (Vercel, Netlify, AWS etc)
-3. Connect your Github account to your cloud platform selection
+3. Connect your GitHub account to your cloud platform selection
 4. Create a new app under your cloud service
 5. Configure your application using your forked repo with the standard node application deployment settings
 6. Deploy and self host your bridge application
