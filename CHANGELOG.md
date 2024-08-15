@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.7.0](https://www.github.com/aeternity/aepp-bridge/compare/v1.6.0...v1.7.0) (2024-08-15)
+
+
+### Features
+
+* Add link to GitHub repository [#37](https://www.github.com/aeternity/aepp-bridge/issues/37) ([d32d2ec](https://www.github.com/aeternity/aepp-bridge/commit/d32d2ec2d03b2706c53ec4cbd2cb2a804fada050))
+* Update ViewContainer footer with Acurast's link [#36](https://www.github.com/aeternity/aepp-bridge/issues/36) ([15198fd](https://www.github.com/aeternity/aepp-bridge/commit/15198fd919aee0edb94d07cc30ea0c8a54e7b33b))
+
+
+### Bug Fixes
+
+* typo ([b01740a](https://www.github.com/aeternity/aepp-bridge/commit/b01740a0dafbad6b317b7151d6e2da0bb74d0137))
+
+
+### Miscellaneous
+
+* Update README with deployment instructions ([2c0c676](https://www.github.com/aeternity/aepp-bridge/commit/2c0c6765c30bb9936682446865b9ac4640fedaad))
+
 ## [1.6.0](https://www.github.com/aeternity/aepp-bridge/compare/v1.5.1...v1.6.0) (2024-08-15)
 
 
