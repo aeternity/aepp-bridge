@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.6.1](https://www.github.com/aeternity/aepp-bridge/compare/v1.6.0...v1.6.1) (2024-08-15)
+
+
+### Miscellaneous
+
+* Update README with deployment instructions ([2c0c676](https://www.github.com/aeternity/aepp-bridge/commit/2c0c6765c30bb9936682446865b9ac4640fedaad))
+
 ## [1.6.0](https://www.github.com/aeternity/aepp-bridge/compare/v1.5.1...v1.6.0) (2024-08-15)
 
 
