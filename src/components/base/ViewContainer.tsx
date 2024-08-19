@@ -5,7 +5,6 @@ import NavigationBar from '../navigation';
 import Typography from '@mui/material/Typography';
 import { Link, Box } from '@mui/material';
 
-import AeternityLogo from '../base/icons/logo';
 import packageJson from '../../../package.json';
 
 const useStyles = makeStyles({
