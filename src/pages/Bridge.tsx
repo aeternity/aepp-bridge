@@ -83,8 +83,10 @@ const getTxUrl = (direction: Direction, hash: string) => {
 const checkEvmNetworkHasEnoughBalance = async (asset: Asset, normalizedAmount: number) => {
     if (asset.symbol === 'WAE') return true;
 
+    const bridgeAddress = Constants.ethereum.bridge_address;
+
     if (asset.symbol === 'ETH') {
-        const balance = await Ethereum.Provider.getBalance(Constants.ethereum.bridge_address);
+        const balance = await Ethereum.Provider.getBalance(bridgeAddress);
         return new BigNumber(balance.toString()).isGreaterThanOrEqualTo(normalizedAmount);
     }
 
@@ -94,9 +96,9 @@ const checkEvmNetworkHasEnoughBalance = async (asset: Asset, normalizedAmount: n
         Ethereum.Provider.getSigner(),
     );
 
-    return new BigNumber(await assetContract.balanceOf(Constants.ethereum.bridge_address)).isGreaterThanOrEqualTo(
-        normalizedAmount,
-    );
+    const tokenBalanceOfBridge = new BigNumber((await assetContract.balanceOf(bridgeAddress)).toString());
+
+    return tokenBalanceOfBridge.isGreaterThanOrEqualTo(normalizedAmount);
 };
 
 const checkAeAccountHasEligibleBridgeUse = async (account: string) => {
@@ -116,6 +118,30 @@ const checkAeAccountHasEligibleBridgeUse = async (account: string) => {
     const diffInHours = (timeNow.getTime() - lastTxTime.getTime()) / 1000 / 60 / 60;
 
     return diffInHours >= BRIDGE_USAGE_INTERVAL_IN_HOURS;
+};
+
+const addTokenToEthereumWallet = async (asset: Asset) => {
+    const tokenAddress = asset.ethAddress;
+    const tokenSymbol = asset.symbol;
+    const tokenDecimals = asset.decimals;
+    const tokenImage = asset.icon;
+
+    try {
+        const wasAdded = await (window as any).ethereum.request({
+            method: 'wallet_watchAsset',
+            params: {
+                type: 'ERC20',
+                options: {
+                    address: tokenAddress,
+                    symbol: tokenSymbol,
+                    decimals: tokenDecimals,
+                    image: tokenImage,
+                },
+            },
+        });
+    } catch (error) {
+        console.error(error);
+    }
 };
 
 const Bridge: React.FC = () => {
@@ -409,6 +435,8 @@ const Bridge: React.FC = () => {
         );
     }
 
+    const isBridgeActionFromAeternity = bridgeActionSummary?.direction === Direction.AeternityToEthereum;
+
     return (
         <Container sx={{ paddingY: 8 }}>
             <Grid container direction="row" justifyContent="center" alignItems="flex-start" sx={{ marginBottom: 10 }}>
@@ -605,9 +633,7 @@ const Bridge: React.FC = () => {
                         <Grid flexDirection={'row'} container justifyContent={'space-between'}>
                             <Grid>From:</Grid>
                             <Grid>
-                                {bridgeActionSummary?.direction === Direction.AeternityToEthereum
-                                    ? 'Aeternity to Ethereum'
-                                    : 'Ethereum to Aeternity'}
+                                {isBridgeActionFromAeternity ? 'Aeternity to Ethereum' : 'Ethereum to Aeternity'}
                             </Grid>
                         </Grid>
 
@@ -636,9 +662,7 @@ const Bridge: React.FC = () => {
                                         )}
                                     >
                                         View allowance transaction on{' '}
-                                        {bridgeActionSummary?.direction === Direction.AeternityToEthereum
-                                            ? 'etherscan'
-                                            : 'aescan'}
+                                        {isBridgeActionFromAeternity ? 'aescan' : 'etherscan'}
                                     </a>
                                 </Grid>
                             </Grid>
@@ -651,17 +675,55 @@ const Bridge: React.FC = () => {
                                     target="_blank"
                                     href={getTxUrl(bridgeActionSummary?.direction!, bridgeActionSummary?.bridgeTxHash!)}
                                 >
-                                    View bridge transaction on{' '}
-                                    {bridgeActionSummary?.direction === Direction.AeternityToEthereum
-                                        ? 'aescan'
-                                        : 'etherscan'}
+                                    View bridge transaction on {isBridgeActionFromAeternity ? 'aescan' : 'etherscan'}
                                 </a>
                             </Grid>
                         </Grid>
-                        <Grid marginTop={3} textAlign={'center'}>
+                        <Grid marginTop={3} textAlign={'center'} color={'green'} fontWeight={'600'}>
                             Your tokens will be available in the destination network after the transaction is confirmed
                             and processed.
                         </Grid>
+
+                        {!isBridgeActionFromAeternity && (
+                            <Grid marginTop={3}>
+                                The received tokens should automatically be added to your Superhero Wallet, you can find
+                                them by opening your Superhero Wallet and clicking on the account you have put as the
+                                recipient of the tokens:
+                                <br />
+                                <br />
+                                If they have not appeared there yet, try refreshing the wallet or check in again in a
+                                few minutes. If you still have issues, please reach out in the{' '}
+                                <a href="https://forum.aeternity.com/" target="_blank">
+                                    forum
+                                </a>
+                                .
+                            </Grid>
+                        )}
+                        {isBridgeActionFromAeternity && (
+                            <Grid marginTop={3}>
+                                Bridged tokens will be available in your Ethereum wallet after the transaction is
+                                processed. It should take a few minutes:{' '}
+                                {bridgeActionSummary?.asset.symbol !== 'ETH' && (
+                                    <>
+                                        <br />
+                                        In case you don't see them after some time, please make sure you have added the
+                                        token to your wallet's token list. If it's not added, you can add it manually by
+                                        clicking:{' '}
+                                        <a
+                                            href="javascript:void(0)"
+                                            onClick={() => addTokenToEthereumWallet(bridgeActionSummary.asset)}
+                                        >
+                                            Add {bridgeActionSummary?.asset.symbol} to your wallet's token list.
+                                        </a>
+                                    </>
+                                )}
+                                If you have issues, please reach out in the{' '}
+                                <a href="https://forum.aeternity.com/" target="_blank">
+                                    forum
+                                </a>
+                                .
+                            </Grid>
+                        )}
                     </Grid>
                 </DialogContent>
                 <DialogActions>
