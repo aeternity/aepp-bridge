@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.8.0](https://www.github.com/aeternity/aepp-bridge/compare/v1.7.0...v1.8.0) (2024-08-23)
+
+
+### Features
+
+* further information about bridge action & bug fixes/improvements [#27](https://www.github.com/aeternity/aepp-bridge/issues/27) ([4751eb2](https://www.github.com/aeternity/aepp-bridge/commit/4751eb237675ffd32abb0811c3c3e879d97a99ed))
+
+
+### Miscellaneous
+
+* remove unused import ([c73f412](https://www.github.com/aeternity/aepp-bridge/commit/c73f412ae1a179ecf5ef54df52927fd326bfd5dc))
+
 ## [1.7.0](https://www.github.com/aeternity/aepp-bridge/compare/v1.6.0...v1.7.0) (2024-08-15)
 
 
