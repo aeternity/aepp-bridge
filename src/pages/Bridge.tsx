@@ -714,7 +714,7 @@ const Bridge: React.FC = () => {
                                             onClick={() => addTokenToEthereumWallet(bridgeActionSummary.asset)}
                                         >
                                             Add {bridgeActionSummary?.asset.symbol} to your wallet's token list.
-                                        </a>
+                                        </a>{' '}
                                     </>
                                 )}
                                 If you have issues, please reach out in the{' '}
