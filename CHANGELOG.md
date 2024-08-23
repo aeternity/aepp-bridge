@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.8.1](https://www.github.com/aeternity/aepp-bridge/compare/v1.8.0...v1.8.1) (2024-08-23)
+
+
+### Miscellaneous
+
+* Fix formatting issue in summary view ([9b4bb29](https://www.github.com/aeternity/aepp-bridge/commit/9b4bb2936b9620049973cb22ff283a5938f78d77))
+
 ## [1.8.0](https://www.github.com/aeternity/aepp-bridge/compare/v1.7.0...v1.8.0) (2024-08-23)
 
 
