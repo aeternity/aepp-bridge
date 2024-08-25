@@ -7,6 +7,7 @@ import Bridge from './pages/Bridge';
 import FAQ from './pages/FAQ';
 import TermsAndConditions from './pages/TermsAndConditions';
 import ViewContainer from './components/base/ViewContainer';
+import SupportedTokensList from './pages/SupportedTokensList';
 
 const AppRouter: React.FC = () => {
     return (
@@ -28,6 +29,7 @@ const AppRouter: React.FC = () => {
                     />
                     <Route path="/faq" element={<FAQ />} />
                     <Route path="/terms" element={<TermsAndConditions />} />
+                    <Route path="/tokens" element={<SupportedTokensList />} />
                 </Routes>
             </ViewContainer>
         </BrowserRouter>

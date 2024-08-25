@@ -38,6 +38,7 @@ import { AeternityAssetInfo, EthereumAssetInfo, Direction } from 'src/context/Ap
 import Spinner from 'src/components/base/Spinner';
 import { useSnackbar } from 'notistack';
 import BigNumber from 'bignumber.js';
+import addTokenToEthereumWallet from 'src/utils/addTokenToEthereumWallet';
 
 const BRIDGE_TOKEN_ACTION_TYPE = 0;
 const BRIDGE_ETH_ACTION_TYPE = 1;
@@ -118,30 +119,6 @@ const checkAeAccountHasEligibleBridgeUse = async (account: string) => {
     const diffInHours = (timeNow.getTime() - lastTxTime.getTime()) / 1000 / 60 / 60;
 
     return diffInHours >= BRIDGE_USAGE_INTERVAL_IN_HOURS;
-};
-
-const addTokenToEthereumWallet = async (asset: Asset) => {
-    const tokenAddress = asset.ethAddress;
-    const tokenSymbol = asset.symbol;
-    const tokenDecimals = asset.decimals;
-    const tokenImage = asset.icon;
-
-    try {
-        const wasAdded = await (window as any).ethereum.request({
-            method: 'wallet_watchAsset',
-            params: {
-                type: 'ERC20',
-                options: {
-                    address: tokenAddress,
-                    symbol: tokenSymbol,
-                    decimals: tokenDecimals,
-                    image: tokenImage,
-                },
-            },
-        });
-    } catch (error) {
-        console.error(error);
-    }
 };
 
 const Bridge: React.FC = () => {

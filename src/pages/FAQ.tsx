@@ -76,6 +76,31 @@ const faqListContent = [
             </>
         ),
     },
+    {
+        question: "I've bridged my tokens, what's next?",
+        answer: (
+            <>
+                <p>
+                    Once you have submitted the bridging transaction, after a few minutes you will see your tokens on
+                    the target network. You can now use them as you would use any other token on that network. However,
+                    for the Ethereum network, you might need to add the token to your wallet first. You can do this by
+                    going to{' '}
+                    <a href="\tokens" target="_blank">
+                        supported tokens list page
+                    </a>{' '}
+                    and adding the token address to your wallet. For the Aeternity, Superhero wallet should
+                    automatically show you the token.
+                </p>
+                <p>
+                    In case you are having issues with the bridging process, please contact us through the contact{' '}
+                    <a href="https://forum.aeternity.com" target="_blank">
+                        forum
+                    </a>
+                    .
+                </p>
+            </>
+        ),
+    },
 ];
 
 const FAQ = () => {
