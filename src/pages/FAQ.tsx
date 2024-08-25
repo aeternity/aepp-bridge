@@ -92,7 +92,7 @@ const faqListContent = [
                     automatically show you the token.
                 </p>
                 <p>
-                    In case you are having issues with the bridging process, please contact us through the contact{' '}
+                    In case you are having issues with the bridging process, please contact us through the{' '}
                     <a href="https://forum.aeternity.com" target="_blank">
                         forum
                     </a>
