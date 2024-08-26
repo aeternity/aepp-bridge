@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.9.0](https://www.github.com/aeternity/aepp-bridge/compare/v1.8.0...v1.9.0) (2024-08-25)
+
+
+### Features
+
+* Added "what's next?" entry to faq & created a token list page ([21118bf](https://www.github.com/aeternity/aepp-bridge/commit/21118bfac63192f70f85bdba1d9f99a7e3a643e0))
+
+
+### Bug Fixes
+
+* typo ([2088ed7](https://www.github.com/aeternity/aepp-bridge/commit/2088ed751fc93b7083903249dfb5e6fff21501b1))
+
+
+### Miscellaneous
+
+* Fix formatting issue in summary view ([9b4bb29](https://www.github.com/aeternity/aepp-bridge/commit/9b4bb2936b9620049973cb22ff283a5938f78d77))
+
 ## [1.8.0](https://www.github.com/aeternity/aepp-bridge/compare/v1.7.0...v1.8.0) (2024-08-23)
 
 
