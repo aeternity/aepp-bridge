@@ -2,11 +2,11 @@ import { Card, CardContent, Container, Grid, List, ListItem, ListItemText, Typog
 
 const faqListContent = [
     {
-        question: 'What is bridgeae ?',
+        question: 'What is bridgeae?',
         answer: (
             <>
                 <p>
-                    bridgeae helps you bridging tokens and and native crypto currencies between the Ethereum and
+                    bridgeae helps you bridge tokens and native cryptocurrencies between the Ethereum and
                     Aeternity blockchain. It supports a variety of tokens as well as the Ethereum (ETH) and Aeternity
                     (ae) crypto currency.
                 </p>
@@ -14,12 +14,12 @@ const faqListContent = [
         ),
     },
     {
-        question: 'How do I use bridgae ?',
+        question: 'How do I use bridgae?',
         answer: (
             <>
                 <p>
                     1. First you chose which network (Ethereum or Aeternity) you want to bridge native crypto currency
-                    or tokens from. Depending on which Network you chose, your Wallet should signal to you that bridgae
+                    or tokens from. Depending on which Network you chose, your wallet should signal to you that bridgae
                     intends to connect, which you need to accept. If this does not happen, try reloading the page or
                     click the "connect wallet" button inside bridgae if one is being shown to you.
                 </p>
@@ -57,7 +57,7 @@ const faqListContent = [
                 <p>
                     Example 2: Bridging Native Currency Just like with Tokens, the bridged Ether or AE is locked inside
                     the bridgae contract. What is released on the target protocol is a wrapped token though: When
-                    bridging Ether to Aeternity, you recieve wETH, wrapped Ether in the form of a AEX-9 Token
+                    bridging Ether to Aeternity, you receive wETH, wrapped Ether in the form of a AEX-9 Token
                     (AEternity's Fungible Token Standard). The same thing happens the other way round: Bridged AE is
                     released in the form of an ERC20-Token called wAE, wrapped AE, on the Ethereum blockchain.
                 </p>
