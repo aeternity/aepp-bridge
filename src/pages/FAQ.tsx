@@ -50,7 +50,7 @@ const faqListContent = [
                     counterpart on the other protocol.
                 </p>
                 <p>
-                    Example 1: Bridging Tokens When bridging tokens, the tokens get transferred to the contract of
+                    Example 1: When bridging tokens, the tokens get transferred to the contract of
                     bridgae. The backend service gets notified about the locking of the tokens and releases the same
                     amount of the token's official counterpart on the other protocol.
                 </p>
@@ -88,7 +88,7 @@ const faqListContent = [
                     <a href="\tokens" target="_blank">
                         supported tokens list page
                     </a>{' '}
-                    and adding the token address to your wallet. For the Aeternity, Superhero wallet should
+                    and adding the token address to your wallet. For the Aeternity, Superhero Wallet should
                     automatically show you the token.
                 </p>
                 <p>
