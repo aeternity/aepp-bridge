@@ -1,5 +1,13 @@
 # Changelog
 
+### [1.9.1](https://www.github.com/aeternity/aepp-bridge/compare/v1.9.0...v1.9.1) (2024-08-30)
+
+
+### Bug Fixes
+
+* typo [#49](https://www.github.com/aeternity/aepp-bridge/issues/49) ([b04e200](https://www.github.com/aeternity/aepp-bridge/commit/b04e20009c9f7fc491b5f57321fe809b8a815946))
+* update wording in FAQ [#54](https://www.github.com/aeternity/aepp-bridge/issues/54) ([2b18aae](https://www.github.com/aeternity/aepp-bridge/commit/2b18aaeb008916b0cf2eb3f8f3f551984d4c2da7))
+
 ## [1.9.0](https://www.github.com/aeternity/aepp-bridge/compare/v1.8.0...v1.9.0) (2024-08-25)
 
 
