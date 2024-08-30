@@ -2,13 +2,13 @@ import { Card, CardContent, Container, Grid, List, ListItem, ListItemText, Typog
 
 const faqListContent = [
     {
-        question: 'What is bridgeae?',
+        question: 'What is bridgae?',
         answer: (
             <>
                 <p>
-                    bridgeae helps you bridge tokens and native cryptocurrencies between the Ethereum and
+                    bridgae helps you bridge tokens and native cryptocurrencies between the Ethereum and
                     Aeternity blockchain. It supports a variety of tokens as well as the Ethereum (ETH) and Aeternity
-                    (ae) crypto currency.
+                    (AE) crypto currency.
                 </p>
             </>
         ),
