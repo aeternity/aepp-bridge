@@ -538,7 +538,7 @@ const Bridge: React.FC = () => {
                             fullWidth
                             id="outlined-textfield-destination"
                             label={`Destination ${
-                                direction == Direction.EthereumToAeternity ? 'Aeternity' : 'Ethereum'
+                                direction == Direction.EthereumToAeternity ? 'æternity' : 'Ethereum'
                             } Address`}
                             variant="outlined"
                             type="text"
@@ -589,7 +589,7 @@ const Bridge: React.FC = () => {
                                 variant="contained"
                                 onClick={direction === Direction.AeternityToEthereum ? bridgeToEvm : bridgeToAeternity}
                             >
-                                Bridge to {direction === Direction.AeternityToEthereum ? 'Ethereum' : 'Aeternity'}
+                                Bridge to {direction === Direction.AeternityToEthereum ? 'Ethereum' : 'æternity'}
                             </Button>
                         </WalletConnection>
                     </CardActions>
@@ -610,7 +610,7 @@ const Bridge: React.FC = () => {
                         <Grid flexDirection={'row'} container justifyContent={'space-between'}>
                             <Grid>From:</Grid>
                             <Grid>
-                                {isBridgeActionFromAeternity ? 'Aeternity to Ethereum' : 'Ethereum to Aeternity'}
+                                {isBridgeActionFromAeternity ? 'æternity to Ethereum' : 'Ethereum to æternity'}
                             </Grid>
                         </Grid>
 

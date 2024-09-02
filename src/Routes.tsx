@@ -20,7 +20,7 @@ const AppRouter: React.FC = () => {
                             <>
                                 <Helmet>
                                     <title>
-                                        (EVM {'<'}-{'>'} Aeternity) Bridge
+                                        (EVM {'<'}-{'>'} æternity) Bridge
                                     </title>
                                 </Helmet>
                                 <Bridge />

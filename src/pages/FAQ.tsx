@@ -7,7 +7,7 @@ const faqListContent = [
             <>
                 <p>
                     bridgae helps you bridge tokens and native cryptocurrencies between the Ethereum and
-                    Aeternity blockchain. It supports a variety of tokens as well as the Ethereum (ETH) and Aeternity
+                    æternity blockchain. It supports a variety of tokens as well as the Ethereum (ETH) and æternity
                     (AE) crypto currency.
                 </p>
             </>
@@ -18,7 +18,7 @@ const faqListContent = [
         answer: (
             <>
                 <p>
-                    1. First you chose which network (Ethereum or Aeternity) you want to bridge native crypto currency
+                    1. First you chose which network (Ethereum or æternity) you want to bridge native crypto currency
                     or tokens from. Depending on which Network you chose, your wallet should signal to you that bridgae
                     intends to connect, which you need to accept. If this does not happen, try reloading the page or
                     click the "connect wallet" button inside bridgae if one is being shown to you.
@@ -57,8 +57,8 @@ const faqListContent = [
                 <p>
                     Example 2: Bridging Native Currency Just like with Tokens, the bridged Ether or AE is locked inside
                     the bridgae contract. What is released on the target protocol is a wrapped token though: When
-                    bridging Ether to Aeternity, you receive wETH, wrapped Ether in the form of a AEX-9 Token
-                    (AEternity's Fungible Token Standard). The same thing happens the other way round: Bridged AE is
+                    bridging Ether to æternity, you receive wETH, wrapped Ether in the form of a AEX-9 Token
+                    (æternity's Fungible Token Standard). The same thing happens the other way round: Bridged AE is
                     released in the form of an ERC20-Token called wAE, wrapped AE, on the Ethereum blockchain.
                 </p>
             </>
@@ -71,7 +71,7 @@ const faqListContent = [
                 <p>
                     At any time, the amount of tokens or currency released on one protocol equals the amount of tokens /
                     currency locked inside the bridgae smart contract the other protocol. This can be verified through
-                    the smart contracts on both Aeternity and Ethereum.
+                    the smart contracts on both æternity and Ethereum.
                 </p>
             </>
         ),
@@ -88,7 +88,7 @@ const faqListContent = [
                     <a href="\tokens" target="_blank">
                         supported tokens list page
                     </a>{' '}
-                    and adding the token address to your wallet. For the Aeternity, Superhero Wallet should
+                    and adding the token address to your wallet. For the æternity, Superhero Wallet should
                     automatically show you the token.
                 </p>
                 <p>

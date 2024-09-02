@@ -1,4 +1,4 @@
-This application is created for interacting with the Aeternity <> EVM Bridge contracts provided by Acurast. Executing proper bridge actions using this application will result in moving the sent funds to the other chain.
+This application is created for interacting with the æternity <> EVM Bridge contracts provided by Acurast. Executing proper bridge actions using this application will result in moving the sent funds to the other chain.
 
 ## Deployment links
 

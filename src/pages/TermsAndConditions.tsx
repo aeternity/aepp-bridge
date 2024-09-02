@@ -67,7 +67,7 @@ const TermsAndConditions = () => {
                                 interpreted as an investment advice.
                             </p>
                             <p>2. USERS OBLIGATIONS</p>
-                            <p>
+                            <div>
                                 As a User, You agree to/declare the following:{' '}
                                 <ul>
                                     <li>You shall comply with the rules set within the present Terms</li>
@@ -118,7 +118,7 @@ const TermsAndConditions = () => {
                                         present article or for any deviation from the declarations hereto.
                                     </li>
                                 </ul>
-                            </p>
+                            </div>
                             <p>3. NO WARRANTIES. NO LIABILITIES</p>{' '}
                             <p>
                                 As mentioned above, the Website is only a web-based interface, which facilitates the
