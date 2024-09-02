@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.9.2](https://www.github.com/aeternity/aepp-bridge/compare/v1.9.1...v1.9.2) (2024-09-02)
+
+
+### Bug Fixes
+
+* update blockchain name with proper spelling and symbols [#56](https://www.github.com/aeternity/aepp-bridge/issues/56) ([231caf5](https://www.github.com/aeternity/aepp-bridge/commit/231caf5fc7d277a21d9ade0cd7d4b923b321d24a))
+
 ### [1.9.1](https://www.github.com/aeternity/aepp-bridge/compare/v1.9.0...v1.9.1) (2024-08-30)
 
 
