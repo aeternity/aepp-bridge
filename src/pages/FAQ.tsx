@@ -6,9 +6,9 @@ const faqListContent = [
         answer: (
             <>
                 <p>
-                    bridgae helps you bridge tokens and native cryptocurrencies between the Ethereum and
-                    æternity blockchain. It supports a variety of tokens as well as the Ethereum (ETH) and æternity
-                    (AE) crypto currency.
+                    bridgae helps you bridge tokens and native cryptocurrencies between the Ethereum and æternity
+                    blockchain. It supports a variety of tokens as well as the Ethereum (ETH) and æternity (AE) crypto
+                    currency.
                 </p>
             </>
         ),
@@ -18,8 +18,8 @@ const faqListContent = [
         answer: (
             <>
                 <p>
-                    1. First you chose which network (Ethereum or æternity) you want to bridge native crypto currency
-                    or tokens from. Depending on which Network you chose, your wallet should signal to you that bridgae
+                    1. First you chose which network (Ethereum or æternity) you want to bridge native crypto currency or
+                    tokens from. Depending on which Network you chose, your wallet should signal to you that bridgae
                     intends to connect, which you need to accept. If this does not happen, try reloading the page or
                     click the "connect wallet" button inside bridgae if one is being shown to you.
                 </p>
@@ -50,16 +50,16 @@ const faqListContent = [
                     counterpart on the other protocol.
                 </p>
                 <p>
-                    Example 1: When bridging tokens, the tokens get transferred to the contract of
-                    bridgae. The backend service gets notified about the locking of the tokens and releases the same
-                    amount of the token's official counterpart on the other protocol.
+                    Example 1: When bridging tokens, the tokens get transferred to the contract of bridgae. The backend
+                    service gets notified about the locking of the tokens and releases the same amount of the token's
+                    official counterpart on the other protocol.
                 </p>
                 <p>
                     Example 2: Bridging Native Currency Just like with Tokens, the bridged Ether or AE is locked inside
                     the bridgae contract. What is released on the target protocol is a wrapped token though: When
-                    bridging Ether to æternity, you receive wETH, wrapped Ether in the form of a AEX-9 Token
-                    (æternity's Fungible Token Standard). The same thing happens the other way round: Bridged AE is
-                    released in the form of an ERC20-Token called wAE, wrapped AE, on the Ethereum blockchain.
+                    bridging Ether to æternity, you receive wETH, wrapped Ether in the form of a AEX-9 Token (æternity's
+                    Fungible Token Standard). The same thing happens the other way round: Bridged AE is released in the
+                    form of an ERC20-Token called wAE, wrapped AE, on the Ethereum blockchain.
                 </p>
             </>
         ),
@@ -88,8 +88,8 @@ const faqListContent = [
                     <a href="\tokens" target="_blank">
                         supported tokens list page
                     </a>{' '}
-                    and adding the token address to your wallet. For the æternity, Superhero Wallet should
-                    automatically show you the token.
+                    and adding the token address to your wallet. For the æternity, Superhero Wallet should automatically
+                    show you the token.
                 </p>
                 <p>
                     In case you are having issues with the bridging process, please contact us through the{' '}
