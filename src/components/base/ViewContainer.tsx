@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import { Link, Box } from '@mui/material';
 
 import packageJson from '../../../package.json';
+import LeftMenu from '../navigation/LeftMenu';
 
 const useStyles = makeStyles({
     root: {
@@ -44,7 +45,18 @@ const ViewContainer: React.FC<{ children: React.ReactNode }> = (props) => {
     return (
         <div className={classes.root}>
             <NavigationBar />
-            <div className={classes.container}>{props.children}</div>
+            <Box
+                sx={{
+                    display: 'flex',
+                    margin: 0,
+                    padding: 0,
+                    flex: 1,
+                    flexDirection: { xs: 'column', sm: 'column', md: 'row' },
+                }}
+            >
+                <LeftMenu />
+                <div className={classes.container}>{props.children}</div>
+            </Box>
             <footer className={classes.footer}>
                 <Box sx={{ flexDirection: 'row', display: 'flex', flexGrow: 1, flex: 1, pl: 3, pr: 3 }}>
                     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
