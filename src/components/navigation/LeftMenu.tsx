@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+
 import { Box, List, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import RouteOutlinedIcon from '@mui/icons-material/RouteOutlined';
 import ReceiptOutlinedIcon from '@mui/icons-material/ReceiptOutlined';
@@ -16,6 +18,7 @@ const ITEMS = [
 ];
 
 const LeftMenu = () => {
+    const navigate = useNavigate();
     return (
         <Box
             sx={{
@@ -44,7 +47,7 @@ const LeftMenu = () => {
                             borderLeftColor: { md: '#f5274e' },
                         }}
                         selected={window.location.pathname === item.link}
-                        href={item.link}
+                        onClick={() => navigate(item.link)}
                     >
                         <ListItemIcon sx={{ minWidth: { xs: 'auto', sm: 'auto', md: 40 } }} aria-label={item.text}>
                             <item.icon
