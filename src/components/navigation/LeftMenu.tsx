@@ -23,7 +23,7 @@ const LeftMenu = () => {
         <Box
             sx={{
                 backgroundColor: 'white',
-                boxShadow: '0 0 3px rgba(0, 0, 0, 0.1)',
+                boxShadow: '0 9px 14px rgba(0, 0, 0, 2.1)',
                 borderBottom: '0.5px solid rgba(0, 0, 0, 0.1)',
                 justifyContent: { xs: 'center', sm: 'center', md: 'flex-start' },
                 display: 'flex',
@@ -43,8 +43,9 @@ const LeftMenu = () => {
                         sx={{
                             marginTop: { md: 2 },
                             marginRight: 0.5,
+                            marginLeft: 0.5,
                             borderLeft: { md: 5 },
-                            borderLeftColor: { md: '#f5274e' },
+                            ...(window.location.pathname === item.link && { borderLeftColor: { md: '#f5274e' } }),
                         }}
                         selected={window.location.pathname === item.link}
                         onClick={() => navigate(item.link)}
