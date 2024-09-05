@@ -19,11 +19,14 @@ import EthereumIcon from 'src/components/base/icons/ethereum';
 import { Direction } from 'src/context/AppContext';
 import useAppContext from 'src/hooks/useAppContext';
 import useWalletContext from 'src/hooks/useWalletContext';
+import useTransactionHistory from 'src/hooks/useTransactionHistory';
 
 const TransactionHistory = () => {
     const { direction, updateDirection } = useAppContext();
     const { aeternityAddress, ethereumAddress } = useWalletContext();
     const connectedWalletAddress = direction === Direction.AeternityToEthereum ? aeternityAddress : ethereumAddress;
+
+    const { transactions } = useTransactionHistory(direction, connectedWalletAddress);
 
     return (
         <Container sx={{ paddingY: 8 }}>
@@ -79,6 +82,9 @@ const TransactionHistory = () => {
                                 disabled
                             />
                             <Divider flexItem orientation="horizontal" />
+                            {transactions.map((transaction, index) => (
+                                <div>{transaction.hash}</div>
+                            ))}
                         </Box>
                     </CardContent>
                 </Card>
