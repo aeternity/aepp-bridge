@@ -6,6 +6,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
     background-image: url('./assets/images/aeternity-get-ae-coins-bg.svg');
     background-size: cover;
+    background-attachment: fixed;
 }
 
 code {
