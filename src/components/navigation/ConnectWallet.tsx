@@ -9,6 +9,7 @@ import useWalletContext from 'src/hooks/useWalletContext';
 
 import EthereumIcon from 'src/components/base/icons/ethereum';
 import AeternityIcon from 'src/components/base/icons/aeternity';
+import { useSnackbar } from 'notistack';
 
 const shortenAddress = (address: string | undefined) => {
     if (!address) return '';
@@ -16,6 +17,7 @@ const shortenAddress = (address: string | undefined) => {
 };
 
 const WalletConnect = () => {
+    const { enqueueSnackbar } = useSnackbar();
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
 
@@ -68,6 +70,7 @@ const WalletConnect = () => {
 
     const handleCopyAddress = () => {
         navigator.clipboard.writeText((connectedToEthereum ? ethereumAddress : aeternityAddress)!);
+        enqueueSnackbar('Copied to clipboard', { variant: 'success' });
         handleClose();
     };
     const handleDisconnect = () => {

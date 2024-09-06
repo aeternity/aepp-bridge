@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-    Alert,
     Box,
     Breadcrumbs,
     Container,
@@ -39,6 +38,7 @@ import Spinner from 'src/components/base/Spinner';
 import { useSnackbar } from 'notistack';
 import BigNumber from 'bignumber.js';
 import addTokenToEthereumWallet from 'src/utils/addTokenToEthereumWallet';
+import getTxUrl from 'src/utils/getTxUrl';
 
 const BRIDGE_TOKEN_ACTION_TYPE = 0;
 const BRIDGE_ETH_ACTION_TYPE = 1;
@@ -75,12 +75,6 @@ interface BridgeAction {
     bridgeTxHash: string;
 }
 
-const getTxUrl = (direction: Direction, hash: string) => {
-    return direction === Direction.AeternityToEthereum
-        ? `${Constants.aeternity.explorer}/transactions/${hash}`
-        : `${Constants.ethereum.etherscan}/tx/${hash}`;
-};
-
 const checkEvmNetworkHasEnoughBalance = async (asset: Asset, normalizedAmount: number) => {
     if (asset.symbol === 'WAE') return true;
 
@@ -107,7 +101,7 @@ const checkAeAccountHasEligibleBridgeUse = async (account: string) => {
     const aeAPI = Constants.aeAPI;
 
     const response = await fetch(
-        `${aeAPI}/transactions?account=${account}&contract_id=${bridge}&entrypoint=bridge_out&limit=1`,
+        `${aeAPI}/v3/transactions?account=${account}&contract_id=${bridge}&entrypoint=bridge_out&limit=1`,
     ).then((res) => res.json());
 
     if (!response.data.length) {
@@ -609,9 +603,7 @@ const Bridge: React.FC = () => {
 
                         <Grid flexDirection={'row'} container justifyContent={'space-between'}>
                             <Grid>From:</Grid>
-                            <Grid>
-                                {isBridgeActionFromAeternity ? 'æternity to Ethereum' : 'Ethereum to æternity'}
-                            </Grid>
+                            <Grid>{isBridgeActionFromAeternity ? 'æternity to Ethereum' : 'Ethereum to æternity'}</Grid>
                         </Grid>
 
                         <Grid flexDirection={'row'} container justifyContent={'space-between'}>

@@ -19,11 +19,17 @@ import EthereumIcon from 'src/components/base/icons/ethereum';
 import { Direction } from 'src/context/AppContext';
 import useAppContext from 'src/hooks/useAppContext';
 import useWalletContext from 'src/hooks/useWalletContext';
+import useTransactionHistory from 'src/hooks/useTransactionHistory';
+import BridgeActionListItem from 'src/components/base/BridgeActionListItem';
+import { useSnackbar } from 'notistack';
 
 const TransactionHistory = () => {
     const { direction, updateDirection } = useAppContext();
     const { aeternityAddress, ethereumAddress } = useWalletContext();
     const connectedWalletAddress = direction === Direction.AeternityToEthereum ? aeternityAddress : ethereumAddress;
+
+    const { transactions } = useTransactionHistory(direction, connectedWalletAddress);
+    const { enqueueSnackbar } = useSnackbar();
 
     return (
         <Container sx={{ paddingY: 8 }}>
@@ -58,7 +64,7 @@ const TransactionHistory = () => {
                                 </Select>
                             </FormControl>
                             <TextField
-                                sx={{ minWidth: { xs: 250, sm: 350, md: 600 }, marginBottom: 3 }}
+                                sx={{ minWidth: { xs: 300, sm: 400, md: 450, lg: 600 }, marginBottom: 3 }}
                                 label="Connected account"
                                 value={connectedWalletAddress || 'Not connected'}
                                 InputProps={{
@@ -66,10 +72,12 @@ const TransactionHistory = () => {
                                         <InputAdornment position="end">
                                             <ContentCopyIcon
                                                 sx={{ ':hover': { cursor: 'pointer' } }}
-                                                onClick={() =>
-                                                    connectedWalletAddress &&
-                                                    navigator.clipboard.writeText(connectedWalletAddress)
-                                                }
+                                                onClick={() => {
+                                                    if (connectedWalletAddress) {
+                                                        navigator.clipboard.writeText(connectedWalletAddress).then();
+                                                        enqueueSnackbar('Copied to clipboard', { variant: 'success' });
+                                                    }
+                                                }}
                                             />
                                         </InputAdornment>
                                     ),
@@ -79,6 +87,9 @@ const TransactionHistory = () => {
                                 disabled
                             />
                             <Divider flexItem orientation="horizontal" />
+                            {transactions.map((transaction, index) => (
+                                <BridgeActionListItem key={index} item={transaction} />
+                            ))}
                         </Box>
                     </CardContent>
                 </Card>

@@ -12,7 +12,7 @@ const bridgeConfig = {
         default_ae: 'ct_J3zBY8xxjsRr3QojETNw48Eb38fjvEuJKkQ6KzECvubvEcvCa',
         wae: '0xCa781A1779c8f363f7F82BF6f4B406e5d54bAE1F',
         default_eth: '0xAbaE76F98A84D1DC3E0af8ed68465631165d33B2',
-        aeAPI: 'https://mainnet.aeternity.io/mdw/v3',
+        aeAPI: 'https://mainnet.aeternity.io/mdw',
     },
     testnet: {
         chainId: '0xaa36a7',
@@ -25,7 +25,7 @@ const bridgeConfig = {
         default_ae: 'ct_22WVQXzVCkgQYDbPUTX1YRNnyUx7XUHQ9ZRkK9P7BwwdyqZaXH',
         wae: '0xBC6e88A962662195e9bb8C17f8f396aCD7B7FE95',
         default_eth: '0xd57aafdC9615835E1F75BcdBDE1c7B1Aa6e4cB10',
-        aeAPI: 'https://testnet.aeternity.io/mdw/v3',
+        aeAPI: 'https://testnet.aeternity.io/mdw',
     },
 };
 
