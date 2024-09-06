@@ -3,14 +3,16 @@ import { Direction } from 'src/context/AppContext';
 import Constants from 'src/constants';
 import * as Ethereum from 'src/services/ethereum';
 import BigNumber from 'bignumber.js';
+import { Event } from 'ethers';
 
-interface BridgeAction {
+export interface BridgeAction {
     direction: Direction;
     hash: string;
     toAddress: string;
     tokenSymbol: string;
     tokenIcon: string;
     amount: number;
+    timestamp: number;
 }
 
 const useTransactionHistory = (direction: Direction, address?: string) => {
@@ -47,24 +49,32 @@ const fetchEthereumTransactions = async (address?: string) => {
     const filter = bridgeContract.filters.BridgeOut();
     const events = await bridgeContract.queryFilter(filter, 20141309, 'latest');
 
-    return parseEthereumTransactions(events);
+    return await parseEthereumTransactions(events);
 };
 
-const parseEthereumTransactions = (events: any): BridgeAction[] => {
-    return events.map((event: any) => {
-        const token = Constants.assets.find((asset) => asset.ethAddress.toLowerCase() === event.args[0].toLowerCase())!;
-        const toAddress = event.args[2];
-        const amount = new BigNumber(event.args[3].toString()).toNumber();
+const parseEthereumTransactions = async (events: any): Promise<BridgeAction[]> => {
+    const actions = await Promise.all(
+        events.map(async (event: Event) => {
+            const token = Constants.assets.find(
+                (asset) => asset.ethAddress.toLowerCase() === event.args![0].toLowerCase(),
+            )!;
+            const toAddress = event.args![2];
+            const amount = new BigNumber(event.args![3].toString()).toNumber();
 
-        return {
-            amount,
-            toAddress,
-            tokenIcon: token.icon,
-            tokenSymbol: token.symbol,
-            hash: event.transactionHash,
-            timestamp: event.blockNumber,
-        };
-    });
+            const block = await event.getBlock();
+            return {
+                amount: new BigNumber(amount).shiftedBy(-token.decimals).toNumber(),
+                toAddress,
+                tokenIcon: token.icon,
+                tokenSymbol: token.symbol,
+                hash: event.transactionHash,
+                timestamp: block.timestamp * 1000,
+                direction: Direction.EthereumToAeternity,
+            };
+        }),
+    );
+
+    return actions.reverse();
 };
 
 const fetchAeternityTransactions = async (address?: string) => {
@@ -99,12 +109,13 @@ const parseAeternityTransactions = (transactions: any): BridgeAction[] => {
         const amount = transaction.tx.arguments[0].value[2].value;
 
         return {
-            amount,
+            amount: new BigNumber(amount).shiftedBy(-token.decimals).toNumber(),
             toAddress,
             tokenIcon: token.icon,
             tokenSymbol: token.symbol,
             hash: transaction.hash,
             timestamp: transaction.micro_time,
+            direction: Direction.AeternityToEthereum,
         };
     });
 };
