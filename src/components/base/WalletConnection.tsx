@@ -30,6 +30,7 @@ const WalletConnection: React.FC<{
     if (requiredWallets.includes(RequiredWallet.Ethereum) && !ethereumAddress) {
         content.push(
             <Button
+                key={'ethereum-wallet-button'}
                 disabled={connecting}
                 fullWidth
                 variant="contained"
@@ -44,6 +45,7 @@ const WalletConnection: React.FC<{
     if (requiredWallets.includes(RequiredWallet.Aeternity) && !aeternityAddress) {
         content.push(
             <Button
+                key={'aeternity-wallet-button'}
                 disabled={connecting}
                 fullWidth
                 variant="contained"
