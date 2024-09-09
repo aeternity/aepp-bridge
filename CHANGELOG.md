@@ -1,5 +1,31 @@
 # Changelog
 
+## [1.11.0](https://www.github.com/aeternity/aepp-bridge/compare/v1.10.0...v1.11.0) (2024-09-09)
+
+
+### Features
+
+* added view customization features to WalletConnection component ([5b69c80](https://www.github.com/aeternity/aepp-bridge/commit/5b69c8046ebaddce618a08e20132e618f544f680))
+* connect wallet view in transaction history [#61](https://www.github.com/aeternity/aepp-bridge/issues/61) ([cfe619f](https://www.github.com/aeternity/aepp-bridge/commit/cfe619fa722241240688ad06592e57ee53c5b465))
+* transaction page ([4d055e0](https://www.github.com/aeternity/aepp-bridge/commit/4d055e0f3f921293abc7f018c1609cc6e5907a09))
+
+
+### Bug Fixes
+
+* add react node keys to wallet connect buttons ([49b83eb](https://www.github.com/aeternity/aepp-bridge/commit/49b83eb04f65331109b687eff108120ebca45050))
+* console warning for nth-child ([2e29c8d](https://www.github.com/aeternity/aepp-bridge/commit/2e29c8dd251a41f6458ab55c73f6fcd4ec2ae379))
+* wording, half button issue ([9462050](https://www.github.com/aeternity/aepp-bridge/commit/9462050c468ae454ba4857b3bebd0be893145c1c))
+
+
+### Refactorings
+
+* WalletConnection component ([a664a02](https://www.github.com/aeternity/aepp-bridge/commit/a664a026145af4a4896193dd7839b4561b64b81c))
+
+
+### Miscellaneous
+
+* update material icons package ([29a1a7f](https://www.github.com/aeternity/aepp-bridge/commit/29a1a7fd1392b458b9f98ee139e26a05a0a98344))
+
 ## [1.10.0](https://www.github.com/aeternity/aepp-bridge/compare/v1.9.2...v1.10.0) (2024-09-06)
 
 
