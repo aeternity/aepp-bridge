@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.10.0](https://www.github.com/aeternity/aepp-bridge/compare/v1.9.2...v1.10.0) (2024-09-06)
+
+
+### Features
+
+* improve left menu navigation ([109fc78](https://www.github.com/aeternity/aepp-bridge/commit/109fc78592c010ce0038822058c054ccd3b68b55))
+* left menu component with responsiveness updates ([#58](https://www.github.com/aeternity/aepp-bridge/issues/58)) ([c1189ef](https://www.github.com/aeternity/aepp-bridge/commit/c1189efde12d252d2e4a0087052ac1bffab8f335))
+* left menu styling ([93691e7](https://www.github.com/aeternity/aepp-bridge/commit/93691e723b1c3fde00207940a4667d4afe2d59b7))
+* transaction history route fundamentals ([ffdfb82](https://www.github.com/aeternity/aepp-bridge/commit/ffdfb82225840110616384edea76c34254d48a23))
+
+
+### Bug Fixes
+
+* code formatting ([0a62371](https://www.github.com/aeternity/aepp-bridge/commit/0a62371e3c589856369670745d5c4820ede05c66))
+
 ### [1.9.2](https://www.github.com/aeternity/aepp-bridge/compare/v1.9.1...v1.9.2) (2024-09-02)
 
 
