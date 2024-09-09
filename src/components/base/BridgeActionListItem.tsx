@@ -27,7 +27,7 @@ const BridgeActionListItem = ({ item }: Props) => {
             mb={1}
             pt={1}
             pb={1}
-            sx={{ '&:nth-child(even)': { backgroundColor: 'rgba(0, 0, 0, 0.05)' } }}
+            sx={{ '&:nth-of-type(even)': { backgroundColor: 'rgba(0, 0, 0, 0.05)' } }}
         >
             <Typography sx={{ color: 'black' }} component={'span'} variant="body1" width={120}>
                 <Link target="_blank" href={getTxUrl(item.direction, item.hash)}>
