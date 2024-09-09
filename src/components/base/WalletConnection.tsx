@@ -37,7 +37,7 @@ const WalletConnection: React.FC<{
                 onClick={connectEthereumWallet}
                 {...buttonProps}
             >
-                Connect EVM Wallet
+                Connect Ethereum Wallet
             </Button>,
         );
     }
@@ -62,7 +62,7 @@ const WalletConnection: React.FC<{
         content.push(children);
     }
 
-    return shouldShowConnectButton ? (
+    return shouldShowConnectButton && wrapperProps ? (
         <Box {...wrapperProps}>
             {shouldShowConnectButton && messageView}
             {content}

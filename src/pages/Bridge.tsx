@@ -575,6 +575,7 @@ const Bridge: React.FC = () => {
                                     ? RequiredWallet.Ethereum
                                     : RequiredWallet.Aeternity,
                             ]}
+                            buttonProps={{ fullWidth: true }}
                         >
                             <Button
                                 disabled={buttonBusy || !isBridgeContractEnabled || !hasOperatorEnoughBalance}
