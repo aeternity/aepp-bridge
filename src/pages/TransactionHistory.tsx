@@ -13,15 +13,17 @@ import {
     TextField,
     InputAdornment,
 } from '@mui/material';
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import AeternityIcon from 'src/components/base/icons/aeternity';
 import EthereumIcon from 'src/components/base/icons/ethereum';
 import { Direction } from 'src/context/AppContext';
 import useAppContext from 'src/hooks/useAppContext';
-import useWalletContext from 'src/hooks/useWalletContext';
+import useWalletContext, { RequiredWallet } from 'src/hooks/useWalletContext';
 import useTransactionHistory from 'src/hooks/useTransactionHistory';
 import BridgeActionListItem from 'src/components/base/BridgeActionListItem';
 import { useSnackbar } from 'notistack';
+import WalletConnection from 'src/components/base/WalletConnection';
 
 const TransactionHistory = () => {
     const { direction, updateDirection } = useAppContext();
@@ -87,9 +89,34 @@ const TransactionHistory = () => {
                                 disabled
                             />
                             <Divider flexItem orientation="horizontal" />
-                            {transactions.map((transaction, index) => (
-                                <BridgeActionListItem key={index} item={transaction} />
-                            ))}
+                            <WalletConnection
+                                buttonProps={{ fullWidth: false, variant: 'outlined', sx: { marginBottom: 1 } }}
+                                requiredWallets={[
+                                    direction === Direction.AeternityToEthereum
+                                        ? RequiredWallet.Aeternity
+                                        : RequiredWallet.Ethereum,
+                                    RequiredWallet.Ethereum,
+                                    RequiredWallet.Aeternity,
+                                ]}
+                                wrapperProps={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    marginTop: 3,
+                                }}
+                                messageView={
+                                    <>
+                                        <AccountBalanceWalletIcon sx={{ width: 48, height: 48 }} />
+                                        <Typography variant="h6" mb={2} textAlign={'center'}>
+                                            Connect your wallet to view transaction history
+                                        </Typography>
+                                    </>
+                                }
+                            >
+                                {transactions.map((transaction, index) => (
+                                    <BridgeActionListItem key={index} item={transaction} />
+                                ))}
+                            </WalletConnection>
                         </Box>
                     </CardContent>
                 </Card>
