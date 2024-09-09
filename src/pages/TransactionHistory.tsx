@@ -10,28 +10,57 @@ import {
     Select,
     MenuItem,
     Divider,
-    TextField,
-    InputAdornment,
 } from '@mui/material';
-import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+
+import { useMemo, useState } from 'react';
+import { useSnackbar } from 'notistack';
+import SelectAllIcon from '@mui/icons-material/SelectAll';
+import WalletIcon from '@mui/icons-material/Wallet';
+
 import AeternityIcon from 'src/components/base/icons/aeternity';
 import EthereumIcon from 'src/components/base/icons/ethereum';
 import { Direction } from 'src/context/AppContext';
-import useAppContext from 'src/hooks/useAppContext';
 import useWalletContext, { RequiredWallet } from 'src/hooks/useWalletContext';
-import useTransactionHistory from 'src/hooks/useTransactionHistory';
+import useTransactionHistory, { ConnectedWallet } from 'src/hooks/useTransactionHistory';
 import BridgeActionListItem from 'src/components/base/BridgeActionListItem';
-import { useSnackbar } from 'notistack';
 import WalletConnection from 'src/components/base/WalletConnection';
+import Spinner from 'src/components/base/Spinner';
+
+const getRequiredWallets = (direction: Direction) => {
+    switch (direction) {
+        case Direction.AeternityToEthereum:
+            return [RequiredWallet.Aeternity];
+        case Direction.EthereumToAeternity:
+            return [RequiredWallet.Ethereum];
+        default:
+            return [RequiredWallet.Aeternity, RequiredWallet.Ethereum];
+    }
+};
 
 const TransactionHistory = () => {
-    const { direction, updateDirection } = useAppContext();
-    const { aeternityAddress, ethereumAddress } = useWalletContext();
-    const connectedWalletAddress = direction === Direction.AeternityToEthereum ? aeternityAddress : ethereumAddress;
-
-    const { transactions } = useTransactionHistory(direction, connectedWalletAddress);
     const { enqueueSnackbar } = useSnackbar();
+    const { aeternityAddress, ethereumAddress } = useWalletContext();
+    const [direction, setDirection] = useState<Direction>(Direction.Both);
+
+    const connectedWallets = useMemo<ConnectedWallet[]>(() => {
+        const _connectedWallets: ConnectedWallet[] = [];
+
+        const ethWallet = { wallet: RequiredWallet.Ethereum, address: ethereumAddress } as ConnectedWallet;
+        const aeWallet = { wallet: RequiredWallet.Aeternity, address: aeternityAddress } as ConnectedWallet;
+
+        if (direction === Direction.AeternityToEthereum) {
+            aeternityAddress && _connectedWallets.push(aeWallet);
+        } else if (direction === Direction.EthereumToAeternity) {
+            ethereumAddress && _connectedWallets.push(ethWallet);
+        } else {
+            aeternityAddress && _connectedWallets.push(aeWallet);
+            ethereumAddress && _connectedWallets.push(ethWallet);
+        }
+
+        return _connectedWallets;
+    }, [aeternityAddress, ethereumAddress, direction]);
+
+    const { transactions, loading } = useTransactionHistory(direction, connectedWallets);
 
     return (
         <Container sx={{ paddingY: 8 }}>
@@ -42,20 +71,25 @@ const TransactionHistory = () => {
                             Transaction History
                         </Typography>
                         <Divider flexItem orientation="horizontal" sx={{ marginTop: 1, marginBottom: 3 }} />
-                        <Box>
+                        <Box display="flex" flexWrap={'wrap'} mb={2}>
                             <FormControl>
                                 <InputLabel id="network-from-select-label">Network</InputLabel>
                                 <Select
-                                    sx={{ marginRight: 1, marginBottom: 3 }}
+                                    sx={{ marginRight: 1, minWidth: 160 }}
                                     labelId="network-from-select-label"
                                     id="network-from-select"
                                     label="Network"
                                     value={direction}
-                                    onChange={(e) => updateDirection(e.target.value as Direction)}
+                                    onChange={(e) => setDirection(e.target.value as Direction)}
                                 >
+                                    <MenuItem value={Direction.Both}>
+                                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                            <SelectAllIcon /> <Box sx={{ marginLeft: 1 }}>All</Box>
+                                        </Box>
+                                    </MenuItem>
                                     <MenuItem value={Direction.AeternityToEthereum}>
                                         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                            <AeternityIcon /> <Box sx={{ marginLeft: 1 }}>æternity </Box>
+                                            <AeternityIcon /> <Box sx={{ marginLeft: 1 }}>æternity</Box>
                                         </Box>
                                     </MenuItem>
                                     <MenuItem value={Direction.EthereumToAeternity}>
@@ -65,56 +99,76 @@ const TransactionHistory = () => {
                                     </MenuItem>
                                 </Select>
                             </FormControl>
-                            <TextField
-                                sx={{ minWidth: { xs: 300, sm: 400, md: 450, lg: 600 }, marginBottom: 3 }}
-                                label="Connected account"
-                                value={connectedWalletAddress || 'Not connected'}
-                                InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <ContentCopyIcon
-                                                sx={{ ':hover': { cursor: 'pointer' } }}
-                                                onClick={() => {
-                                                    if (connectedWalletAddress) {
-                                                        navigator.clipboard.writeText(connectedWalletAddress).then();
-                                                        enqueueSnackbar('Copied to clipboard', { variant: 'success' });
-                                                    }
-                                                }}
-                                            />
-                                        </InputAdornment>
-                                    ),
+
+                            <Box
+                                sx={{
+                                    display: 'inline-flex',
+                                    flexDirection: 'column',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    minWidth: { xs: 300, sm: 400, md: 450, lg: 600 },
                                 }}
-                                variant="outlined"
-                                type="text"
-                                disabled
-                            />
-                            <Divider flexItem orientation="horizontal" />
+                            >
+                                {!!connectedWallets.length ? (
+                                    <Typography variant="caption" mt={-1}>
+                                        Connected account{connectedWallets.length > 1 ? 's' : ''}
+                                    </Typography>
+                                ) : (
+                                    <Typography variant="h5">Wallet not connected</Typography>
+                                )}
+                                {connectedWallets.map((connected) => {
+                                    return (
+                                        <Typography
+                                            key={`wallet-address-${connected.wallet}`}
+                                            display="flex"
+                                            alignItems="center"
+                                            variant="body2"
+                                            mb={1}
+                                            gap={1}
+                                            onClick={(e) => {
+                                                e.detail === 2 &&
+                                                    navigator.clipboard.writeText(connected.address).then(() =>
+                                                        enqueueSnackbar('Copied to clipboard', {
+                                                            variant: 'success',
+                                                        }),
+                                                    );
+                                            }}
+                                        >
+                                            {connected.wallet === RequiredWallet.Ethereum ? (
+                                                <EthereumIcon height={13} width={13} />
+                                            ) : (
+                                                <AeternityIcon height={13} width={13} />
+                                            )}
+                                            {connected.address}
+                                        </Typography>
+                                    );
+                                })}
+                            </Box>
+                        </Box>
+                        <Divider flexItem orientation="horizontal" />
+                        <Box>
+                            <Spinner loading={loading} size={32} margin={5} />
                             <WalletConnection
                                 buttonProps={{ fullWidth: false, variant: 'outlined', sx: { marginBottom: 1 } }}
-                                requiredWallets={[
-                                    direction === Direction.AeternityToEthereum
-                                        ? RequiredWallet.Aeternity
-                                        : RequiredWallet.Ethereum,
-                                    RequiredWallet.Ethereum,
-                                    RequiredWallet.Aeternity,
-                                ]}
+                                requiredWallets={getRequiredWallets(direction)}
                                 wrapperProps={{
                                     display: 'flex',
                                     flexDirection: 'column',
                                     alignItems: 'center',
                                     marginTop: 3,
+                                    justifyContent: 'center',
                                 }}
                                 messageView={
                                     <>
-                                        <AccountBalanceWalletIcon sx={{ width: 48, height: 48 }} />
+                                        <WalletIcon sx={{ width: 48, height: 48 }} />
                                         <Typography variant="h6" mb={2} textAlign={'center'}>
                                             Connect your wallet to view transaction history
                                         </Typography>
                                     </>
                                 }
                             >
-                                {transactions.map((transaction, index) => (
-                                    <BridgeActionListItem key={index} item={transaction} />
+                                {transactions.map((transaction) => (
+                                    <BridgeActionListItem key={transaction.hash} item={transaction} />
                                 ))}
                             </WalletConnection>
                         </Box>

@@ -29,6 +29,7 @@ export interface FundEvent {
 export enum Direction {
     AeternityToEthereum = 'aeternity-ethereum',
     EthereumToAeternity = 'ethereum-aeternity',
+    Both = 'both',
 }
 
 export interface IAppContext {

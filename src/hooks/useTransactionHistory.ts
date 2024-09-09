@@ -4,6 +4,7 @@ import Constants from 'src/constants';
 import * as Ethereum from 'src/services/ethereum';
 import BigNumber from 'bignumber.js';
 import { Event } from 'ethers';
+import { RequiredWallet } from './useWalletContext';
 
 export interface BridgeAction {
     direction: Direction;
@@ -15,7 +16,12 @@ export interface BridgeAction {
     timestamp: number;
 }
 
-const useTransactionHistory = (direction: Direction, address?: string) => {
+export interface ConnectedWallet {
+    wallet: RequiredWallet;
+    address: string;
+}
+
+const useTransactionHistory = (direction: Direction, connectedWallets: ConnectedWallet[]) => {
     const [transactions, setTransactions] = useState<BridgeAction[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
 
@@ -23,15 +29,25 @@ const useTransactionHistory = (direction: Direction, address?: string) => {
         (async function () {
             setLoading(true);
 
-            if (direction === Direction.AeternityToEthereum) {
-                setTransactions(await fetchAeternityTransactions(address));
-            } else if (direction === Direction.EthereumToAeternity) {
-                setTransactions(await fetchEthereumTransactions(address));
+            const ethWallet = connectedWallets.find((wallet) => wallet.wallet === RequiredWallet.Ethereum);
+            const aeWallet = connectedWallets.find((wallet) => wallet.wallet === RequiredWallet.Aeternity);
+
+            if (direction === Direction.AeternityToEthereum && aeWallet) {
+                setTransactions(await fetchAeternityTransactions(aeWallet.address));
+            } else if (direction === Direction.EthereumToAeternity && ethWallet) {
+                setTransactions(await fetchEthereumTransactions(ethWallet.address));
+            } else if (direction === Direction.Both && ethWallet && aeWallet) {
+                const [ethTransactions, aeTransactions] = await Promise.all([
+                    fetchEthereumTransactions(ethWallet.address),
+                    fetchAeternityTransactions(aeWallet.address),
+                ]);
+
+                setTransactions([...ethTransactions, ...aeTransactions].sort((a, b) => b.timestamp - a.timestamp));
             }
 
             setLoading(false);
         })();
-    }, [direction, address]);
+    }, [direction, connectedWallets]);
 
     return { transactions, loading };
 };
