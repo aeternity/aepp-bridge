@@ -570,11 +570,11 @@ const Bridge: React.FC = () => {
                     <CardActions sx={{ margin: 1, paddingTop: 1 }}>
                         <WalletConnection
                             onWalletConnectError={showSnackMessage}
-                            requiredWallet={
+                            requiredWallets={[
                                 direction == Direction.EthereumToAeternity
                                     ? RequiredWallet.Ethereum
-                                    : RequiredWallet.Aeternity
-                            }
+                                    : RequiredWallet.Aeternity,
+                            ]}
                         >
                             <Button
                                 disabled={buttonBusy || !isBridgeContractEnabled || !hasOperatorEnoughBalance}

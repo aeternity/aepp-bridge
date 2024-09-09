@@ -3,10 +3,10 @@ import Button from '@mui/material/Button';
 import useWalletContext, { RequiredWallet } from 'src/hooks/useWalletContext';
 
 const WalletConnection: React.FC<{
-    requiredWallet: RequiredWallet;
+    requiredWallets: RequiredWallet[];
     children: React.ReactNode;
-    onWalletConnectError: (e: string) => void;
-}> = ({ requiredWallet, children, onWalletConnectError }) => {
+    onWalletConnectError?: (e: string) => void;
+}> = ({ requiredWallets, children, onWalletConnectError }) => {
     const {
         connectAeternityWallet,
         connectEthereumWallet,
@@ -16,20 +16,23 @@ const WalletConnection: React.FC<{
         connecting,
     } = useWalletContext();
 
-    useEffect(() => onWalletConnectError(walletConnectError), [walletConnectError]);
+    useEffect(
+        () => onWalletConnectError && onWalletConnectError(walletConnectError),
+        [walletConnectError, onWalletConnectError],
+    );
 
-    if (requiredWallet == RequiredWallet.Ethereum && !ethereumAddress) {
+    if (requiredWallets.includes(RequiredWallet.Ethereum) && !ethereumAddress) {
         return (
             <Button disabled={connecting} fullWidth variant="contained" onClick={connectEthereumWallet}>
-                Connect Wallet
+                Connect EVM Wallet
             </Button>
         );
     }
 
-    if (requiredWallet == RequiredWallet.Aeternity && !aeternityAddress) {
+    if (requiredWallets.includes(RequiredWallet.Aeternity) && !aeternityAddress) {
         return (
             <Button disabled={connecting} fullWidth variant="contained" onClick={connectAeternityWallet}>
-                Connect Wallet
+                Connect SuperHero Wallet
             </Button>
         );
     }
