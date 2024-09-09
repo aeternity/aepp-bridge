@@ -1,12 +1,16 @@
 import React, { useEffect } from 'react';
 import Button from '@mui/material/Button';
 import useWalletContext, { RequiredWallet } from 'src/hooks/useWalletContext';
+import { Box } from '@mui/material';
 
 const WalletConnection: React.FC<{
-    requiredWallets: RequiredWallet[];
     children: React.ReactNode;
+    requiredWallets: RequiredWallet[];
+    messageView?: React.ReactNode;
+    wrapperProps?: React.ComponentProps<typeof Box>;
+    buttonProps?: React.ComponentProps<typeof Button>;
     onWalletConnectError?: (e: string) => void;
-}> = ({ requiredWallets, children, onWalletConnectError }) => {
+}> = ({ requiredWallets, children, onWalletConnectError, buttonProps, messageView, wrapperProps }) => {
     const {
         connectAeternityWallet,
         connectEthereumWallet,
@@ -15,6 +19,8 @@ const WalletConnection: React.FC<{
         walletConnectError,
         connecting,
     } = useWalletContext();
+    let content = [];
+    let shouldShowConnectButton = true;
 
     useEffect(
         () => onWalletConnectError && onWalletConnectError(walletConnectError),
@@ -22,21 +28,46 @@ const WalletConnection: React.FC<{
     );
 
     if (requiredWallets.includes(RequiredWallet.Ethereum) && !ethereumAddress) {
-        return (
-            <Button disabled={connecting} fullWidth variant="contained" onClick={connectEthereumWallet}>
+        content.push(
+            <Button
+                disabled={connecting}
+                fullWidth
+                variant="contained"
+                onClick={connectEthereumWallet}
+                {...buttonProps}
+            >
                 Connect EVM Wallet
-            </Button>
+            </Button>,
         );
     }
 
     if (requiredWallets.includes(RequiredWallet.Aeternity) && !aeternityAddress) {
-        return (
-            <Button disabled={connecting} fullWidth variant="contained" onClick={connectAeternityWallet}>
+        content.push(
+            <Button
+                disabled={connecting}
+                fullWidth
+                variant="contained"
+                onClick={connectAeternityWallet}
+                {...buttonProps}
+            >
                 Connect SuperHero Wallet
-            </Button>
+            </Button>,
         );
     }
 
-    return <>{children}</>;
+    if (content.length === 0) {
+        shouldShowConnectButton = false;
+        content.push(children);
+    }
+
+    return shouldShowConnectButton ? (
+        <Box {...wrapperProps}>
+            {shouldShowConnectButton && messageView}
+            {content}
+        </Box>
+    ) : (
+        <>{content}</>
+    );
 };
+
 export default WalletConnection;
