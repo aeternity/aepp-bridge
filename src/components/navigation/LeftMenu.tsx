@@ -1,10 +1,13 @@
 import { useNavigate } from 'react-router-dom';
 
-import { Box, List, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import RouteOutlinedIcon from '@mui/icons-material/RouteOutlined';
 import ReceiptOutlinedIcon from '@mui/icons-material/ReceiptOutlined';
+import QuizIcon from '@mui/icons-material/Quiz';
+import SuperHeroIcon from 'src/components/base/icons/superhero';
+import MetaMaskIcon from 'src/components/base/icons/metamask';
 
-const ITEMS = [
+const MAIN_ITEMS = [
     {
         icon: RouteOutlinedIcon,
         text: 'Bridge',
@@ -17,6 +20,26 @@ const ITEMS = [
     },
 ];
 
+const SUB_ITEMS = [
+    {
+        icon: SuperHeroIcon,
+        text: 'æternity Wallet',
+        link: 'https://wallet.superhero.com/',
+        external: true,
+    },
+    {
+        icon: MetaMaskIcon,
+        text: 'EVM Wallet',
+        link: 'https://metamask.io/',
+        external: true,
+    },
+    {
+        icon: QuizIcon,
+        text: 'How To / FAQ',
+        link: '/faq',
+    },
+];
+
 const LeftMenu = () => {
     const navigate = useNavigate();
     return (
@@ -25,8 +48,9 @@ const LeftMenu = () => {
                 backgroundColor: 'white',
                 boxShadow: '0 9px 14px rgba(0, 0, 0, 2.1)',
                 borderBottom: '0.5px solid rgba(0, 0, 0, 0.1)',
-                justifyContent: { xs: 'center', sm: 'center', md: 'flex-start' },
+                justifyContent: { xs: 'center', sm: 'center', md: 'space-between' },
                 display: 'flex',
+                flexDirection: { xs: 'row', sm: 'row', md: 'column' },
             }}
         >
             <List
@@ -37,7 +61,7 @@ const LeftMenu = () => {
                     display: { xs: 'flex', sm: 'flex', md: 'block' },
                 }}
             >
-                {ITEMS.map((item, index) => (
+                {MAIN_ITEMS.map((item, index) => (
                     <ListItemButton
                         key={index}
                         sx={{
@@ -68,6 +92,24 @@ const LeftMenu = () => {
                         />
                     </ListItemButton>
                 ))}
+            </List>
+            <List>
+                {SUB_ITEMS.map((item, index) => {
+                    return (
+                        <ListItem
+                            key={index}
+                            sx={{ cursor: 'pointer', ':hover': { textDecoration: 'underline', color: 'black' } }}
+                            onClick={() =>
+                                item.external ? (window as any).open(item.link, '_blank').focus() : navigate(item.link)
+                            }
+                        >
+                            <ListItemIcon sx={{ minWidth: { xs: 'auto', sm: 'auto', md: 40 } }}>
+                                <item.icon width={24} height={24} />
+                            </ListItemIcon>
+                            <ListItemText>{item.text}</ListItemText>
+                        </ListItem>
+                    );
+                })}
             </List>
         </Box>
     );

@@ -85,9 +85,6 @@ const ViewContainer: React.FC<{ children: React.ReactNode }> = (props) => {
                         <Link sx={linkStyles} href="https://github.com/aeternity/aepp-bridge" target="_blank">
                             GitHub Repo
                         </Link>
-                        <Link sx={linkStyles} href="/faq">
-                            FAQ
-                        </Link>
                         <Link sx={linkStyles} href="/terms">
                             Terms and Conditions
                         </Link>

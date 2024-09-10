@@ -1,4 +1,3 @@
-import * as React from 'react';
 const SvgComponent = (props: any) => (
     <svg xmlns="http://www.w3.org/2000/svg" id="Layer_2" data-name="Layer 2" viewBox="0 0 549.71 501.09" {...props}>
         <defs id="defs1">

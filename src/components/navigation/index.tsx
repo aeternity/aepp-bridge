@@ -23,14 +23,8 @@ const NavigationBar = () => {
                     </Link>
                     <Box sx={{ alignItems: 'center', display: 'flex' }}>
                         <Box sx={{ alignItems: 'center', display: { sm: 'flex', xs: 'none' } }}>
-                            <Link sx={linkStyles} href="/faq">
-                                How To
-                            </Link>
                             <Link sx={linkStyles} href="https://aeternity.com" target="_blank">
                                 æternity Website
-                            </Link>
-                            <Link sx={linkStyles} href="https://wallet.superhero.com" target="_blank">
-                                æternity Wallet
                             </Link>
                         </Box>
 
@@ -38,9 +32,6 @@ const NavigationBar = () => {
                         <ConnectWallet />
                     </Box>
                 </Box>
-
-                {/* <Divider flexItem orientation="vertical" sx={{ margin: 1 }} />
-                <DarkLightSwitch /> */}
             </Toolbar>
         </AppBar>
     );
