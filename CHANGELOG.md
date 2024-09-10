@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.12.0](https://www.github.com/aeternity/aepp-bridge/compare/v1.11.0...v1.12.0) (2024-09-10)
+
+
+### Features
+
+* added sub menu to left bar & reorganized menus ([d28814b](https://www.github.com/aeternity/aepp-bridge/commit/d28814b024d08766e8d74ee5615ed168b90800e2))
+
+
+### Bug Fixes
+
+* left sub menu responsiveness ([5c8b9e3](https://www.github.com/aeternity/aepp-bridge/commit/5c8b9e311a50d2175b26e24f70d0136000691030))
+
+
+### Miscellaneous
+
+* wording updates ([8036c59](https://www.github.com/aeternity/aepp-bridge/commit/8036c59aee2a949f97adf7f8fa1b26ff9d5a208a))
+
 ## [1.11.0](https://www.github.com/aeternity/aepp-bridge/compare/v1.10.0...v1.11.0) (2024-09-09)
 
 
