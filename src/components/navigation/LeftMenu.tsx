@@ -93,7 +93,7 @@ const LeftMenu = () => {
                     </ListItemButton>
                 ))}
             </List>
-            <List>
+            <List sx={{ display: { xs: 'flex', sm: 'flex', md: 'block' } }}>
                 {SUB_ITEMS.map((item, index) => {
                     return (
                         <ListItem
@@ -106,7 +106,9 @@ const LeftMenu = () => {
                             <ListItemIcon sx={{ minWidth: { xs: 'auto', sm: 'auto', md: 40 } }}>
                                 <item.icon width={24} height={24} />
                             </ListItemIcon>
-                            <ListItemText>{item.text}</ListItemText>
+                            <ListItemText sx={{ display: { xs: 'none', sm: 'none', md: 'block' } }}>
+                                {item.text}
+                            </ListItemText>
                         </ListItem>
                     );
                 })}
