@@ -197,18 +197,25 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
             fetchEthereumBalance(ethereumAddress).then(setEthereumBalance).catch(Logger.error);
             fetchAeternityBalance(aeternityAddress).then(setAeternityBalance).catch(Logger.error);
-            fetchEthereumBridgeInfo()
-                .then((info) => {
-                    setEthereumBridgeEnabled(info.isEnabled!);
-                    setEthereumFundsSufficient(info.areFundsSufficient!);
-                })
-                .catch(Logger.error);
-            fetchAeternityBridgeInfo()
-                .then((info) => {
-                    setAeternityBridgeEnabled(info.isEnabled!);
-                    setAeternityFundsSufficient(info.areFundsSufficient!);
-                })
-                .catch(Logger.error);
+
+            !!(window as any).ethereum &&
+                fetchEthereumBridgeInfo()
+                    .then((info) => {
+                        setEthereumBridgeEnabled(info.isEnabled!);
+                        setEthereumFundsSufficient(info.areFundsSufficient!);
+                    })
+                    .catch(Logger.error);
+
+            Aeternity.detectWallet().then((hasWallet) => {
+                if (hasWallet) {
+                    fetchAeternityBridgeInfo()
+                        .then((info) => {
+                            setAeternityBridgeEnabled(info.isEnabled!);
+                            setAeternityFundsSufficient(info.areFundsSufficient!);
+                        })
+                        .catch(Logger.error);
+                }
+            });
         };
         fetch(); // First fetch
 

@@ -49,4 +49,18 @@ export const connect = async (): Promise<string> => {
     });
 };
 
+export const detectWallet = async (): Promise<boolean> => {
+    return new Promise((resolve, reject) => {
+        const handleWallets = async ({ wallets, newWallet }: any) => {
+            clearTimeout(walletDetectionTimeout);
+            stopScan();
+            resolve(!!newWallet);
+        };
+
+        const scannerConnection = new BrowserWindowMessageConnection();
+        const walletDetectionTimeout = setTimeout(() => resolve(false), 5000);
+        const stopScan = walletDetector(scannerConnection, handleWallets);
+    });
+};
+
 export { isAddressValid };
