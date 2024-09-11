@@ -1,5 +1,13 @@
 # Changelog
 
+### [1.12.1](https://www.github.com/aeternity/aepp-bridge/compare/v1.12.0...v1.12.1) (2024-09-11)
+
+
+### Bug Fixes
+
+* only fetch bridge info when wallets detected ([ae54572](https://www.github.com/aeternity/aepp-bridge/commit/ae545721b7b12622ef227a81033d412c4ae7ff89))
+* only try to connect to aeternity wallet when wallet detected ([f0ea95a](https://www.github.com/aeternity/aepp-bridge/commit/f0ea95a51f22e4b60e2da44ca75c26c1d3e65dbb))
+
 ## [1.12.0](https://www.github.com/aeternity/aepp-bridge/compare/v1.11.0...v1.12.0) (2024-09-10)
 
 
