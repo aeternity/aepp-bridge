@@ -35,10 +35,11 @@ const WalletProvider: React.FC<{ children: ReactNode }> = (props) => {
 
     const tryConnectToAeternityWallet = useCallback(async () => {
         try {
-            const address = Aeternity.Sdk.address;
-        } catch (e) {
-            connectAeternityWallet();
-        }
+            const walletDetected = await Aeternity.detectWallet();
+            if (walletDetected) {
+                connectAeternityWallet();
+            }
+        } catch (e) {}
     }, []);
 
     const connectAeternityWallet = useCallback(async () => {
