@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import AppContext, { AeternityAssetInfo, EthereumAssetInfo, Direction, BridgeInfo } from './AppContext';
 import * as Aeternity from 'src/services/aeternity';
 import Constants, {
@@ -161,7 +161,7 @@ const fetchAeternityBalance = async (address: string | undefined) => {
 
 const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const isMounter = React.useRef(false);
-    const { aeternityAddress, ethereumAddress, connectAeternityWallet } = useWalletContext();
+    const { aeternityAddress, ethereumAddress, connectAeternityWallet, connectEthereumWallet } = useWalletContext();
     const [asset, updateAsset] = React.useState<Asset>(Constants.assets[0]);
     const [ethereumAssetInfo, setEthereumAssetInfo] = React.useState<EthereumAssetInfo>();
     const [aeternityAssetInfo, setAeternityAssetInfo] = React.useState<AeternityAssetInfo>();
@@ -174,7 +174,13 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [areEthereumFundsSufficient, setEthereumFundsSufficient] = React.useState<boolean>(true);
     const [areAeternityFundsSufficient, setAeternityFundsSufficient] = React.useState<boolean>(true);
 
-    React.useEffect(() => {
+    useEffect(() => {
+        if (direction === Direction.EthereumToAeternity) {
+            connectEthereumWallet();
+        }
+    }, []);
+
+    useEffect(() => {
         isMounter.current = true;
 
         const fetch = () => {

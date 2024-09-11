@@ -15,74 +15,85 @@ const WalletProvider: React.FC<{ children: ReactNode }> = (props) => {
     const [aeternityAddress, setAeternityAddress] = useState<string | undefined>(undefined);
     const [walletConnectError, setWalletConnectError] = useState<string>('');
 
-    const isWalletDetectionEnded = useRef<boolean>(false);
+    const isEthWalletDetectionEnded = useRef<boolean>(false);
+    const isAeWalletDetectionEnded = useRef<boolean>(false);
     const ethereumWalletDetected = useRef<boolean>(false);
     const aeternityWalletDetected = useRef<boolean>(false);
 
     useEffect(() => {
         (async function () {
-            ethereumWalletDetected.current = !!(window as any).ethereum;
+            const ethereumClient = (window as any).ethereum;
+
+            ethereumWalletDetected.current = !!ethereumClient;
+            isEthWalletDetectionEnded.current = true;
+
             aeternityWalletDetected.current = await Aeternity.detectWallet();
-            isWalletDetectionEnded.current = true;
+            isAeWalletDetectionEnded.current = true;
+
+            if (ethereumWalletDetected.current) {
+                Ethereum.Provider.listAccounts().then((accounts) => {
+                    if (accounts.length > 0) {
+                        setEthereumAddress(accounts[0]);
+                    }
+                });
+                ethereumClient.on('accountsChanged', (accounts: any) => {
+                    if (accounts.length > 0) {
+                        setEthereumAddress(accounts[0]);
+                    } else {
+                        setEthereumAddress(undefined);
+                    }
+                });
+            }
+
+            if (aeternityWalletDetected.current) {
+                Aeternity.Sdk.onAddressChange = ({ current }) => {
+                    setAeternityAddress(Object.keys(current)[0]);
+                };
+            }
         })();
     }, []);
 
-    useEffect(() => {
-        const ethereumClient = (window as any).ethereum;
-
-        if (ethereumClient) {
-            Ethereum.Provider.listAccounts().then((accounts) => {
-                if (accounts.length > 0) {
-                    setEthereumAddress(accounts[0]);
-                }
-            });
-            ethereumClient.on('accountsChanged', (accounts: any) => {
-                if (accounts.length > 0) {
-                    setEthereumAddress(accounts[0]);
-                } else {
-                    setEthereumAddress(undefined);
-                }
-            });
-
-            Aeternity.Sdk.onAddressChange = ({ current }) => {
-                setAeternityAddress(Object.keys(current)[0]);
-            };
-        }
-    }, []);
-
     const connectAeternityWallet = useCallback(async () => {
-        if (isWalletDetectionEnded.current && !aeternityWalletDetected.current) {
-            handleWalletConnectError('æternity wallet extension not found');
-            return;
-        }
+        if (isAeWalletDetectionEnded.current) {
+            if (!aeternityWalletDetected.current) {
+                handleWalletConnectError('æternity wallet extension not found');
+                return;
+            }
 
-        try {
-            setConnecting(true);
-            const address = await Aeternity.connect();
-            setAeternityAddress(address);
-        } catch (e) {
-            Logger.error(e);
-            handleWalletConnectError((e as Error).message);
-        } finally {
-            setConnecting(false);
+            try {
+                setConnecting(true);
+                const address = await Aeternity.connect();
+                setAeternityAddress(address);
+            } catch (e) {
+                Logger.error(e);
+                handleWalletConnectError((e as Error).message);
+            } finally {
+                setConnecting(false);
+            }
+        } else {
+            setTimeout(connectAeternityWallet, 100);
         }
     }, [aeternityAddress]);
 
     const connectEthereumWallet = useCallback(async () => {
-        if (isWalletDetectionEnded.current && !ethereumWalletDetected.current) {
-            handleWalletConnectError('Ethereum wallet extension not found');
-            return;
-        }
+        if (isEthWalletDetectionEnded.current) {
+            if (!ethereumWalletDetected.current) {
+                handleWalletConnectError('Ethereum wallet extension not found');
+                return;
+            }
 
-        try {
-            setConnecting(true);
-            const address = await Ethereum.connect();
-            setEthereumAddress(address);
-        } catch (e) {
-            Logger.error(e);
-            handleWalletConnectError((e as Error).message);
-        } finally {
-            setConnecting(false);
+            try {
+                setConnecting(true);
+                const address = await Ethereum.connect();
+                setEthereumAddress(address);
+            } catch (e) {
+                Logger.error(e);
+                handleWalletConnectError((e as Error).message);
+            } finally {
+                setConnecting(false);
+            }
+        } else {
+            setTimeout(connectEthereumWallet, 100);
         }
     }, []);
 
