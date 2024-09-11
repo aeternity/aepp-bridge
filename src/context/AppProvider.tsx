@@ -161,7 +161,7 @@ const fetchAeternityBalance = async (address: string | undefined) => {
 
 const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const isMounter = React.useRef(false);
-    const { aeternityAddress, ethereumAddress, tryConnectToAeternityWallet } = useWalletContext();
+    const { aeternityAddress, ethereumAddress, connectAeternityWallet } = useWalletContext();
     const [asset, updateAsset] = React.useState<Asset>(Constants.assets[0]);
     const [ethereumAssetInfo, setEthereumAssetInfo] = React.useState<EthereumAssetInfo>();
     const [aeternityAssetInfo, setAeternityAssetInfo] = React.useState<AeternityAssetInfo>();
@@ -253,7 +253,7 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                 updateDirection: (direction: Direction) => {
                     updateDirection(direction);
                     if (direction === Direction.AeternityToEthereum) {
-                        tryConnectToAeternityWallet();
+                        connectAeternityWallet();
                     }
                 },
             }}

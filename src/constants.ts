@@ -19,6 +19,10 @@ export const ETHEREUM_FUNDS_THRESHOLD = 0.01;
 export const AETERNITY_FUNDS_THRESHOLD = 0.005;
 export const BRIDGE_USAGE_INTERVAL_IN_HOURS = 12;
 
+export const EVM_WALLET_INSTALL_URL =
+    'https://support.metamask.io/getting-started/getting-started-with-metamask/#how-to-install-metamask';
+export const SUPERHERO_WALLET_URL = 'https://wallet.superhero.com/';
+
 const isMainnet = true;
 
 const Constants = {

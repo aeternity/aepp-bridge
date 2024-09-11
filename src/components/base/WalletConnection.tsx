@@ -4,28 +4,16 @@ import useWalletContext, { RequiredWallet } from 'src/hooks/useWalletContext';
 import { Box } from '@mui/material';
 
 const WalletConnection: React.FC<{
-    children: React.ReactNode;
+    children?: React.ReactNode;
     requiredWallets: RequiredWallet[];
     messageView?: React.ReactNode;
     wrapperProps?: React.ComponentProps<typeof Box>;
     buttonProps?: React.ComponentProps<typeof Button>;
-    onWalletConnectError?: (e: string) => void;
-}> = ({ requiredWallets, children, onWalletConnectError, buttonProps, messageView, wrapperProps }) => {
-    const {
-        connectAeternityWallet,
-        connectEthereumWallet,
-        aeternityAddress,
-        ethereumAddress,
-        walletConnectError,
-        connecting,
-    } = useWalletContext();
+}> = ({ requiredWallets, children, buttonProps, messageView, wrapperProps }) => {
+    const { connectAeternityWallet, connectEthereumWallet, aeternityAddress, ethereumAddress, connecting } =
+        useWalletContext();
     let content = [];
     let shouldShowConnectButton = true;
-
-    useEffect(
-        () => onWalletConnectError && onWalletConnectError(walletConnectError),
-        [walletConnectError, onWalletConnectError],
-    );
 
     if (requiredWallets.includes(RequiredWallet.Ethereum) && !ethereumAddress) {
         content.push(

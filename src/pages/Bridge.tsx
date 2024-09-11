@@ -569,7 +569,6 @@ const Bridge: React.FC = () => {
                     </Grid>
                     <CardActions sx={{ margin: 1, paddingTop: 1 }}>
                         <WalletConnection
-                            onWalletConnectError={showSnackMessage}
                             requiredWallets={[
                                 direction == Direction.EthereumToAeternity
                                     ? RequiredWallet.Ethereum

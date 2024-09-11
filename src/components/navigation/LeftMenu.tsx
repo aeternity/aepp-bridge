@@ -6,6 +6,7 @@ import ReceiptOutlinedIcon from '@mui/icons-material/ReceiptOutlined';
 import QuizIcon from '@mui/icons-material/Quiz';
 import SuperHeroIcon from 'src/components/base/icons/superhero';
 import MetaMaskIcon from 'src/components/base/icons/metamask';
+import { EVM_WALLET_INSTALL_URL, SUPERHERO_WALLET_URL } from 'src/constants';
 
 const MAIN_ITEMS = [
     {
@@ -24,13 +25,13 @@ const SUB_ITEMS = [
     {
         icon: SuperHeroIcon,
         text: 'æternity Wallet',
-        link: 'https://wallet.superhero.com/',
+        link: SUPERHERO_WALLET_URL,
         external: true,
     },
     {
         icon: MetaMaskIcon,
         text: 'EVM Wallet',
-        link: 'https://metamask.io/',
+        link: EVM_WALLET_INSTALL_URL,
         external: true,
     },
     {

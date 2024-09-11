@@ -19,13 +19,13 @@ global.process = require('process');
 
 const App = () => (
     <ThemeProvider>
-        <WalletProvider>
-            <SnackbarProvider classes={{ containerRoot: 'snackRoot' }}>
+        <SnackbarProvider classes={{ containerRoot: 'snackRoot' }}>
+            <WalletProvider>
                 <AppProvider>
                     <Router />
                 </AppProvider>
-            </SnackbarProvider>
-        </WalletProvider>
+            </WalletProvider>
+        </SnackbarProvider>
     </ThemeProvider>
 );
 
