@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.13.0](https://www.github.com/aeternity/aepp-bridge/compare/v1.12.0...v1.13.0) (2024-09-11)
+
+
+### Features
+
+* wallet connection flow improvements ([a4795b4](https://www.github.com/aeternity/aepp-bridge/commit/a4795b4f4bfc829d55ef9bf2dc9924700d951d70))
+
+
+### Bug Fixes
+
+* auto wallet connect & display message ([b9d2875](https://www.github.com/aeternity/aepp-bridge/commit/b9d28752547d00925f7ce9abc6cb8ac18213211a))
+* only fetch bridge info when wallets detected ([ae54572](https://www.github.com/aeternity/aepp-bridge/commit/ae545721b7b12622ef227a81033d412c4ae7ff89))
+* only try to connect to aeternity wallet when wallet detected ([f0ea95a](https://www.github.com/aeternity/aepp-bridge/commit/f0ea95a51f22e4b60e2da44ca75c26c1d3e65dbb))
+
 ## [1.12.0](https://www.github.com/aeternity/aepp-bridge/compare/v1.11.0...v1.12.0) (2024-09-10)
 
 
