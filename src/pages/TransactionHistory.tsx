@@ -65,14 +65,14 @@ const TransactionHistory = () => {
     return (
         <Container sx={{ paddingY: 8 }}>
             <Grid container direction="row" justifyContent="center" alignItems="flex-start">
-                <Card>
+                <Card sx={{ width: 700 }}>
                     <CardContent>
                         <Typography variant="h3" gutterBottom pb={1}>
                             Transaction History
                         </Typography>
-                        <Divider flexItem orientation="horizontal" sx={{ marginTop: 1, marginBottom: 3 }} />
-                        <Box display="flex" flexWrap={'wrap'} mb={2}>
-                            <FormControl>
+                        <Divider flexItem orientation="horizontal" sx={{ marginTop: 1, marginBottom: 2 }} />
+                        <Box display="flex" flexWrap={'wrap'}>
+                            <FormControl sx={{ marginBottom: 2 }}>
                                 <InputLabel id="network-from-select-label">Network</InputLabel>
                                 <Select
                                     sx={{ marginRight: 1, minWidth: 160 }}
@@ -102,11 +102,11 @@ const TransactionHistory = () => {
 
                             <Box
                                 sx={{
+                                    flex: 1,
                                     display: 'inline-flex',
                                     flexDirection: 'column',
                                     justifyContent: 'center',
-                                    alignItems: 'center',
-                                    minWidth: { xs: 300, sm: 400, md: 450, lg: 600 },
+                                    ml: 1,
                                 }}
                             >
                                 {!!connectedWallets.length ? (
