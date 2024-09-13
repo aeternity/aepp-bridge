@@ -21,8 +21,8 @@ const SupportedTokensList = () => {
             <Grid container direction="row" justifyContent="center" alignItems="flex-start">
                 <Card>
                     <CardContent>
-                        <Typography variant="h3" gutterBottom p={1}>
-                            Supported Tokens List
+                        <Typography variant="h4" gutterBottom p={1}>
+                            Supported Tokens
                         </Typography>
                         <TableContainer component={Paper}>
                             <Table sx={{ width: '100%' }} aria-label="tokens">
