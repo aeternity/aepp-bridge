@@ -52,7 +52,7 @@ const TransactionHistory = () => {
     const { transactions, loading } = useTransactionHistory(direction, connectedWallets);
 
     return (
-        <PageContainer title="Transaction History">
+        <PageContainer title="Transaction History" cardSx={{ width: 700, minHeight: 460 }}>
             <Divider flexItem orientation="horizontal" sx={{ marginTop: 1, marginBottom: 2 }} />
             <Box display="flex" flexWrap={'wrap'}>
                 <FormControl sx={{ marginBottom: 2 }}>
