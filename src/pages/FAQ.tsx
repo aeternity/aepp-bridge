@@ -109,7 +109,7 @@ const FAQ = () => {
             <Grid container direction="row" justifyContent="center" alignItems="flex-start">
                 <Card>
                     <CardContent>
-                        <Typography variant="h3" gutterBottom p={1}>
+                        <Typography variant="h4" gutterBottom p={1}>
                             FAQ
                         </Typography>
                         <List sx={{ width: '100%', bgcolor: 'background.paper' }}>

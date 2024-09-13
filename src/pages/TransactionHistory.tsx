@@ -65,9 +65,9 @@ const TransactionHistory = () => {
     return (
         <Container sx={{ paddingY: 8 }}>
             <Grid container direction="row" justifyContent="center" alignItems="flex-start">
-                <Card sx={{ width: 700 }}>
+                <Card sx={{ width: 700, minHeight: 460 }}>
                     <CardContent>
-                        <Typography variant="h3" gutterBottom pb={1}>
+                        <Typography variant="h4" gutterBottom pb={1}>
                             Transaction History
                         </Typography>
                         <Divider flexItem orientation="horizontal" sx={{ marginTop: 1, marginBottom: 2 }} />

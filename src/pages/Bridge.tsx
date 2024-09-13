@@ -410,7 +410,7 @@ const Bridge: React.FC = () => {
 
     return (
         <Container sx={{ paddingY: 8 }}>
-            <Grid container direction="row" justifyContent="center" alignItems="flex-start" sx={{ marginBottom: 10 }}>
+            <Grid container direction="row" justifyContent="center" alignItems="flex-start">
                 <Card sx={{ minWidth: 375 }}>
                     <CardContent>
                         <Stack justifyContent="space-between" direction={'row'}>
