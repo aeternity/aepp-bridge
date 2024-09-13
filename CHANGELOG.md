@@ -1,5 +1,27 @@
 # Changelog
 
+## [1.14.0](https://www.github.com/aeternity/aepp-bridge/compare/v1.13.0...v1.14.0) (2024-09-13)
+
+
+### Features
+
+* add PageContainer style prop ([903155f](https://www.github.com/aeternity/aepp-bridge/commit/903155f39fba3779ae8bcefd794f1acc3f54989a))
+* adjust content height for page container component [#62](https://www.github.com/aeternity/aepp-bridge/issues/62) ([bfdc96b](https://www.github.com/aeternity/aepp-bridge/commit/bfdc96bf6ea3e8ca10c37d126facd0974a59532d))
+* set smaller paddings for smaller screens ([3e78575](https://www.github.com/aeternity/aepp-bridge/commit/3e78575f94a5a4396cb77f15d599721884a36eff))
+
+
+### Bug Fixes
+
+* headings & margins across pages ([73dd6d5](https://www.github.com/aeternity/aepp-bridge/commit/73dd6d5dca1ce2dc2187a540a41dd8668542f92f))
+* supported token list heading ([4a6441a](https://www.github.com/aeternity/aepp-bridge/commit/4a6441a8ddb697e91714721b9ad8d7f4812f7f6e))
+* transaction history box metrics ([6eb60ae](https://www.github.com/aeternity/aepp-bridge/commit/6eb60ae364d2e90c9f2544ccf2304e9a1befe2b5))
+* transaction page mobile screen text positions ([692852f](https://www.github.com/aeternity/aepp-bridge/commit/692852fc31e20e778830cd89288c94272b097558))
+
+
+### Refactorings
+
+* page components to create reusable PageContainer ([1738902](https://www.github.com/aeternity/aepp-bridge/commit/1738902124c6a6fa8e1ee060ee7c3417348346b1))
+
 ## [1.13.0](https://www.github.com/aeternity/aepp-bridge/compare/v1.12.0...v1.13.0) (2024-09-11)
 
 
