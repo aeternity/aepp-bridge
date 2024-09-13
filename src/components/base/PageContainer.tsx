@@ -7,21 +7,13 @@ interface Props {
 }
 
 const PageContainer = (props: Props) => {
-    const scrollableHeightForDesktop = `calc(100vh - 256px)`;
-    const scrollableHeightForMobile = `calc(100vh - 308px)`;
-
     return (
-        <Container sx={{ paddingY: 8 }}>
+        <Container sx={{ paddingY: { xs: 4, sm: 4, md: 8, lg: 8 }, paddingX: 1 }}>
             <Grid container direction="row" justifyContent="center" alignItems="flex-start">
                 <Card sx={props.cardSx}>
                     <CardContent
                         sx={{
-                            maxHeight: {
-                                xs: scrollableHeightForMobile,
-                                sm: scrollableHeightForMobile,
-                                md: scrollableHeightForDesktop,
-                                lg: scrollableHeightForDesktop,
-                            },
+                            maxHeight: `calc(100vh - 256px)`,
                             display: 'flex',
                             flexDirection: 'column',
                         }}
