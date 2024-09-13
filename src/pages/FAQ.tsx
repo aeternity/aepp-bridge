@@ -1,4 +1,5 @@
-import { Card, CardContent, Container, Grid, List, ListItem, ListItemText, Typography } from '@mui/material';
+import { List, ListItem, ListItemText } from '@mui/material';
+import PageContainer from 'src/components/base/PageContainer';
 
 const faqListContent = [
     {
@@ -105,29 +106,20 @@ const faqListContent = [
 
 const FAQ = () => {
     return (
-        <Container sx={{ paddingY: 8 }}>
-            <Grid container direction="row" justifyContent="center" alignItems="flex-start">
-                <Card>
-                    <CardContent>
-                        <Typography variant="h4" gutterBottom p={1}>
-                            FAQ
-                        </Typography>
-                        <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
-                            {faqListContent.map((faqItem, index) => (
-                                <ListItem key={index}>
-                                    <ListItemText
-                                        primaryTypographyProps={{ fontSize: '20px', fontWeight: '600' }}
-                                        secondaryTypographyProps={{ fontSize: '16px' }}
-                                        primary={faqItem.question}
-                                        secondary={faqItem.answer}
-                                    />
-                                </ListItem>
-                            ))}
-                        </List>
-                    </CardContent>
-                </Card>
-            </Grid>
-        </Container>
+        <PageContainer title="FAQ">
+            <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+                {faqListContent.map((faqItem, index) => (
+                    <ListItem key={index}>
+                        <ListItemText
+                            primaryTypographyProps={{ fontSize: '20px', fontWeight: '600' }}
+                            secondaryTypographyProps={{ fontSize: '16px' }}
+                            primary={faqItem.question}
+                            secondary={faqItem.answer}
+                        />
+                    </ListItem>
+                ))}
+            </List>
+        </PageContainer>
     );
 };
 

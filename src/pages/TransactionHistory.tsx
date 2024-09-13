@@ -1,16 +1,4 @@
-import {
-    Container,
-    Grid,
-    Card,
-    CardContent,
-    Typography,
-    Box,
-    FormControl,
-    InputLabel,
-    Select,
-    MenuItem,
-    Divider,
-} from '@mui/material';
+import { Typography, Box, FormControl, InputLabel, Select, MenuItem, Divider } from '@mui/material';
 
 import { useMemo, useState } from 'react';
 import { useSnackbar } from 'notistack';
@@ -25,6 +13,7 @@ import useTransactionHistory, { ConnectedWallet } from 'src/hooks/useTransaction
 import BridgeActionListItem from 'src/components/base/BridgeActionListItem';
 import WalletConnection from 'src/components/base/WalletConnection';
 import Spinner from 'src/components/base/Spinner';
+import PageContainer from 'src/components/base/PageContainer';
 
 const getRequiredWallets = (direction: Direction) => {
     switch (direction) {
@@ -63,119 +52,110 @@ const TransactionHistory = () => {
     const { transactions, loading } = useTransactionHistory(direction, connectedWallets);
 
     return (
-        <Container sx={{ paddingY: 8 }}>
-            <Grid container direction="row" justifyContent="center" alignItems="flex-start">
-                <Card sx={{ width: 700, minHeight: 460 }}>
-                    <CardContent>
-                        <Typography variant="h4" gutterBottom pb={1}>
-                            Transaction History
-                        </Typography>
-                        <Divider flexItem orientation="horizontal" sx={{ marginTop: 1, marginBottom: 2 }} />
-                        <Box display="flex" flexWrap={'wrap'}>
-                            <FormControl sx={{ marginBottom: 2 }}>
-                                <InputLabel id="network-from-select-label">Network</InputLabel>
-                                <Select
-                                    sx={{ marginRight: 1, minWidth: 160 }}
-                                    labelId="network-from-select-label"
-                                    id="network-from-select"
-                                    label="Network"
-                                    value={direction}
-                                    onChange={(e) => setDirection(e.target.value as Direction)}
-                                >
-                                    <MenuItem value={Direction.Both}>
-                                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                            <SelectAllIcon /> <Box sx={{ marginLeft: 1 }}>All</Box>
-                                        </Box>
-                                    </MenuItem>
-                                    <MenuItem value={Direction.AeternityToEthereum}>
-                                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                            <AeternityIcon /> <Box sx={{ marginLeft: 1 }}>æternity</Box>
-                                        </Box>
-                                    </MenuItem>
-                                    <MenuItem value={Direction.EthereumToAeternity}>
-                                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                            <EthereumIcon /> <Box sx={{ marginLeft: 1 }}>Ethereum</Box>
-                                        </Box>
-                                    </MenuItem>
-                                </Select>
-                            </FormControl>
-
-                            <Box
-                                sx={{
-                                    flex: 1,
-                                    display: 'inline-flex',
-                                    flexDirection: 'column',
-                                    justifyContent: 'center',
-                                    ml: 1,
-                                }}
-                            >
-                                {!!connectedWallets.length ? (
-                                    <Typography variant="caption" mt={-1}>
-                                        Connected account{connectedWallets.length > 1 ? 's' : ''}
-                                    </Typography>
-                                ) : (
-                                    <Typography variant="h5">Wallet not connected</Typography>
-                                )}
-                                {connectedWallets.map((connected) => {
-                                    return (
-                                        <Typography
-                                            key={`wallet-address-${connected.wallet}`}
-                                            display="flex"
-                                            alignItems="center"
-                                            variant="body2"
-                                            mb={1}
-                                            gap={1}
-                                            onClick={(e) => {
-                                                e.detail === 2 &&
-                                                    navigator.clipboard.writeText(connected.address).then(() =>
-                                                        enqueueSnackbar('Copied to clipboard', {
-                                                            variant: 'success',
-                                                        }),
-                                                    );
-                                            }}
-                                        >
-                                            {connected.wallet === RequiredWallet.Ethereum ? (
-                                                <EthereumIcon height={13} width={13} />
-                                            ) : (
-                                                <AeternityIcon height={13} width={13} />
-                                            )}
-                                            {connected.address}
-                                        </Typography>
-                                    );
-                                })}
+        <PageContainer title="Transaction History">
+            <Divider flexItem orientation="horizontal" sx={{ marginTop: 1, marginBottom: 2 }} />
+            <Box display="flex" flexWrap={'wrap'}>
+                <FormControl sx={{ marginBottom: 2 }}>
+                    <InputLabel id="network-from-select-label">Network</InputLabel>
+                    <Select
+                        sx={{ marginRight: 1, minWidth: 160 }}
+                        labelId="network-from-select-label"
+                        id="network-from-select"
+                        label="Network"
+                        value={direction}
+                        onChange={(e) => setDirection(e.target.value as Direction)}
+                    >
+                        <MenuItem value={Direction.Both}>
+                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                <SelectAllIcon /> <Box sx={{ marginLeft: 1 }}>All</Box>
                             </Box>
-                        </Box>
-                        <Divider flexItem orientation="horizontal" />
-                        <Box>
-                            <Spinner loading={loading} size={32} margin={5} />
-                            <WalletConnection
-                                buttonProps={{ fullWidth: false, variant: 'outlined', sx: { marginBottom: 1 } }}
-                                requiredWallets={getRequiredWallets(direction)}
-                                wrapperProps={{
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    alignItems: 'center',
-                                    marginTop: 3,
-                                    justifyContent: 'center',
+                        </MenuItem>
+                        <MenuItem value={Direction.AeternityToEthereum}>
+                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                <AeternityIcon /> <Box sx={{ marginLeft: 1 }}>æternity</Box>
+                            </Box>
+                        </MenuItem>
+                        <MenuItem value={Direction.EthereumToAeternity}>
+                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                <EthereumIcon /> <Box sx={{ marginLeft: 1 }}>Ethereum</Box>
+                            </Box>
+                        </MenuItem>
+                    </Select>
+                </FormControl>
+
+                <Box
+                    sx={{
+                        flex: 1,
+                        display: 'inline-flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        ml: 1,
+                    }}
+                >
+                    {!!connectedWallets.length ? (
+                        <Typography variant="caption" mt={-1}>
+                            Connected account{connectedWallets.length > 1 ? 's' : ''}
+                        </Typography>
+                    ) : (
+                        <Typography variant="h5">Wallet not connected</Typography>
+                    )}
+                    {connectedWallets.map((connected) => {
+                        return (
+                            <Typography
+                                key={`wallet-address-${connected.wallet}`}
+                                display="flex"
+                                alignItems="center"
+                                variant="body2"
+                                mb={1}
+                                gap={1}
+                                onClick={(e) => {
+                                    e.detail === 2 &&
+                                        navigator.clipboard.writeText(connected.address).then(() =>
+                                            enqueueSnackbar('Copied to clipboard', {
+                                                variant: 'success',
+                                            }),
+                                        );
                                 }}
-                                messageView={
-                                    <>
-                                        <WalletIcon sx={{ width: 48, height: 48 }} />
-                                        <Typography variant="h6" mb={2} textAlign={'center'}>
-                                            Connect your wallet to view transaction history
-                                        </Typography>
-                                    </>
-                                }
                             >
-                                {transactions.map((transaction) => (
-                                    <BridgeActionListItem key={transaction.hash} item={transaction} />
-                                ))}
-                            </WalletConnection>
-                        </Box>
-                    </CardContent>
-                </Card>
-            </Grid>
-        </Container>
+                                {connected.wallet === RequiredWallet.Ethereum ? (
+                                    <EthereumIcon height={13} width={13} />
+                                ) : (
+                                    <AeternityIcon height={13} width={13} />
+                                )}
+                                {connected.address}
+                            </Typography>
+                        );
+                    })}
+                </Box>
+            </Box>
+            <Divider flexItem orientation="horizontal" />
+            <Box>
+                <Spinner loading={loading} size={32} margin={5} />
+                <WalletConnection
+                    buttonProps={{ fullWidth: false, variant: 'outlined', sx: { marginBottom: 1 } }}
+                    requiredWallets={getRequiredWallets(direction)}
+                    wrapperProps={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        marginTop: 3,
+                        justifyContent: 'center',
+                    }}
+                    messageView={
+                        <>
+                            <WalletIcon sx={{ width: 48, height: 48 }} />
+                            <Typography variant="h6" mb={2} textAlign={'center'}>
+                                Connect your wallet to view transaction history
+                            </Typography>
+                        </>
+                    }
+                >
+                    {transactions.map((transaction) => (
+                        <BridgeActionListItem key={transaction.hash} item={transaction} />
+                    ))}
+                </WalletConnection>
+            </Box>
+        </PageContainer>
     );
 };
 
