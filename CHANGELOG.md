@@ -1,5 +1,14 @@
 # Changelog
 
+### [1.13.1](https://www.github.com/aeternity/aepp-bridge/compare/v1.13.0...v1.13.1) (2024-09-13)
+
+
+### Bug Fixes
+
+* headings & margins across pages ([73dd6d5](https://www.github.com/aeternity/aepp-bridge/commit/73dd6d5dca1ce2dc2187a540a41dd8668542f92f))
+* supported token list heading ([4a6441a](https://www.github.com/aeternity/aepp-bridge/commit/4a6441a8ddb697e91714721b9ad8d7f4812f7f6e))
+* transaction page mobile screen text positions ([692852f](https://www.github.com/aeternity/aepp-bridge/commit/692852fc31e20e778830cd89288c94272b097558))
+
 ## [1.13.0](https://www.github.com/aeternity/aepp-bridge/compare/v1.12.0...v1.13.0) (2024-09-11)
 
 
