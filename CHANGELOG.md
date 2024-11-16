@@ -1,5 +1,13 @@
 # Changelog
 
+### [1.14.1](https://www.github.com/aeternity/aepp-bridge/compare/v1.14.0...v1.14.1) (2024-11-16)
+
+
+### Bug Fixes
+
+* scientific notation issue ([524dc34](https://www.github.com/aeternity/aepp-bridge/commit/524dc34886723661d7864f7f5991b46563ae8f09))
+* validations for amount's new type ([3f3f061](https://www.github.com/aeternity/aepp-bridge/commit/3f3f061142092c6ec3c1d0d8f3b7eeed628d5c7e))
+
 ## [1.14.0](https://www.github.com/aeternity/aepp-bridge/compare/v1.13.0...v1.14.0) (2024-09-13)
 
 
