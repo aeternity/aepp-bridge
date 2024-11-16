@@ -1,4 +1,5 @@
 import ReactDOMClient from 'react-dom/client';
+import BigNumber from 'bignumber.js';
 
 import './index.css';
 import reportWebVitals from './reportWebVitals';
@@ -16,6 +17,7 @@ if (!container) {
 
 // For some reason Web3 depends on the process api
 global.process = require('process');
+BigNumber.config({ EXPONENTIAL_AT: 1e9 });
 
 const App = () => (
     <ThemeProvider>

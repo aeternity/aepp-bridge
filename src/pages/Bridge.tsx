@@ -75,7 +75,7 @@ interface BridgeAction {
     bridgeTxHash: string;
 }
 
-const checkEvmNetworkHasEnoughBalance = async (asset: Asset, normalizedAmount: number) => {
+const checkEvmNetworkHasEnoughBalance = async (asset: Asset, normalizedAmount: BigNumber) => {
     if (asset.symbol === 'WAE') return true;
 
     const bridgeAddress = Constants.ethereum.bridge_address;
@@ -156,9 +156,9 @@ const Bridge: React.FC = () => {
 
     const normalizedAmount = React.useMemo(() => {
         if (!amount) {
-            return 0;
+            return new BigNumber(0);
         }
-        return Number(amount) * 10 ** asset.decimals;
+        return new BigNumber(amount).shiftedBy(asset.decimals);
     }, [asset, amount]);
 
     const isValidDestination = React.useMemo(() => {
@@ -211,10 +211,10 @@ const Bridge: React.FC = () => {
         if (!isValidDestination || !destination?.startsWith('ak_')) {
             return showSnackMessage('Invalid destination!');
         }
-        if (!normalizedAmount || normalizedAmount <= 0) {
+        if (!normalizedAmount || normalizedAmount.isLessThanOrEqualTo(0)) {
             return showSnackMessage('Invalid amount!');
         }
-        if (normalizedAmount > Number(ethereum.assetInfo?.asset?.balance || 0)) {
+        if (normalizedAmount.isGreaterThan(ethereum.assetInfo?.asset?.balance || 0)) {
             return showSnackMessage('Not enough balance!');
         }
 
@@ -225,7 +225,7 @@ const Bridge: React.FC = () => {
         let allowanceTxHash = '';
         if (asset.ethAddress === Constants.ethereum.default_eth) {
             action_type = BRIDGE_ETH_ACTION_TYPE;
-            eth_amount = BigInt(normalizedAmount);
+            eth_amount = BigInt(normalizedAmount.toString());
         } else if (asset.ethAddress === Constants.ethereum.wae) {
             action_type = BRIDGE_AETERNITY_ACTION_TYPE;
         } else {
@@ -270,7 +270,7 @@ const Bridge: React.FC = () => {
                 direction,
                 asset,
                 destination,
-                amount: new BigNumber(normalizedAmount.toString()).shiftedBy(-asset.decimals).toString(),
+                amount: normalizedAmount.shiftedBy(-asset.decimals).toString(),
                 allowanceTxHash,
                 bridgeTxHash: bridgeOutResult.hash,
             });
@@ -290,10 +290,10 @@ const Bridge: React.FC = () => {
         if (!isValidDestination || !destination?.startsWith('0x')) {
             return showSnackMessage('Invalid destination!');
         }
-        if (!normalizedAmount || normalizedAmount <= 0) {
+        if (!normalizedAmount || normalizedAmount.isLessThanOrEqualTo(0)) {
             return showSnackMessage('Invalid amount!');
         }
-        if (normalizedAmount > Number(aeternity.assetInfo?.asset?.balance || 0)) {
+        if (normalizedAmount.isGreaterThan(aeternity.assetInfo?.asset?.balance || 0)) {
             return showSnackMessage('Not enough balance!');
         }
 
@@ -324,7 +324,7 @@ const Bridge: React.FC = () => {
 
             if (asset.aeAddress === Constants.aeternity.default_ae) {
                 action_type = BRIDGE_AETERNITY_ACTION_TYPE;
-                ae_amount = BigInt(normalizedAmount);
+                ae_amount = BigInt(normalizedAmount.toString());
             } else {
                 action_type =
                     asset.aeAddress === Constants.aeternity.aeeth ? BRIDGE_ETH_ACTION_TYPE : BRIDGE_TOKEN_ACTION_TYPE;
