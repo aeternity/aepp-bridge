@@ -231,12 +231,12 @@ const Bridge: React.FC = () => {
         } else {
             try {
                 const allowance = await assetContract.allowance(ethereumAddress, Constants.ethereum.bridge_address);
-                if (allowance.lt(normalizedAmount)) {
+                if (allowance.lt(normalizedAmount.toString())) {
                     setConfirming(true);
                     setConfirmingMsg('Approving allowance');
                     const approveResult = await assetContract.approve(
                         Constants.ethereum.bridge_address,
-                        normalizedAmount,
+                        normalizedAmount.toString(),
                     );
 
                     allowanceTxHash = approveResult.hash;
@@ -344,16 +344,16 @@ const Bridge: React.FC = () => {
                     setConfirming(true);
                     const allowanceCall = await asset_contract.create_allowance(
                         Constants.aeternity.bridge_address.replace('ct_', 'ak_'),
-                        normalizedAmount,
+                        normalizedAmount.toString(),
                     );
                     allowanceTxHash = allowanceCall.hash;
                     showTransactionSubmittedMessage('Allowance transaction submitted.', allowanceCall.hash);
-                } else if (Number(allowance) < Number(normalizedAmount)) {
+                } else if (normalizedAmount.isGreaterThan(allowance)) {
                     setConfirmingMsg('Updating allowance');
                     setConfirming(true);
                     const allowanceCall = await asset_contract.change_allowance(
                         Constants.aeternity.bridge_address.replace('ct_', 'ak_'),
-                        normalizedAmount,
+                        normalizedAmount.toString(),
                     );
                     allowanceTxHash = allowanceCall.hash;
                     showTransactionSubmittedMessage('Allowance transaction submitted.', allowanceCall.hash);
@@ -370,14 +370,14 @@ const Bridge: React.FC = () => {
             setConfirmingMsg('Bridge action');
             setConfirming(true);
             const bridge_out_call = await bridge_contract.bridge_out(
-                [asset.ethAddress, destination, normalizedAmount, action_type],
+                [asset.ethAddress, destination, normalizedAmount.toString(), action_type],
                 { amount: ae_amount },
             );
             setBridgeActionSummary({
                 direction,
                 asset,
                 destination,
-                amount: new BigNumber(normalizedAmount.toString()).shiftedBy(-asset.decimals).toString(),
+                amount: normalizedAmount.shiftedBy(-asset.decimals).toString(),
                 allowanceTxHash,
                 bridgeTxHash: bridge_out_call.hash,
             });
