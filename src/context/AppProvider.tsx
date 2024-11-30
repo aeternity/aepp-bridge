@@ -15,7 +15,7 @@ import useWalletContext from 'src/hooks/useWalletContext';
 import BigNumber from 'bignumber.js';
 
 async function fetchAeternityBridgeInfo(): Promise<BridgeInfo> {
-    const bridgeContract = await Aeternity.Sdk.initializeContract({
+    const bridgeContract = await Aeternity.initializeContract({
         aci: Constants.aeternity.bridge_aci,
         address: Constants.aeternity.bridge_address,
         omitUnknown: true,
@@ -36,7 +36,7 @@ async function fetchAeternityBridgeInfo(): Promise<BridgeInfo> {
 }
 
 async function fetchAeternityAssetInfo(asset: Asset, aeternityAddress?: string): Promise<AeternityAssetInfo> {
-    const bridge_contract = await Aeternity.Sdk.initializeContract({
+    const bridge_contract = await Aeternity.initializeContract({
         aci: Constants.aeternity.bridge_aci,
         address: Constants.aeternity.bridge_address,
         omitUnknown: true,
@@ -58,7 +58,7 @@ async function fetchAeternityAssetInfo(asset: Asset, aeternityAddress?: string):
                     : await bridge_contract.asset(asset.ethAddress);
 
             asset_address = asset_addr;
-            const asset_contract = await Aeternity.Sdk.initializeContract({
+            const asset_contract = await Aeternity.initializeContract({
                 aci: Constants.aeternity.asset_aci,
                 address: asset_addr,
                 omitUnknown: true,

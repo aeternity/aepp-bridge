@@ -1,17 +1,18 @@
 import {
-    AeSdkAepp,
     BrowserWindowMessageConnection,
     Node,
     SUBSCRIPTION_TYPES,
     walletDetector,
     isAddressValid,
+    AeSdkAepp,
+    Contract,
 } from '@aeternity/aepp-sdk';
 
 import Constants from 'src/constants';
 
 export const Sdk = new AeSdkAepp({
-    name: 'Bridge demo',
     nodes: [{ name: Constants.isMainnet ? 'mainnet' : 'testnet', instance: new Node(Constants.aeternity.rpc) }],
+    name: 'Bridge Aepp',
     onNetworkChange: async ({ networkId }) => {
         const [{ name }] = (await Sdk.getNodesInPool()).filter((node) => node.nodeNetworkId === networkId);
         Sdk.selectNode(name);
@@ -63,4 +64,17 @@ export const detectWallet = async (): Promise<boolean> => {
     });
 };
 
-export { isAddressValid };
+export const initializeContract = async (options: {
+    aci: any;
+    address: `ct_${string}` | `${string}.chain` | undefined;
+    omitUnknown: boolean;
+}) => {
+    return Contract.initialize({
+        ...Sdk.getContext(),
+        aci: options.aci,
+        address: options.address,
+        omitUnknown: options.omitUnknown,
+    });
+};
+
+export { isAddressValid, Contract };

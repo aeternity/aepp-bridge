@@ -328,7 +328,7 @@ const Bridge: React.FC = () => {
             } else {
                 action_type =
                     asset.aeAddress === Constants.aeternity.aeeth ? BRIDGE_ETH_ACTION_TYPE : BRIDGE_TOKEN_ACTION_TYPE;
-                const asset_contract = await Aeternity.Sdk.initializeContract({
+                const asset_contract = await Aeternity.initializeContract({
                     aci: Constants.aeternity.asset_aci,
                     address: aeternity.assetInfo?.asset?.address as `ct_${string}`,
                     omitUnknown: true,
@@ -361,7 +361,7 @@ const Bridge: React.FC = () => {
                 setConfirming(false);
                 setConfirmingMsg('');
             }
-            const bridge_contract = await Aeternity.Sdk.initializeContract({
+            const bridge_contract = await Aeternity.initializeContract({
                 aci: Constants.aeternity.bridge_aci,
                 address: Constants.aeternity.bridge_address,
                 omitUnknown: true,

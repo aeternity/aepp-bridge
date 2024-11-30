@@ -3,7 +3,7 @@
     "version": "1.14.1",
     "private": true,
     "devDependencies": {
-        "@aeternity/aepp-sdk": "13.3.2",
+        "@aeternity/aepp-sdk": "14.0.0",
         "@craco/craco": "6.4.5",
         "@emotion/react": "11.10.0",
         "@emotion/styled": "11.10.0",
