@@ -13,7 +13,6 @@ const WalletProvider: React.FC<{ children: ReactNode }> = (props) => {
     const [connecting, setConnecting] = useState(false);
     const [ethereumAddress, setEthereumAddress] = useState<string | undefined>(undefined);
     const [aeternityAddress, setAeternityAddress] = useState<string | undefined>(undefined);
-    const [walletConnectError, setWalletConnectError] = useState<string>('');
 
     const isEthWalletDetectionEnded = useRef<boolean>(false);
     const isAeWalletDetectionEnded = useRef<boolean>(false);
@@ -149,7 +148,6 @@ const WalletProvider: React.FC<{ children: ReactNode }> = (props) => {
                 ethereumAddress,
                 connectAeternityWallet,
                 connectEthereumWallet,
-                walletConnectError,
                 disconnectWallet,
             }}
         >
