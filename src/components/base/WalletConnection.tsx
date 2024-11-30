@@ -40,7 +40,7 @@ const WalletConnection: React.FC<{
                 onClick={connectAeternityWallet}
                 {...buttonProps}
             >
-                Connect SuperHero Wallet
+                Connect æternity Wallet
             </Button>,
         );
     }

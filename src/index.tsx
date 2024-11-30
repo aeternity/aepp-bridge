@@ -8,6 +8,7 @@ import Router from './Routes';
 import AppProvider from './context/AppProvider';
 import WalletProvider from './context/WalletProvider';
 import { SnackbarProvider } from 'notistack';
+import AEWalletSelect from './components/navigation/AEWalletSelect';
 
 const container = document.getElementById('root');
 if (!container) {
@@ -24,6 +25,7 @@ const App = () => (
         <SnackbarProvider classes={{ containerRoot: 'snackRoot' }}>
             <WalletProvider>
                 <AppProvider>
+                    <AEWalletSelect />
                     <Router />
                 </AppProvider>
             </WalletProvider>

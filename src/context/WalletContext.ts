@@ -7,6 +7,13 @@ export interface IWalletContext {
     connectEthereumWallet: () => Promise<void>;
     connectAeternityWallet: () => Promise<void>;
     disconnectWallet: () => void;
+    showAeWalletSelect: boolean;
+    setShowAeWalletSelect: (show: boolean) => void;
+    aeternityWalletDetected: boolean;
+    ethereumWalletDetected: boolean;
+    setConnecting: (connecting: boolean) => void;
+    setAeternityAddress: (address: string) => void;
+    handleWalletConnectError: (message: string) => void;
 }
 
 const contextStub = {
@@ -18,6 +25,19 @@ const contextStub = {
         // stub
     },
     disconnectWallet: async () => {
+        // stub
+    },
+    showAeWalletSelect: false,
+    setShowAeWalletSelect: (show: boolean) => {
+        // stub
+    },
+    aeternityWalletDetected: false,
+    ethereumWalletDetected: false,
+    setConnecting: (connecting: boolean) => {
+        // stub
+    },
+    setAeternityAddress: (address: string) => {},
+    handleWalletConnectError: (message: string) => {
         // stub
     },
 };

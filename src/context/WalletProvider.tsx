@@ -13,6 +13,7 @@ const WalletProvider: React.FC<{ children: ReactNode }> = (props) => {
     const [connecting, setConnecting] = useState(false);
     const [ethereumAddress, setEthereumAddress] = useState<string | undefined>(undefined);
     const [aeternityAddress, setAeternityAddress] = useState<string | undefined>(undefined);
+    const [showAeWalletSelect, setShowAeWalletSelect] = useState(false);
 
     const isEthWalletDetectionEnded = useRef<boolean>(false);
     const isAeWalletDetectionEnded = useRef<boolean>(false);
@@ -43,32 +44,12 @@ const WalletProvider: React.FC<{ children: ReactNode }> = (props) => {
                     }
                 });
             }
-
-            if (aeternityWalletDetected.current) {
-                Aeternity.Sdk.onAddressChange = ({ current }) => {
-                    setAeternityAddress(Object.keys(current)[0]);
-                };
-            }
         })();
     }, []);
 
     const connectAeternityWallet = useCallback(async () => {
         if (isAeWalletDetectionEnded.current) {
-            if (!aeternityWalletDetected.current) {
-                handleWalletConnectError('æternity wallet extension not found');
-                return;
-            }
-
-            try {
-                setConnecting(true);
-                const address = await Aeternity.connect();
-                setAeternityAddress(address);
-            } catch (e) {
-                Logger.error(e);
-                handleWalletConnectError((e as Error).message);
-            } finally {
-                setConnecting(false);
-            }
+            setShowAeWalletSelect(true);
         } else {
             setTimeout(connectAeternityWallet, 100);
         }
@@ -149,6 +130,13 @@ const WalletProvider: React.FC<{ children: ReactNode }> = (props) => {
                 connectAeternityWallet,
                 connectEthereumWallet,
                 disconnectWallet,
+                showAeWalletSelect,
+                setShowAeWalletSelect,
+                aeternityWalletDetected: aeternityWalletDetected.current,
+                ethereumWalletDetected: ethereumWalletDetected.current,
+                setConnecting,
+                setAeternityAddress,
+                handleWalletConnectError,
             }}
         >
             {props.children}
