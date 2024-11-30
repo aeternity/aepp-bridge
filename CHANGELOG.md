@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.15.0](https://www.github.com/aeternity/aepp-bridge/compare/v1.14.1...v1.15.0) (2024-11-30)
+
+
+### Features
+
+* support aeternity MM snap [#73](https://www.github.com/aeternity/aepp-bridge/issues/73) ([d9ccf50](https://www.github.com/aeternity/aepp-bridge/commit/d9ccf50b976fd3525fe4bc87a522a950140eb8b3))
+* update ae sdk package & adapt changes ([c1ccd7d](https://www.github.com/aeternity/aepp-bridge/commit/c1ccd7d6e5d887b0dbee7463ab81ae5e600e0012))
+
+
+### Miscellaneous
+
+* remove redundant context prop ([b7aecf2](https://www.github.com/aeternity/aepp-bridge/commit/b7aecf26df0c4dc8c012f23a7cd2548fa25c36ee))
+
 ### [1.14.1](https://www.github.com/aeternity/aepp-bridge/compare/v1.14.0...v1.14.1) (2024-11-16)
 
 
