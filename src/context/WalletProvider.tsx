@@ -19,6 +19,7 @@ const WalletProvider: React.FC<{ children: ReactNode }> = (props) => {
     const isAeWalletDetectionEnded = useRef<boolean>(false);
     const ethereumWalletDetected = useRef<boolean>(false);
     const aeternityWalletDetected = useRef<boolean>(false);
+    const aeternityWalletAddress = useRef<string | undefined>(undefined);
 
     useEffect(() => {
         (async function () {
@@ -47,7 +48,15 @@ const WalletProvider: React.FC<{ children: ReactNode }> = (props) => {
         })();
     }, []);
 
+    useEffect(() => {
+        // For some reason, the wallet address state is not updated properly when the ae wallet is connected
+        // Therefore, we need to use a ref to store the address and update the state manually
+        aeternityWalletAddress.current = aeternityAddress;
+    }, [aeternityAddress]);
+
     const connectAeternityWallet = useCallback(async () => {
+        if (aeternityWalletAddress.current) return;
+
         if (isAeWalletDetectionEnded.current) {
             setShowAeWalletSelect(true);
         } else {
