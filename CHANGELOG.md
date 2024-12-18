@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.15.1](https://www.github.com/aeternity/aepp-bridge/compare/v1.15.0...v1.15.1) (2024-12-18)
+
+
+### Bug Fixes
+
+* remove persistance show of wallet extension missing error [#80](https://www.github.com/aeternity/aepp-bridge/issues/80) ([a4eb249](https://www.github.com/aeternity/aepp-bridge/commit/a4eb24912421d21b02b9b4c0d6b5407f17c0b7c8))
+
 ## [1.15.0](https://www.github.com/aeternity/aepp-bridge/compare/v1.14.1...v1.15.0) (2024-11-30)
 
 
