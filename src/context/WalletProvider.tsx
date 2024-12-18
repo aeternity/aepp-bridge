@@ -96,7 +96,6 @@ const WalletProvider: React.FC<{ children: ReactNode }> = (props) => {
             variant: 'error',
             anchorOrigin: { vertical: 'top', horizontal: 'right' },
             autoHideDuration: 4000,
-            persist: message === aeWalletErr || message === ethWalletErr,
             action: (key) => {
                 let url = '';
                 if (message === aeWalletErr) {
