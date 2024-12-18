@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.15.2](https://www.github.com/aeternity/aepp-bridge/compare/v1.15.1...v1.15.2) (2024-12-18)
+
+
+### Bug Fixes
+
+* AE wallet select prompting issue [#82](https://www.github.com/aeternity/aepp-bridge/issues/82) ([73b539a](https://www.github.com/aeternity/aepp-bridge/commit/73b539acf6a3176e8d293c831d8b9045b434a6c8))
+
 ### [1.15.1](https://www.github.com/aeternity/aepp-bridge/compare/v1.15.0...v1.15.1) (2024-12-18)
 
 
