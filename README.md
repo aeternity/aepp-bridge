@@ -1,9 +1,5 @@
 This application is created for interacting with the æternity <> EVM Bridge contracts provided by Acurast. Executing proper bridge actions using this application will result in moving the sent funds to the other chain.
 
-## Deployment link
-
-Production: https://ae-bridge.com
-
 ## Getting started
 
 Before running the application, first project dependencies needs to be installed with the following command:
