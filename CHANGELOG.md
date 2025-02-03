@@ -1,5 +1,13 @@
 # Changelog
 
+### [1.15.3](https://www.github.com/aeternity/aepp-bridge/compare/v1.15.2...v1.15.3) (2025-02-03)
+
+
+### Miscellaneous
+
+* trigger testing docs updater ([b225056](https://www.github.com/aeternity/aepp-bridge/commit/b22505618518bb2b24689875c36db9137fbd8168))
+* trigger testing docs updater ([bf1edc6](https://www.github.com/aeternity/aepp-bridge/commit/bf1edc618a3e14bcd86d905691dbc7657b168091))
+
 ### [1.15.2](https://www.github.com/aeternity/aepp-bridge/compare/v1.15.1...v1.15.2) (2024-12-18)
 
 
