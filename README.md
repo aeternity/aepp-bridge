@@ -4,7 +4,7 @@ This application is created for interacting with the æternity <> EVM Bridge con
 
 Staging: https://bridge.stg.aepps.com/
 
-Production: https://ae-bridge.com/
+Production: https://ae-bridge.com
 
 ## Getting started
 
