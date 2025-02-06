@@ -3,7 +3,7 @@ import { Direction } from 'src/context/AppContext';
 import Constants from 'src/constants';
 import * as Ethereum from 'src/services/ethereum';
 import BigNumber from 'bignumber.js';
-import { Event } from 'ethers';
+import { EventLog } from 'ethers';
 import { RequiredWallet } from './useWalletContext';
 
 export interface BridgeAction {
@@ -70,7 +70,7 @@ const fetchEthereumTransactions = async (address?: string) => {
 
 const parseEthereumTransactions = async (events: any): Promise<BridgeAction[]> => {
     const actions = await Promise.all(
-        events.map(async (event: Event) => {
+        events.map(async (event: EventLog) => {
             const token = Constants.assets.find(
                 (asset) => asset.ethAddress.toLowerCase() === event.args![0].toLowerCase(),
             )!;

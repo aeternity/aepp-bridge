@@ -88,7 +88,7 @@ const checkEvmNetworkHasEnoughBalance = async (asset: Asset, normalizedAmount: B
     const assetContract = new Ethereum.Contract(
         asset.ethAddress,
         Constants.ethereum.asset_abi,
-        Ethereum.Provider.getSigner(),
+        await Ethereum.Provider.getSigner(),
     );
 
     const tokenBalanceOfBridge = new BigNumber((await assetContract.balanceOf(bridgeAddress)).toString());
@@ -201,12 +201,12 @@ const Bridge: React.FC = () => {
         const bridge = new Ethereum.Contract(
             Constants.ethereum.bridge_address,
             Constants.ethereum.bridge_abi,
-            Ethereum.Provider.getSigner(),
+            await Ethereum.Provider.getSigner(),
         );
         const assetContract = new Ethereum.Contract(
             asset.ethAddress,
             Constants.ethereum.asset_abi,
-            Ethereum.Provider.getSigner(),
+            await Ethereum.Provider.getSigner(),
         );
         if (!isValidDestination || !destination?.startsWith('ak_')) {
             return showSnackMessage('Invalid destination!');

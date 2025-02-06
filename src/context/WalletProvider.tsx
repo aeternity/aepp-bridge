@@ -34,7 +34,7 @@ const WalletProvider: React.FC<{ children: ReactNode }> = (props) => {
             if (ethereumWalletDetected.current) {
                 Ethereum.Provider.listAccounts().then((accounts) => {
                     if (accounts.length > 0) {
-                        setEthereumAddress(accounts[0]);
+                        setEthereumAddress(accounts[0].address);
                     }
                 });
                 ethereumClient.on('accountsChanged', (accounts: any) => {
