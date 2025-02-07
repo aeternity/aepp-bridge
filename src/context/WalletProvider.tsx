@@ -1,20 +1,20 @@
 import { useState, useEffect, ReactNode, useCallback, useRef } from 'react';
 import * as Aeternity from 'src/services/aeternity';
-import * as Ethereum from 'src/services/ethereum';
-import Logger from '../services/logger';
 import WalletContext from './WalletContext';
 import { Button } from '@mui/material';
 import { useSnackbar } from 'notistack';
 import { EVM_WALLET_INSTALL_URL, SUPERHERO_WALLET_URL } from 'src/constants';
+import { useAppKit, useAppKitAccount, useDisconnect } from '@reown/appkit/react';
 
 const WalletProvider: React.FC<{ children: ReactNode }> = (props) => {
+    const { open } = useAppKit();
+    const { disconnect } = useDisconnect();
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
     const [connecting, setConnecting] = useState(false);
-    const [ethereumAddress, setEthereumAddress] = useState<string | undefined>(undefined);
+    const { address: ethereumAddress } = useAppKitAccount();
     const [aeternityAddress, setAeternityAddress] = useState<string | undefined>(undefined);
     const [showAeWalletSelect, setShowAeWalletSelect] = useState(false);
-
     const isEthWalletDetectionEnded = useRef<boolean>(false);
     const isAeWalletDetectionEnded = useRef<boolean>(false);
     const ethereumWalletDetected = useRef<boolean>(false);
@@ -30,21 +30,6 @@ const WalletProvider: React.FC<{ children: ReactNode }> = (props) => {
 
             aeternityWalletDetected.current = await Aeternity.detectWallet();
             isAeWalletDetectionEnded.current = true;
-
-            if (ethereumWalletDetected.current) {
-                Ethereum.Provider.listAccounts().then((accounts) => {
-                    if (accounts.length > 0) {
-                        setEthereumAddress(accounts[0].address);
-                    }
-                });
-                ethereumClient.on('accountsChanged', (accounts: any) => {
-                    if (accounts.length > 0) {
-                        setEthereumAddress(accounts[0]);
-                    } else {
-                        setEthereumAddress(undefined);
-                    }
-                });
-            }
         })();
     }, []);
 
@@ -65,30 +50,14 @@ const WalletProvider: React.FC<{ children: ReactNode }> = (props) => {
     }, [aeternityAddress]);
 
     const connectEthereumWallet = useCallback(async () => {
-        if (isEthWalletDetectionEnded.current) {
-            if (!ethereumWalletDetected.current) {
-                handleWalletConnectError('Ethereum wallet extension not found');
-                return;
-            }
-
-            try {
-                setConnecting(true);
-                const address = await Ethereum.connect();
-                setEthereumAddress(address);
-            } catch (e) {
-                Logger.error(e);
-                handleWalletConnectError((e as Error).message);
-            } finally {
-                setConnecting(false);
-            }
-        } else {
-            setTimeout(connectEthereumWallet, 100);
-        }
+        open({
+            view: 'Connect',
+        });
     }, []);
 
     const disconnectWallet = useCallback(() => {
         if (ethereumAddress) {
-            setEthereumAddress(undefined);
+            disconnect();
         } else if (aeternityAddress) {
             setAeternityAddress(undefined);
         }

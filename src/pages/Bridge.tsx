@@ -39,6 +39,8 @@ import { useSnackbar } from 'notistack';
 import BigNumber from 'bignumber.js';
 import addTokenToEthereumWallet from 'src/utils/addTokenToEthereumWallet';
 import getTxUrl from 'src/utils/getTxUrl';
+import { useAppKitProvider } from '@reown/appkit/react';
+import { BrowserProvider, Eip1193Provider } from 'ethers';
 
 const BRIDGE_TOKEN_ACTION_TYPE = 0;
 const BRIDGE_ETH_ACTION_TYPE = 1;
@@ -119,6 +121,7 @@ const Bridge: React.FC = () => {
     const { enqueueSnackbar } = useSnackbar();
     const { aeternity, ethereum, assets, asset, updateAsset, direction, updateDirection } = useAppContext();
     const { aeternityAddress, ethereumAddress } = useWalletContext();
+    const { walletProvider } = useAppKitProvider<Eip1193Provider>('eip155');
 
     const [buttonBusy, setButtonBusy] = React.useState(false);
     const [confirming, setConfirming] = React.useState(false);
@@ -198,15 +201,16 @@ const Bridge: React.FC = () => {
     };
 
     const bridgeToAeternity = React.useCallback(async () => {
+        const ethersProvider = new BrowserProvider(walletProvider);
         const bridge = new Ethereum.Contract(
             Constants.ethereum.bridge_address,
             Constants.ethereum.bridge_abi,
-            await Ethereum.Provider.getSigner(),
+            await ethersProvider.getSigner(),
         );
         const assetContract = new Ethereum.Contract(
             asset.ethAddress,
             Constants.ethereum.asset_abi,
-            await Ethereum.Provider.getSigner(),
+            await ethersProvider.getSigner(),
         );
         if (!isValidDestination || !destination?.startsWith('ak_')) {
             return showSnackMessage('Invalid destination!');
