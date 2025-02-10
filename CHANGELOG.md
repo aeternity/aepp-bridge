@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.17.0](https://www.github.com/aeternity/aepp-bridge/compare/v1.16.0...v1.17.0) (2025-02-10)
+
+
+### Features
+
+* update metadata ([3b6e2a0](https://www.github.com/aeternity/aepp-bridge/commit/3b6e2a04622457720687b6d485a8693c5838e0e5))
+
 ## [1.16.0](https://www.github.com/aeternity/aepp-bridge/compare/v1.15.2...v1.16.0) (2025-02-10)
 
 
