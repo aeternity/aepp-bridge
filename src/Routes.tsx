@@ -20,9 +20,7 @@ const AppRouter: React.FC = () => {
                         element={
                             <>
                                 <Helmet>
-                                    <title>
-                                        (EVM {'<'}-{'>'} æternity) Bridge
-                                    </title>
+                                    <title>Æternity {`<>`} Ethereum Bridge</title>
                                 </Helmet>
                                 <Bridge />
                             </>
