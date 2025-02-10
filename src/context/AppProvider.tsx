@@ -206,16 +206,12 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                     })
                     .catch(Logger.error);
 
-            Aeternity.detectWallet().then((hasWallet) => {
-                if (hasWallet) {
-                    fetchAeternityBridgeInfo()
-                        .then((info) => {
-                            setAeternityBridgeEnabled(info.isEnabled!);
-                            setAeternityFundsSufficient(info.areFundsSufficient!);
-                        })
-                        .catch(Logger.error);
-                }
-            });
+            fetchAeternityBridgeInfo()
+                .then((info) => {
+                    setAeternityBridgeEnabled(info.isEnabled!);
+                    setAeternityFundsSufficient(info.areFundsSufficient!);
+                })
+                .catch(Logger.error);
         };
         fetch(); // First fetch
 
