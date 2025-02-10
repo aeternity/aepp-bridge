@@ -6,7 +6,7 @@ import Logger from './logger';
 export let Provider: ethers.BrowserProvider;
 try {
     Provider = new ethers.BrowserProvider((window as any).ethereum);
-    // (window as any).ethereum.request({ method: 'eth_chainId' }).then(console.log);
+
     (window as any).ethereum.request({
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: Constants.isMainnet ? bridgeConfig.mainnet.chainId : bridgeConfig.testnet.chainId }],
@@ -24,5 +24,6 @@ export const connect = async (): Promise<string> => {
 };
 
 export const isAddressValid = (address: string) => ethers.isAddress(address);
+export const isMetaMask = () => (window as any).ethereum.isMetaMask;
 
 export { Contract };

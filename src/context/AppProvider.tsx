@@ -161,7 +161,7 @@ const fetchAeternityBalance = async (address: string | undefined) => {
 
 const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const isMounter = React.useRef(false);
-    const { aeternityAddress, ethereumAddress, connectAeternityWallet, connectEthereumWallet } = useWalletContext();
+    const { aeternityAddress, ethereumAddress } = useWalletContext();
     const [asset, updateAsset] = React.useState<Asset>(Constants.assets[0]);
     const [ethereumAssetInfo, setEthereumAssetInfo] = React.useState<EthereumAssetInfo>();
     const [aeternityAssetInfo, setAeternityAssetInfo] = React.useState<AeternityAssetInfo>();
@@ -173,12 +173,6 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [isAeternityBridgeEnabled, setAeternityBridgeEnabled] = React.useState<boolean>(true);
     const [areEthereumFundsSufficient, setEthereumFundsSufficient] = React.useState<boolean>(true);
     const [areAeternityFundsSufficient, setAeternityFundsSufficient] = React.useState<boolean>(true);
-
-    useEffect(() => {
-        if (direction === Direction.EthereumToAeternity) {
-            connectEthereumWallet();
-        }
-    }, []);
 
     useEffect(() => {
         isMounter.current = true;
@@ -212,16 +206,12 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                     })
                     .catch(Logger.error);
 
-            Aeternity.detectWallet().then((hasWallet) => {
-                if (hasWallet) {
-                    fetchAeternityBridgeInfo()
-                        .then((info) => {
-                            setAeternityBridgeEnabled(info.isEnabled!);
-                            setAeternityFundsSufficient(info.areFundsSufficient!);
-                        })
-                        .catch(Logger.error);
-                }
-            });
+            fetchAeternityBridgeInfo()
+                .then((info) => {
+                    setAeternityBridgeEnabled(info.isEnabled!);
+                    setAeternityFundsSufficient(info.areFundsSufficient!);
+                })
+                .catch(Logger.error);
         };
         fetch(); // First fetch
 
@@ -256,12 +246,7 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                     areFundsSufficient: areEthereumFundsSufficient,
                 },
                 direction,
-                updateDirection: (direction: Direction) => {
-                    updateDirection(direction);
-                    if (direction === Direction.AeternityToEthereum) {
-                        connectAeternityWallet();
-                    }
-                },
+                updateDirection,
             }}
         >
             {children}
