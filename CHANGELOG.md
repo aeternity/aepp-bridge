@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.16.0](https://www.github.com/aeternity/aepp-bridge/compare/v1.15.2...v1.16.0) (2025-02-10)
+
+
+### Features
+
+* add bridge contracts ([9eaa820](https://www.github.com/aeternity/aepp-bridge/commit/9eaa820c02e23577cd5ed03c59e25647217dfd63))
+* **readme:** add title ([edd193d](https://www.github.com/aeternity/aepp-bridge/commit/edd193de234ef9dd72ee4e5ced09d09b9fea7cbf))
+* update metadata ([3b6e2a0](https://www.github.com/aeternity/aepp-bridge/commit/3b6e2a04622457720687b6d485a8693c5838e0e5))
+
+
+### Bug Fixes
+
+* update ethers package and adjust related code for compatibility ([42ad9f9](https://www.github.com/aeternity/aepp-bridge/commit/42ad9f90dc3384ad613ef0941adf95b0daff3d6b))
+
+
+### Miscellaneous
+
+* trigger testing docs updater ([b225056](https://www.github.com/aeternity/aepp-bridge/commit/b22505618518bb2b24689875c36db9137fbd8168))
+* trigger testing docs updater ([bf1edc6](https://www.github.com/aeternity/aepp-bridge/commit/bf1edc618a3e14bcd86d905691dbc7657b168091))
+
 ### [1.15.2](https://www.github.com/aeternity/aepp-bridge/compare/v1.15.1...v1.15.2) (2024-12-18)
 
 
