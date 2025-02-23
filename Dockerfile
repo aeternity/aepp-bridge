@@ -1,12 +1,12 @@
 # Stage 1
-FROM node:18-alpine as react-build
+FROM node:18 AS react-build
 WORKDIR /app
 COPY . ./
 RUN yarn
 RUN yarn build
 
 ARG REVISION
-ENV REACT_APP_REVISION $REVISION
+ENV REACT_APP_REVISION=$REVISION
 
 # Stage 2 - the production environment
 FROM nginx:1.19.0
