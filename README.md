@@ -48,6 +48,24 @@ Finally, to run the build:
 serve -s build
 ```
 
+### Running in a docker container
+
+Project has a Dockerfile in place. So, it can be easly run in a docker container with the following commands:
+
+build the container:
+
+```sh
+docker build -t aepp-bridge .
+```
+
+and run:
+
+```sh
+docker run -d -p 3000:80 aepp-bridge
+```
+
+it should be served at [localhost:3000](http://localhost:3000/)
+
 ### Running on a cloud service
 
 If you want to run the bridge on free cloud service, following steps can be taken:
