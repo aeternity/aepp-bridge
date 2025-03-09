@@ -1,3 +1,4 @@
+import type { BaseProvider } from '@metamask/providers';
 import {
     BrowserWindowMessageConnection,
     Node,
@@ -10,11 +11,28 @@ import {
     WalletConnectorFrame,
     AccountBase,
 } from '@aeternity/aepp-sdk';
-type Wallet = Parameters<Parameters<typeof walletDetector>[1]>[0]['newWallet'];
-
 import Constants from 'src/constants';
 
 let connector: WalletConnectorFrame;
+type Wallet = Parameters<Parameters<typeof walletDetector>[1]>[0]['newWallet'];
+
+// This function is used to get the Metamask provider over EIP-6963
+// When AE SDK JS library will support EIP-6963, this function will be removed
+async function getMetamaskOverEip6963(): Promise<BaseProvider | undefined> {
+    setTimeout(() => window.dispatchEvent(new Event('eip6963:requestProvider')));
+    return new Promise<BaseProvider | undefined>((resolve) => {
+        const handler = (event: CustomEvent<{ info: { rdns: string }; provider: BaseProvider }>): void => {
+            if (event.detail.info.rdns !== 'io.metamask') return;
+            window.removeEventListener('eip6963:announceProvider', handler as EventListener);
+            resolve(event.detail.provider);
+        };
+        window.addEventListener('eip6963:announceProvider', handler as EventListener);
+        setTimeout(() => {
+            window.removeEventListener('eip6963:announceProvider', handler as EventListener);
+            resolve(undefined);
+        }, 500);
+    });
+}
 
 export const Sdk = new AeSdk({
     nodes: [{ name: Constants.isMainnet ? 'mainnet' : 'testnet', instance: new Node(Constants.aeternity.rpc) }],
@@ -25,7 +43,8 @@ export const connect = async (
     onAccountChange?: (accounts: AccountBase[]) => void,
 ): Promise<string> => {
     if (wallet === 'metamask') {
-        const factory = new AccountMetamaskFactory();
+        const provider = await getMetamaskOverEip6963();
+        const factory = new AccountMetamaskFactory(provider);
         await factory.installSnap();
 
         Sdk.addAccount(await factory.initialize(0), { select: true });
