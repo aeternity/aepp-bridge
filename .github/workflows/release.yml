@@ -6,10 +6,10 @@ on:
 
 jobs:
   publish:
-    uses: aeternity/github-actions/.github/workflows/_publish-ecr.yml@v2.3.1
+    uses: aeternity/github-actions/.github/workflows/_publish-ecr.yml@v2.4.0
     secrets: inherit
   deploy:
-    uses: aeternity/github-actions/.github/workflows/_deploy-gitops.yml@v2.3.1
+    uses: aeternity/github-actions/.github/workflows/_deploy-gitops.yml@v2.4.0
     needs: [publish]
     secrets: inherit
     with:
