@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.17.5](https://github.com/aeternity/aepp-bridge/compare/v1.17.4...v1.17.5) (2025-04-24)
+
+### Miscellaneous
+* Update AE GHA to latest ([2cc4a33](https://www.github.com/aeternity/aepp-bridge/commit/2cc4a33c7592b7d6adf1ef5a20a01a092067a059))
+
 ### [1.17.4](https://github.com/aeternity/aepp-bridge/compare/v1.17.3...v1.17.4) (2025-04-24)
 
 
