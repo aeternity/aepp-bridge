@@ -2898,7 +2898,7 @@
             "name": "Wrapped Ethereum",
             "symbol": "ETH",
             "decimals": 18,
-            "icon": "https://cryptologos.cc/logos/ethereum-eth-logo.png",
+            "icon": "https://www.svgrepo.com/show/349356/ethereum.svg",
             "ethAddress": "0xd57aafdC9615835E1F75BcdBDE1c7B1Aa6e4cB10",
             "aeAddress": "ct_WVqAvLQpvZCgBg4faZLXA1YBj43Fxj91D33Z8K7pFsY8YCofv"
         },
